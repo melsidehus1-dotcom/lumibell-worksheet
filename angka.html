@@ -5,25 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Petualangan Angka LumiBell - Workbook Tracing Angka 1-10</title>
     <meta name="description" content="Belajar menulis angka 1 sampai 10 bersama LumiBell! Workbook interaktif tracing angka untuk anak TK.">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: #F0FFF4;
-            user-select: none;
-        }
-        h1, h2, h3, .brand-font {
-            font-family: 'Fredoka', sans-serif;
-        }
-        /* Grid Penuntun Menulis 3 Garis */
+        body { font-family: 'Quicksand', sans-serif; background-color: #F0FFF4; user-select: none; }
+        h1, h2, h3 { font-family: 'Fredoka', sans-serif; }
         .tracing-guideline {
             background: linear-gradient(to bottom,
                 transparent 0px, transparent 19px,
@@ -34,101 +23,45 @@
                 #f43f5e 80px, #f43f5e 81px,
                 transparent 82px) left top / 100% 100px;
         }
-        /* Dotted Letter untuk Tracing */
         .dotted-letter {
             font-family: 'Fredoka', sans-serif;
             color: rgba(148, 163, 184, 0.25);
             text-shadow: 2px 2px 0px rgba(255,255,255,0.9);
-            letter-spacing: 0.15em;
             -webkit-text-stroke: 2px dashed #94a3b8;
             font-size: 5rem;
             line-height: 100px;
             display: inline-block;
         }
-        /* Animasi Float Maskot */
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-10px) rotate(3deg); }
         }
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-        /* Custom Scrollbar */
+        .animate-float { animation: float 3s ease-in-out infinite; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #F0FFF4; }
         ::-webkit-scrollbar-thumb { background: #34d399; border-radius: 10px; }
-
-        /* Slot gambar custom */
-        .image-slot {
-            width: 100%;
-            height: 160px;
-            border: 3px dashed #a7f3d0;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #f0fdf4;
-            cursor: pointer;
-            transition: all 0.2s;
-            overflow: hidden;
-            position: relative;
-        }
-        .image-slot:hover {
-            border-color: #10b981;
-            background: #dcfce7;
-        }
-        .image-slot img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        .image-slot .upload-hint {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: #6ee7b7;
-        }
-        .image-slot input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        /* Nav link antar halaman */
         .page-link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 18px;
-            border-radius: 999px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 18px; border-radius: 999px;
+            font-weight: 700; font-size: 0.85rem;
+            transition: all 0.2s; text-decoration: none;
         }
         .page-link-btn:active { transform: scale(0.95); }
-
+        /* Mewarnai SVG */
+        .paintable { cursor: pointer; transition: filter 0.15s; }
+        .paintable:hover { filter: brightness(1.1); }
         @media print {
-            body { background: white !important; color: black !important; }
+            body { background: white !important; }
             .no-print { display: none !important; }
-            .print-page {
-                page-break-after: always;
-                border: none !important;
-                box-shadow: none !important;
-                background: white !important;
-            }
+            .print-page { page-break-after: always; border: none !important; box-shadow: none !important; }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased text-slate-800 pb-12">
 
-    <!-- Header Navbar -->
+    <!-- Header -->
     <header class="bg-emerald-400 shadow-md p-4 sticky top-0 z-50 no-print">
         <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <!-- Logo -->
             <div class="flex items-center gap-3">
                 <div class="bg-white p-2.5 rounded-full shadow-inner border-2 border-emerald-500">
                     <svg class="w-8 h-8 text-emerald-500 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
@@ -140,45 +73,33 @@
                     <p class="text-xs font-semibold text-emerald-800 uppercase tracking-widest">Petualangan Angka 1–10</p>
                 </div>
             </div>
-
-            <!-- Navigasi Antar Halaman -->
             <div class="flex items-center gap-2 bg-white/60 p-1.5 rounded-full border border-emerald-200">
-                <a href="index.html" class="page-link-btn bg-white text-emerald-800 hover:bg-emerald-50 border border-emerald-200">
-                    🔤 Huruf A–Z
-                </a>
-                <span class="page-link-btn bg-emerald-500 text-white shadow">
-                    🔢 Angka 1–10
-                </span>
+                <a href="index.html" class="page-link-btn bg-white text-emerald-800 hover:bg-emerald-50 border border-emerald-200">🔤 Huruf A–Z</a>
+                <span class="page-link-btn bg-emerald-500 text-white shadow">🔢 Angka 1–10</span>
             </div>
-
-            <!-- Tombol Aksi -->
             <div class="flex items-center gap-2">
                 <button onclick="window.print()" class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow flex items-center gap-1.5 transition-transform active:scale-95 no-print">
                     <i class="fa-solid fa-print"></i> Cetak PDF
                 </button>
-                <button onclick="resetCurrentCanvas()" class="bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full font-bold text-sm shadow flex items-center justify-center w-9 h-9 transition-transform active:scale-95 no-print" title="Bersihkan Coretan">
+                <button onclick="resetCurrentCanvas()" class="bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full font-bold w-9 h-9 flex items-center justify-center transition-transform active:scale-95 no-print" title="Bersihkan">
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Konten Utama -->
     <main class="flex-grow max-w-6xl w-full mx-auto p-4 flex flex-col md:flex-row gap-6 mt-4">
 
         <!-- Sidebar -->
         <aside class="md:w-1/4 flex flex-col gap-4 no-print">
-            <!-- Maskot Lumi -->
             <div class="bg-gradient-to-br from-emerald-100 to-emerald-200 border-4 border-emerald-400 rounded-3xl p-5 shadow-lg relative overflow-hidden flex flex-col items-center text-center">
                 <div class="absolute top-2 right-2 bg-white text-xs px-2.5 py-1 rounded-full text-emerald-600 font-bold border border-emerald-300">Maskot</div>
                 <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md border-2 border-emerald-300 mb-3 animate-float">
-                    <svg class="w-16 h-16 text-emerald-500" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-16 h-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M32 8C20.9543 8 12 16.9543 12 28V40H52V28C52 16.9543 43.0457 8 32 8Z" fill="#6EE7B7" stroke="#059669" stroke-width="4" stroke-linejoin="round"/>
                         <circle cx="32" cy="52" r="6" fill="#34D399" stroke="#059669" stroke-width="3"/>
-                        <circle cx="25" cy="26" r="4" fill="#1E293B"/>
-                        <circle cx="39" cy="26" r="4" fill="#1E293B"/>
-                        <circle cx="26" cy="25" r="1" fill="white"/>
-                        <circle cx="40" cy="25" r="1" fill="white"/>
+                        <circle cx="25" cy="26" r="4" fill="#1E293B"/><circle cx="39" cy="26" r="4" fill="#1E293B"/>
+                        <circle cx="26" cy="25" r="1" fill="white"/><circle cx="40" cy="25" r="1" fill="white"/>
                         <circle cx="21" cy="30" r="3" fill="#F87171" opacity="0.6"/>
                         <circle cx="43" cy="30" r="3" fill="#F87171" opacity="0.6"/>
                         <path d="M29 32C29 33.6569 30.3431 35 32 35C33.6569 35 35 33.6569 35 32" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
@@ -186,102 +107,104 @@
                 </div>
                 <h3 class="text-lg font-bold text-emerald-900">Halo, Aku Lumi!</h3>
                 <p id="lumi-bubble" class="text-sm text-emerald-800 mt-2 bg-white/80 p-3 rounded-2xl border border-emerald-300">
-                    "Ayo belajar menulis angka bersama Lumi! Pilih angka di bawah dan mulai tracing!"
+                    "Ayo belajar menulis angka bersama Lumi! Klik angka di bawah dan mulai tracing!"
                 </p>
             </div>
 
             <!-- Palet Warna -->
             <div class="bg-white border-2 border-slate-200 rounded-3xl p-4 shadow-md flex flex-col gap-3">
                 <h4 class="font-bold text-slate-700 text-sm flex items-center gap-1.5 border-b pb-2">
-                    <i class="fa-solid fa-palette text-emerald-500"></i> Warna Kuas Menulismu:
+                    <i class="fa-solid fa-palette text-emerald-500"></i> Warna Kuas:
                 </h4>
-                <div class="grid grid-cols-4 gap-2" id="brush-colors">
-                    <button onclick="setBrushColor('#3b82f6', this)" class="color-btn w-10 h-10 rounded-full bg-blue-500 border-4 border-white shadow ring-2 ring-blue-500/50 transform scale-110"></button>
-                    <button onclick="setBrushColor('#f43f5e', this)" class="color-btn w-10 h-10 rounded-full bg-rose-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
-                    <button onclick="setBrushColor('#10b981', this)" class="color-btn w-10 h-10 rounded-full bg-emerald-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
-                    <button onclick="setBrushColor('#eab308', this)" class="color-btn w-10 h-10 rounded-full bg-yellow-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
-                    <button onclick="setBrushColor('#8b5cf6', this)" class="color-btn w-10 h-10 rounded-full bg-violet-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
-                    <button onclick="setBrushColor('#ec4899', this)" class="color-btn w-10 h-10 rounded-full bg-pink-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
-                    <button onclick="setBrushColor('#000000', this)" class="color-btn w-10 h-10 rounded-full bg-black border-4 border-white shadow hover:scale-105 transition-transform"></button>
-                    <button onclick="setBrushColor('rainbow', this)" class="color-btn w-10 h-10 rounded-full bg-gradient-to-tr from-rose-400 via-yellow-300 to-indigo-500 border-4 border-white shadow hover:scale-105 transition-transform" title="Efek Pelangi"></button>
+                <div class="grid grid-cols-4 gap-2">
+                    <button onclick="setBrushColor('#3b82f6',this)" class="color-btn w-10 h-10 rounded-full bg-blue-500 border-4 border-white shadow ring-2 ring-blue-500/50 scale-110"></button>
+                    <button onclick="setBrushColor('#f43f5e',this)" class="color-btn w-10 h-10 rounded-full bg-rose-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#10b981',this)" class="color-btn w-10 h-10 rounded-full bg-emerald-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#eab308',this)" class="color-btn w-10 h-10 rounded-full bg-yellow-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#8b5cf6',this)" class="color-btn w-10 h-10 rounded-full bg-violet-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#ec4899',this)" class="color-btn w-10 h-10 rounded-full bg-pink-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#000000',this)" class="color-btn w-10 h-10 rounded-full bg-black border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('rainbow',this)" class="color-btn w-10 h-10 rounded-full bg-gradient-to-tr from-rose-400 via-yellow-300 to-indigo-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
                 </div>
-                <div class="mt-2">
+                <div class="mt-1">
                     <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
-                        <span>Ukuran Kuas</span>
-                        <span id="brush-size-val">10px</span>
+                        <span>Ukuran Kuas</span><span id="brush-size-val">10px</span>
                     </div>
-                    <input type="range" id="brush-size" min="4" max="25" value="10" oninput="updateBrushSize(this.value)" class="w-full accent-emerald-500 bg-slate-200 rounded-lg cursor-pointer h-2">
+                    <input type="range" id="brush-size" min="4" max="25" value="10" oninput="updateBrushSize(this.value)" class="w-full accent-emerald-500 h-2 rounded-lg cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Palet Warna Gambar -->
+            <div class="bg-white border-2 border-slate-200 rounded-3xl p-4 shadow-md flex flex-col gap-2">
+                <h4 class="font-bold text-slate-700 text-sm flex items-center gap-1.5 border-b pb-2">
+                    <i class="fa-solid fa-fill-drip text-amber-500"></i> Warnai Gambar:
+                </h4>
+                <p class="text-[10px] text-slate-500">Klik warna lalu klik bagian gambar!</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <button onclick="setFillColor('#ef4444')" class="fill-btn w-7 h-7 rounded-full bg-red-500 border-2 border-white shadow hover:scale-110 transition-transform"></button>
+                    <button onclick="setFillColor('#f97316')" class="fill-btn w-7 h-7 rounded-full bg-orange-500 border-2 border-white shadow hover:scale-110 transition-transform"></button>
+                    <button onclick="setFillColor('#fbbf24')" class="fill-btn w-7 h-7 rounded-full bg-yellow-400 border-2 border-white shadow hover:scale-110 transition-transform"></button>
+                    <button onclick="setFillColor('#4ade80')" class="fill-btn w-7 h-7 rounded-full bg-green-400 border-2 border-white shadow hover:scale-110 transition-transform"></button>
+                    <button onclick="setFillColor('#3b82f6')" class="fill-btn w-7 h-7 rounded-full bg-blue-500 border-2 border-white shadow hover:scale-110 transition-transform"></button>
+                    <button onclick="setFillColor('#a855f7')" class="fill-btn w-7 h-7 rounded-full bg-purple-500 border-2 border-white shadow hover:scale-110 transition-transform"></button>
+                    <button onclick="setFillColor('#ec4899')" class="fill-btn w-7 h-7 rounded-full bg-pink-500 border-2 border-white shadow hover:scale-110 transition-transform"></button>
+                    <button onclick="setFillColor('#ffffff')" class="fill-btn w-7 h-7 rounded-full bg-white border-2 border-slate-300 shadow hover:scale-110 transition-transform" title="Putih (hapus warna)"></button>
                 </div>
             </div>
 
             <!-- Navigasi Angka -->
-            <div class="bg-white border-2 border-slate-200 rounded-3xl p-4 shadow-md flex-grow overflow-y-auto max-h-[300px] md:max-h-[400px]">
+            <div class="bg-white border-2 border-slate-200 rounded-3xl p-4 shadow-md overflow-y-auto max-h-[280px]">
                 <h4 class="font-bold text-slate-700 text-sm border-b pb-2 mb-2 sticky top-0 bg-white z-10">Pilih Angka:</h4>
-                <div id="navigation-list" class="grid grid-cols-2 gap-1.5">
-                    <!-- Diisi Javascript -->
-                </div>
+                <div id="navigation-list" class="grid grid-cols-2 gap-1.5"></div>
             </div>
         </aside>
 
-        <!-- Area Workbook Utama -->
+        <!-- Area Workbook -->
         <section class="flex-grow flex flex-col gap-4">
             <div class="bg-white border-4 border-emerald-400 rounded-3xl shadow-xl p-4 md:p-6 relative print-page">
 
-                <!-- Header Halaman -->
+                <!-- Header -->
                 <div class="flex justify-between items-start border-b-2 border-slate-100 pb-3 mb-4">
                     <div class="flex items-center gap-3">
-                        <div class="bg-emerald-100 text-emerald-700 w-14 h-14 rounded-2xl flex items-center justify-center font-bold text-4xl" id="header-number-badge">1</div>
+                        <div class="bg-emerald-100 w-14 h-14 rounded-2xl flex items-center justify-center font-black text-4xl" id="header-number-badge" style="color:#10b981">1</div>
                         <div>
                             <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">Halaman Tracing Angka</span>
                             <h2 class="text-2xl font-bold text-slate-800" id="header-number-title">1 — Satu</h2>
                         </div>
                     </div>
                     <div class="flex gap-2 no-print">
-                        <button id="btn-sound-number" class="bg-emerald-500 hover:bg-emerald-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-transform active:scale-90" title="Dengar Suara">
+                        <button id="btn-sound-number" class="bg-emerald-500 hover:bg-emerald-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-transform active:scale-90">
                             <i class="fa-solid fa-volume-high"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- Layout Utama: Grid 2 Kolom -->
+                <!-- Layout Grid 2 Kolom -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
-                    <!-- Kolom Kiri: Gambar Custom + Info Angka -->
+                    <!-- Kolom Kiri: Ilustrasi SVG -->
                     <div class="lg:col-span-4 flex flex-col gap-3">
-
-                        <!-- Slot Gambar Custom -->
-                        <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 flex flex-col items-center justify-center relative">
-                            <div class="absolute top-2 left-2 text-[10px] font-bold text-emerald-600 bg-white border px-2 py-0.5 rounded-full z-10">Upload Gambarmu!</div>
-                            <div class="image-slot" id="image-slot-display" onclick="document.getElementById('file-upload-input').click()">
-                                <div class="upload-hint" id="upload-hint-content">
-                                    <i class="fa-solid fa-cloud-arrow-up text-3xl"></i>
-                                    <span class="text-xs font-bold text-center">Klik untuk upload<br>gambar PNG/JPG</span>
-                                </div>
-                                <img id="uploaded-image" src="" alt="" style="display:none;" class="rounded-xl">
-                            </div>
-                            <input type="file" id="file-upload-input" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
-                            <div class="text-center font-bold text-slate-700 mt-2 text-xl uppercase tracking-wide" id="number-word-label">Satu</div>
-                            <div class="text-center text-4xl font-black text-emerald-500 mt-1" id="number-emoji-display">🍎</div>
+                        <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 flex flex-col items-center justify-center relative min-h-[200px]">
+                            <div class="absolute top-2 left-2 text-[10px] font-bold text-emerald-600 bg-white border px-2 py-0.5 rounded-full z-10">Warna & Tebalkan!</div>
+                            <div id="illustration-holder" class="w-full h-44 flex items-center justify-center"></div>
+                            <div class="text-center font-bold text-slate-700 mt-2 text-lg uppercase tracking-wide" id="number-word-label">Satu</div>
                         </div>
 
-                        <!-- Jumlah benda -->
+                        <!-- Hitung benda -->
                         <div class="bg-emerald-50/50 p-3 rounded-2xl border border-emerald-100">
                             <span class="text-xs font-bold text-emerald-800 block mb-2 text-center">🔢 Hitung benda sebanyak angkanya!</span>
-                            <div class="flex flex-wrap justify-center gap-1.5" id="count-objects-display">
-                                <!-- Diisi JS -->
-                            </div>
+                            <div class="flex flex-wrap justify-center gap-1.5" id="count-objects-display"></div>
                         </div>
                     </div>
 
-                    <!-- Kolom Kanan: Area Tracing -->
+                    <!-- Kolom Kanan: Tracing -->
                     <div class="lg:col-span-8 flex flex-col gap-3">
-
-                        <!-- Box Panduan Menulis -->
+                        <!-- Panduan -->
                         <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-3 flex flex-col sm:flex-row gap-4 items-center">
-                            <div class="flex gap-4">
+                            <div class="flex gap-3">
                                 <div class="flex flex-col items-center">
                                     <span class="text-xs font-bold text-emerald-800 mb-0.5">Angka</span>
-                                    <div class="w-16 h-16 bg-white border border-emerald-300 rounded-xl flex items-center justify-center font-bold text-4xl text-emerald-600" id="guide-number-box">1</div>
+                                    <div class="w-16 h-16 bg-white border border-emerald-300 rounded-xl flex items-center justify-center font-black text-4xl" id="guide-number-box" style="color:#10b981">1</div>
                                 </div>
                                 <div class="flex flex-col items-center">
                                     <span class="text-xs font-bold text-emerald-800 mb-0.5">Kata</span>
@@ -290,78 +213,52 @@
                             </div>
                             <div class="flex-1">
                                 <span class="text-xs font-bold text-emerald-900 block mb-1">✍️ Panduan Arah Tarikan:</span>
-                                <p class="text-xs text-emerald-800 leading-relaxed" id="guide-directions-text">
-                                    1: Tarik garis lurus ke bawah dari atas.
-                                </p>
+                                <p class="text-xs text-emerald-800 leading-relaxed" id="guide-directions-text">1: Tarik garis lurus ke bawah dari atas.</p>
                             </div>
                         </div>
 
                         <!-- Kanvas Tracing -->
-                        <div class="relative bg-white rounded-2xl border-2 border-slate-200 shadow-inner overflow-hidden select-none" style="height: 340px;">
-                            <!-- Grid Panduan 3 Baris -->
-                            <div class="absolute inset-0 flex flex-col justify-around p-3 pointer-events-none" id="grid-lines-background">
-
-                                <!-- Baris 1: Angka Besar -->
+                        <div class="relative bg-white rounded-2xl border-2 border-slate-200 shadow-inner overflow-hidden select-none" style="height:340px">
+                            <div class="absolute inset-0 flex flex-col justify-around p-3 pointer-events-none">
+                                <!-- Baris 1: Angka -->
                                 <div class="h-[100px] w-full tracing-guideline relative opacity-80 flex items-center justify-around px-4">
-                                    <span class="dotted-letter" id="grid-number-row1-A">1</span>
-                                    <span class="dotted-letter" id="grid-number-row1-B">1</span>
-                                    <span class="dotted-letter" id="grid-number-row1-C">1</span>
-                                    <span class="dotted-letter" id="grid-number-row1-D">1</span>
-                                    <span class="dotted-letter" id="grid-number-row1-E">1</span>
+                                    <span class="dotted-letter" id="grid-r1-A">1</span>
+                                    <span class="dotted-letter" id="grid-r1-B">1</span>
+                                    <span class="dotted-letter" id="grid-r1-C">1</span>
+                                    <span class="dotted-letter" id="grid-r1-D">1</span>
+                                    <span class="dotted-letter" id="grid-r1-E">1</span>
                                 </div>
-
-                                <!-- Baris 2: Nama Angka -->
+                                <!-- Baris 2: Nama -->
                                 <div class="h-[100px] w-full tracing-guideline relative opacity-80 flex items-center justify-around px-4">
-                                    <span class="dotted-letter text-4xl" id="grid-word-row2-A" style="font-size:2.5rem">satu</span>
-                                    <span class="dotted-letter text-4xl" id="grid-word-row2-B" style="font-size:2.5rem">satu</span>
-                                    <span class="dotted-letter text-4xl" id="grid-word-row2-C" style="font-size:2.5rem">satu</span>
+                                    <span class="dotted-letter" id="grid-r2-A" style="font-size:2.5rem">satu</span>
+                                    <span class="dotted-letter" id="grid-r2-B" style="font-size:2.5rem">satu</span>
+                                    <span class="dotted-letter" id="grid-r2-C" style="font-size:2.5rem">satu</span>
                                 </div>
-
-                                <!-- Baris 3: Coba Mandiri -->
+                                <!-- Baris 3: Mandiri -->
                                 <div class="h-[100px] w-full tracing-guideline relative opacity-80 flex items-center justify-around px-4">
-                                    <div class="relative w-16 text-center">
-                                        <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div>
-                                        <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
-                                    </div>
-                                    <div class="relative w-16 text-center">
-                                        <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div>
-                                        <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
-                                    </div>
-                                    <div class="relative w-16 text-center">
-                                        <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div>
-                                        <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
-                                    </div>
-                                    <div class="relative w-16 text-center">
-                                        <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div>
-                                        <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
-                                    </div>
-                                    <div class="relative w-16 text-center">
-                                        <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div>
-                                        <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
-                                    </div>
+                                    <div class="relative w-16 text-center" style="font-size:2rem"><div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div><span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span></div>
+                                    <div class="relative w-16 text-center"><div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div><span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span></div>
+                                    <div class="relative w-16 text-center"><div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div><span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span></div>
+                                    <div class="relative w-16 text-center"><div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div><span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span></div>
+                                    <div class="relative w-16 text-center"><div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div><span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span></div>
                                 </div>
                             </div>
-
-                            <!-- Label Samping -->
                             <div class="absolute left-1 top-4 flex flex-col gap-16 pointer-events-none no-print">
                                 <span class="bg-emerald-200 text-emerald-800 text-[10px] font-bold px-1.5 py-0.5 rounded">Angka</span>
                                 <span class="bg-indigo-200 text-indigo-800 text-[10px] font-bold px-1.5 py-0.5 rounded">Nama</span>
-                                <span class="bg-amber-200 text-amber-800 text-[10px] font-bold px-1.5 py-0.5 rounded">Coba Sendiri</span>
+                                <span class="bg-amber-200 text-amber-800 text-[10px] font-bold px-1.5 py-0.5 rounded">Sendiri</span>
                             </div>
-
-                            <!-- Kanvas Drawing -->
                             <canvas id="canvas-tracing" class="absolute inset-0 w-full h-full cursor-crosshair z-20"></canvas>
                         </div>
 
-                        <!-- Tips -->
-                        <div class="mt-1 p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-center gap-2 no-print">
+                        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-center gap-2 no-print">
                             <span class="text-lg">💡</span>
-                            <span>Gunakan <strong>mouse</strong> atau <strong>sentuhan jari</strong> (HP/Tablet) untuk menggambar langsung di kertas di atas!</span>
+                            <span>Gunakan <strong>mouse</strong> atau <strong>sentuhan jari</strong> untuk menggambar. Klik warna di kiri lalu klik gambar untuk mewarnai!</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tombol Navigasi -->
+                <!-- Navigasi -->
                 <div class="flex justify-between items-center mt-6 pt-4 border-t border-slate-100 no-print">
                     <button onclick="prevNumber()" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-700 px-5 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 transition-all">
                         <i class="fa-solid fa-arrow-left"></i> Kembali
@@ -375,368 +272,529 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="text-center text-xs text-slate-400 mt-12 no-print">
         <p>© 2026 Petualangan Angka LumiBell. Dibuat dengan penuh ❤️ untuk Generasi Emas Indonesia.</p>
     </footer>
 
     <script>
-        // =============================================
-        // DATA ANGKA 1-10
-        // =============================================
-        const numberData = [
-            {
-                number: 1, word: 'Satu', wordLower: 'satu',
-                emoji: '🍎',
-                guide: '1: Tarik garis tegak lurus ke bawah dari atas. Mudah sekali!',
-                color: '#10b981'
-            },
-            {
-                number: 2, word: 'Dua', wordLower: 'dua',
-                emoji: '🦋',
-                guide: '2: Mulai dari atas, buat lengkung ke kanan (1), tarik miring ke kiri (2), lalu garis mendatar ke kanan di bawah (3).',
-                color: '#3b82f6'
-            },
-            {
-                number: 3, word: 'Tiga', wordLower: 'tiga',
-                emoji: '🌟',
-                guide: '3: Buat lengkung ke kanan di atas (1), lalu lengkung ke kanan lagi di bawah (2). Seperti huruf C terbalik ganda!',
-                color: '#f59e0b'
-            },
-            {
-                number: 4, word: 'Empat', wordLower: 'empat',
-                emoji: '🦁',
-                guide: '4: Tarik garis tegak lurus ke bawah di kiri (1), lalu garis mendatar ke kanan (2), lalu garis tegak ke bawah melewati garis mendatar (3).',
-                color: '#8b5cf6'
-            },
-            {
-                number: 5, word: 'Lima', wordLower: 'lima',
-                emoji: '🐢',
-                guide: '5: Garis tegak ke bawah (1), buat garis mendatar ke kiri di atas (2), lalu buat perut bulat ke kanan bawah (3).',
-                color: '#ec4899'
-            },
-            {
-                number: 6, word: 'Enam', wordLower: 'enam',
-                emoji: '🐝',
-                guide: '6: Mulai dari atas, lengkung ke kiri lalu ke bawah (1), lalu buat lingkaran penuh di bawah (2).',
-                color: '#f43f5e'
-            },
-            {
-                number: 7, word: 'Tujuh', wordLower: 'tujuh',
-                emoji: '🌈',
-                guide: '7: Tarik garis mendatar dari kiri ke kanan di atas (1), lalu tarik garis miring ke bawah kiri (2). Seperti petir!',
-                color: '#06b6d4'
-            },
-            {
-                number: 8, word: 'Delapan', wordLower: 'delapan',
-                emoji: '🎱',
-                guide: '8: Buat lingkaran kecil di atas (1), lalu lanjutkan membuat lingkaran besar di bawah (2). Seperti boneka salju!',
-                color: '#84cc16'
-            },
-            {
-                number: 9, word: 'Sembilan', wordLower: 'sembilan',
-                emoji: '🎈',
-                guide: '9: Buat lingkaran penuh di atas (1), lalu tarik garis tegak ke bawah dari kanan lingkaran (2).',
-                color: '#f97316'
-            },
-            {
-                number: 10, word: 'Sepuluh', wordLower: 'sepuluh',
-                emoji: '🏆',
-                guide: '10: Tulis angka 1 terlebih dahulu (garis tegak), lalu tulis angka 0 di sebelah kanannya (lingkaran penuh).',
-                color: '#eab308'
-            }
-        ];
-
-        // State
-        let currentIdx = 0;
-        let brushColor = '#3b82f6';
-        let brushSize = 10;
-        let isDrawing = false;
-        let lastX = 0, lastY = 0;
-        let rainbowAngle = 0;
-        let uploadedImages = {}; // simpan gambar per angka { 0: dataURL, 1: dataURL, ... }
-
-        // Canvas
-        const canvas = document.getElementById('canvas-tracing');
-        const ctx = canvas.getContext('2d');
-
-        // =============================================
-        // CANVAS SETUP & DRAWING
-        // =============================================
-        function initCanvas() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
+    // ================================================
+    // DATA ANGKA 1-10 + ILUSTRASI SVG
+    // ================================================
+    const numberData = [
+        {
+            number: 1, word: 'Satu', wordLower: 'satu', emoji: '🕯️', color: '#10b981',
+            guide: '1: Tarik garis lurus tegak ke bawah dari atas. Satu gerakan saja!',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- 1 Lilin ulang tahun -->
+  <rect x="42" y="45" width="16" height="45" rx="8" fill="#fbbf24" class="paintable"/>
+  <rect x="44" y="47" width="5" height="40" rx="2" fill="#fde68a" class="paintable" opacity="0.6"/>
+  <path d="M50,45 C50,45 55,35 52,25 C49,18 44,22 46,30 C48,22 54,22 52,25" stroke="#f97316" stroke-width="2" fill="none"/>
+  <path d="M50,20 C46,28 44,36 47,42 C49,46 51,46 53,42 C56,36 54,28 50,20 Z" fill="#f97316" class="paintable"/>
+  <path d="M50,26 C48,32 47,38 49,42 C50,44 50,44 51,42 C53,38 52,32 50,26 Z" fill="#fef9c3" class="paintable"/>
+  <circle cx="50" cy="22" r="3" fill="#fbbf24"/>
+  <!-- Piringan lilin -->
+  <ellipse cx="50" cy="90" rx="14" ry="5" fill="#f59e0b" class="paintable"/>
+  <path d="M36,88 L38,90 L62,90 L64,88 Z" fill="#d97706" class="paintable"/>
+  <!-- Percikan api -->
+  <circle cx="44" cy="32" r="1.5" fill="#fb923c" opacity="0.8"/>
+  <circle cx="56" cy="28" r="1.5" fill="#fb923c" opacity="0.7"/>
+  <circle cx="42" cy="24" r="1" fill="#fbbf24" opacity="0.7"/>
+</svg>`
+        },
+        {
+            number: 2, word: 'Dua', wordLower: 'dua', emoji: '🦆', color: '#3b82f6',
+            guide: '2: Lengkung ke kanan atas (1), tarik miring ke kiri (2), garis mendatar ke kanan (3).',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- 2 Bebek kuning -->
+  <!-- Bebek 1 (kiri) -->
+  <ellipse cx="30" cy="70" rx="18" ry="14" fill="#fbbf24" class="paintable"/>
+  <circle cx="42" cy="52" r="12" fill="#fbbf24" class="paintable"/>
+  <circle cx="38" cy="48" r="5" fill="#fde68a" class="paintable" opacity="0.6"/>
+  <path d="M50,52 L58,49 L56,55 Z" fill="#f97316" class="paintable"/>
+  <circle cx="47" cy="49" r="2.5" fill="white"/><circle cx="48" cy="49" r="1.5" fill="#1e293b"/>
+  <path d="M14,65 C10,56 14,48 22,52 C18,60 20,68 14,65 Z" fill="#f59e0b" class="paintable"/>
+  <path d="M22,82 L19,90 M22,82 L24,90 M22,82 L21,90" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+  <path d="M38,82 L35,90 M38,82 L40,90 M38,82 L37,90" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+  <!-- Bebek 2 (kanan) -->
+  <ellipse cx="72" cy="68" rx="16" ry="12" fill="#fbbf24" class="paintable"/>
+  <circle cx="82" cy="52" r="11" fill="#fbbf24" class="paintable"/>
+  <circle cx="78" cy="48" r="4" fill="#fde68a" class="paintable" opacity="0.6"/>
+  <path d="M88,52 L96,49 L94,54 Z" fill="#f97316" class="paintable"/>
+  <circle cx="86" cy="49" r="2.5" fill="white"/><circle cx="87" cy="49" r="1.5" fill="#1e293b"/>
+  <path d="M60,64 C56,56 60,50 66,53 C63,60 64,67 60,64 Z" fill="#f59e0b" class="paintable"/>
+  <path d="M64,78 L61,86 M64,78 L66,86 M64,78 L63,86" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+  <path d="M80,78 L77,86 M80,78 L82,86 M80,78 L79,86" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
+  <!-- Gelombang air -->
+  <path d="M10,94 Q20,90 30,94 Q40,98 50,94 Q60,90 70,94 Q80,98 90,94" stroke="#93c5fd" stroke-width="2" fill="none" opacity="0.8"/>
+</svg>`
+        },
+        {
+            number: 3, word: 'Tiga', wordLower: 'tiga', emoji: '⭐', color: '#f59e0b',
+            guide: '3: Lengkung ke kanan di atas (1), lanjut lengkung ke kanan di bawah (2). Seperti huruf C terbalik!',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- 3 Bintang dengan ekspresi lucu -->
+  <!-- Bintang besar tengah -->
+  <path d="M50,14 L54,28 L68,28 L57,37 L61,51 L50,42 L39,51 L43,37 L32,28 L46,28 Z" fill="#fbbf24" class="paintable"/>
+  <path d="M50,14 L53,24 L64,24 L55,32 L58,44 L50,38 L42,44 L45,32 L36,24 L47,24 Z" fill="#fde68a" class="paintable" opacity="0.7"/>
+  <circle cx="46" cy="30" r="2" fill="#1e293b"/><circle cx="54" cy="30" r="2" fill="#1e293b"/>
+  <path d="M46,36 Q50,40 54,36" stroke="#92400e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Bintang kiri bawah -->
+  <path d="M22,60 L25,70 L35,70 L27,77 L30,87 L22,80 L14,87 L17,77 L9,70 L19,70 Z" fill="#f97316" class="paintable"/>
+  <path d="M22,60 L24,68 L32,68 L26,74 L28,82 L22,77 L16,82 L18,74 L12,68 L20,68 Z" fill="#fed7aa" class="paintable" opacity="0.7"/>
+  <circle cx="19" cy="70" r="1.5" fill="#1e293b"/><circle cx="25" cy="70" r="1.5" fill="#1e293b"/>
+  <path d="M19,75 Q22,78 25,75" stroke="#92400e" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Bintang kanan bawah -->
+  <path d="M78,60 L81,70 L91,70 L83,77 L86,87 L78,80 L70,87 L73,77 L65,70 L75,70 Z" fill="#a855f7" class="paintable"/>
+  <path d="M78,60 L80,68 L88,68 L82,74 L84,82 L78,77 L72,82 L74,74 L68,68 L76,68 Z" fill="#e9d5ff" class="paintable" opacity="0.7"/>
+  <circle cx="75" cy="70" r="1.5" fill="#1e293b"/><circle cx="81" cy="70" r="1.5" fill="#1e293b"/>
+  <path d="M75,75 Q78,78 81,75" stroke="#6b21a8" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+</svg>`
+        },
+        {
+            number: 4, word: 'Empat', wordLower: 'empat', emoji: '🌸', color: '#8b5cf6',
+            guide: '4: Garis tegak ke bawah di kiri (1), garis mendatar ke kanan (2), garis tegak melewati mendatar (3).',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- 4 Bunga -->
+  <!-- Bunga 1 kiri atas -->
+  <circle cx="30" cy="30" r="8" fill="#f9a8d4" class="paintable"/>
+  <circle cx="20" cy="24" r="7" fill="#f9a8d4" class="paintable"/>
+  <circle cx="24" cy="14" r="7" fill="#f9a8d4" class="paintable"/>
+  <circle cx="36" cy="14" r="7" fill="#f9a8d4" class="paintable"/>
+  <circle cx="40" cy="24" r="7" fill="#f9a8d4" class="paintable"/>
+  <circle cx="30" cy="24" r="7" fill="#fce7f3" class="paintable" opacity="0.8"/>
+  <circle cx="30" cy="24" r="5" fill="#fbbf24" class="paintable"/>
+  <!-- Bunga 2 kanan atas -->
+  <circle cx="70" cy="30" r="8" fill="#86efac" class="paintable"/>
+  <circle cx="60" cy="24" r="7" fill="#86efac" class="paintable"/>
+  <circle cx="64" cy="14" r="7" fill="#86efac" class="paintable"/>
+  <circle cx="76" cy="14" r="7" fill="#86efac" class="paintable"/>
+  <circle cx="80" cy="24" r="7" fill="#86efac" class="paintable"/>
+  <circle cx="70" cy="24" r="7" fill="#d1fae5" class="paintable" opacity="0.8"/>
+  <circle cx="70" cy="24" r="5" fill="#f59e0b" class="paintable"/>
+  <!-- Bunga 3 kiri bawah -->
+  <circle cx="30" cy="76" r="8" fill="#93c5fd" class="paintable"/>
+  <circle cx="20" cy="70" r="7" fill="#93c5fd" class="paintable"/>
+  <circle cx="24" cy="60" r="7" fill="#93c5fd" class="paintable"/>
+  <circle cx="36" cy="60" r="7" fill="#93c5fd" class="paintable"/>
+  <circle cx="40" cy="70" r="7" fill="#93c5fd" class="paintable"/>
+  <circle cx="30" cy="70" r="7" fill="#dbeafe" class="paintable" opacity="0.8"/>
+  <circle cx="30" cy="70" r="5" fill="#fbbf24" class="paintable"/>
+  <!-- Bunga 4 kanan bawah -->
+  <circle cx="70" cy="76" r="8" fill="#fca5a5" class="paintable"/>
+  <circle cx="60" cy="70" r="7" fill="#fca5a5" class="paintable"/>
+  <circle cx="64" cy="60" r="7" fill="#fca5a5" class="paintable"/>
+  <circle cx="76" cy="60" r="7" fill="#fca5a5" class="paintable"/>
+  <circle cx="80" cy="70" r="7" fill="#fca5a5" class="paintable"/>
+  <circle cx="70" cy="70" r="7" fill="#fee2e2" class="paintable" opacity="0.8"/>
+  <circle cx="70" cy="70" r="5" fill="#fbbf24" class="paintable"/>
+  <!-- Tangkai -->
+  <line x1="30" y1="32" x2="30" y2="58" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/>
+  <line x1="70" y1="32" x2="70" y2="58" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/>
+  <path d="M30,44 C38,40 44,44 50,42" stroke="#4ade80" stroke-width="2" fill="none"/>
+  <path d="M70,44 C62,40 56,44 50,42" stroke="#4ade80" stroke-width="2" fill="none"/>
+</svg>`
+        },
+        {
+            number: 5, word: 'Lima', wordLower: 'lima', emoji: '✋', color: '#ec4899',
+            guide: '5: Garis tegak ke bawah (1), garis mendatar ke kiri atas (2), perut bulat ke kanan bawah (3).',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tangan dengan 5 jari -->
+  <!-- Telapak tangan -->
+  <ellipse cx="50" cy="72" rx="28" ry="22" fill="#fde68a" class="paintable"/>
+  <!-- Jempol -->
+  <path d="M22,68 C16,62 14,50 20,46 C24,44 28,48 28,55 L28,68 Z" fill="#fde68a" class="paintable"/>
+  <path d="M22,66 C18,62 17,52 21,49" stroke="#f59e0b" stroke-width="1" fill="none" opacity="0.5"/>
+  <!-- Jari telunjuk -->
+  <rect x="32" y="30" width="10" height="40" rx="5" fill="#fde68a" class="paintable"/>
+  <path d="M34,32 L34,50" stroke="#f59e0b" stroke-width="1" fill="none" opacity="0.4"/>
+  <!-- Jari tengah -->
+  <rect x="44" y="22" width="10" height="48" rx="5" fill="#fde68a" class="paintable"/>
+  <path d="M46,24 L46,44" stroke="#f59e0b" stroke-width="1" fill="none" opacity="0.4"/>
+  <!-- Jari manis -->
+  <rect x="56" y="26" width="10" height="44" rx="5" fill="#fde68a" class="paintable"/>
+  <path d="M58,28 L58,48" stroke="#f59e0b" stroke-width="1" fill="none" opacity="0.4"/>
+  <!-- Jari kelingking -->
+  <rect x="68" y="36" width="9" height="34" rx="4.5" fill="#fde68a" class="paintable"/>
+  <path d="M70,38 L70,54" stroke="#f59e0b" stroke-width="1" fill="none" opacity="0.4"/>
+  <!-- Kuku -->
+  <ellipse cx="37" cy="32" rx="4" ry="3" fill="#fef9c3" class="paintable"/>
+  <ellipse cx="49" cy="24" rx="4" ry="3" fill="#fef9c3" class="paintable"/>
+  <ellipse cx="61" cy="28" rx="4" ry="3" fill="#fef9c3" class="paintable"/>
+  <ellipse cx="72.5" cy="38" rx="3.5" ry="2.5" fill="#fef9c3" class="paintable"/>
+  <!-- Ruas jari -->
+  <path d="M32,60 Q37,58 42,60 M44,60 Q49,58 54,60 M56,60 Q61,58 66,60 M68,60 Q71.5,58 77,60" stroke="#f59e0b" stroke-width="1.2" fill="none" opacity="0.5"/>
+  <!-- Perhiasan cincin jari manis -->
+  <ellipse cx="61" cy="52" rx="5" ry="3" fill="none" stroke="#fbbf24" stroke-width="2"/>
+</svg>`
+        },
+        {
+            number: 6, word: 'Enam', wordLower: 'enam', emoji: '🐝', color: '#f43f5e',
+            guide: '6: Mulai dari atas lengkung ke kiri dan bawah (1), lalu buat lingkaran di bawah (2).',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lebah dengan sarang madu - 6 sel sarang -->
+  <!-- Sarang madu (6 segi enam) -->
+  <polygon points="35,55 42,51 49,55 49,63 42,67 35,63" fill="#fbbf24" class="paintable" stroke="#d97706" stroke-width="1"/>
+  <polygon points="49,55 56,51 63,55 63,63 56,67 49,63" fill="#fde68a" class="paintable" stroke="#d97706" stroke-width="1"/>
+  <polygon points="63,55 70,51 77,55 77,63 70,67 63,63" fill="#fbbf24" class="paintable" stroke="#d97706" stroke-width="1"/>
+  <polygon points="35,67 42,63 49,67 49,75 42,79 35,75" fill="#fde68a" class="paintable" stroke="#d97706" stroke-width="1"/>
+  <polygon points="49,67 56,63 63,67 63,75 56,79 49,75" fill="#fbbf24" class="paintable" stroke="#d97706" stroke-width="1"/>
+  <polygon points="63,67 70,63 77,67 77,75 70,79 63,75" fill="#fde68a" class="paintable" stroke="#d97706" stroke-width="1"/>
+  <!-- Lebah -->
+  <!-- Badan -->
+  <ellipse cx="50" cy="28" rx="16" ry="12" fill="#fbbf24" class="paintable"/>
+  <!-- Belang -->
+  <path d="M36,26 Q50,22 64,26" stroke="#1e293b" stroke-width="4" fill="none"/>
+  <path d="M35,30 Q50,26 65,30" stroke="#1e293b" stroke-width="3" fill="none"/>
+  <!-- Kepala -->
+  <circle cx="50" cy="14" r="9" fill="#fbbf24" class="paintable"/>
+  <circle cx="46" cy="12" r="2.5" fill="#1e293b"/><circle cx="54" cy="12" r="2.5" fill="#1e293b"/>
+  <circle cx="47" cy="11" r="0.8" fill="white"/><circle cx="55" cy="11" r="0.8" fill="white"/>
+  <path d="M46,17 Q50,20 54,17" stroke="#1e293b" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Antena -->
+  <path d="M46,6 C44,2 40,0 38,2" stroke="#1e293b" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <circle cx="38" cy="2" r="2" fill="#f43f5e"/>
+  <path d="M54,6 C56,2 60,0 62,2" stroke="#1e293b" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <circle cx="62" cy="2" r="2" fill="#f43f5e"/>
+  <!-- Sayap -->
+  <ellipse cx="36" cy="22" rx="10" ry="6" fill="#bfdbfe" class="paintable" opacity="0.8" transform="rotate(-20 36 22)"/>
+  <ellipse cx="64" cy="22" rx="10" ry="6" fill="#bfdbfe" class="paintable" opacity="0.8" transform="rotate(20 64 22)"/>
+  <!-- Sengat -->
+  <path d="M50,38 L50,44" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+</svg>`
+        },
+        {
+            number: 7, word: 'Tujuh', wordLower: 'tujuh', emoji: '🌈', color: '#06b6d4',
+            guide: '7: Garis mendatar dari kiri ke kanan di atas (1), lalu garis miring turun ke kiri bawah (2).',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pelangi 7 warna dengan awan -->
+  <!-- Awan kiri -->
+  <circle cx="18" cy="70" r="10" fill="white" class="paintable"/>
+  <circle cx="10" cy="74" r="8" fill="white" class="paintable"/>
+  <circle cx="26" cy="74" r="8" fill="white" class="paintable"/>
+  <circle cx="18" cy="78" r="9" fill="white" class="paintable"/>
+  <!-- Awan kanan -->
+  <circle cx="82" cy="70" r="10" fill="white" class="paintable"/>
+  <circle cx="74" cy="74" r="8" fill="white" class="paintable"/>
+  <circle cx="90" cy="74" r="8" fill="white" class="paintable"/>
+  <circle cx="82" cy="78" r="9" fill="white" class="paintable"/>
+  <!-- 7 busur pelangi -->
+  <path d="M18,72 Q50,10 82,72" stroke="#ef4444" stroke-width="7" fill="none" stroke-linecap="round" class="paintable"/>
+  <path d="M20,72 Q50,16 80,72" stroke="#f97316" stroke-width="7" fill="none" stroke-linecap="round" class="paintable"/>
+  <path d="M22,72 Q50,22 78,72" stroke="#fbbf24" stroke-width="7" fill="none" stroke-linecap="round" class="paintable"/>
+  <path d="M24,72 Q50,28 76,72" stroke="#4ade80" stroke-width="7" fill="none" stroke-linecap="round" class="paintable"/>
+  <path d="M26,72 Q50,34 74,72" stroke="#3b82f6" stroke-width="7" fill="none" stroke-linecap="round" class="paintable"/>
+  <path d="M28,72 Q50,40 72,72" stroke="#818cf8" stroke-width="7" fill="none" stroke-linecap="round" class="paintable"/>
+  <path d="M30,72 Q50,46 70,72" stroke="#a855f7" stroke-width="7" fill="none" stroke-linecap="round" class="paintable"/>
+  <!-- Penutup bawah awan -->
+  <rect x="10" y="72" width="16" height="15" fill="white"/>
+  <rect x="74" y="72" width="16" height="15" fill="white"/>
+  <!-- Matahari kecil di atas -->
+  <circle cx="50" cy="14" r="6" fill="#fbbf24" class="paintable"/>
+  <path d="M50,5 L50,8 M50,20 L50,23 M41,14 L44,14 M56,14 L59,14 M43,7 L45,9 M55,19 L57,21 M43,21 L45,19 M55,9 L57,7" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+  <!-- Bintang -->
+  <circle cx="20" cy="20" r="2" fill="#fde68a"/>
+  <circle cx="80" cy="18" r="2" fill="#fde68a"/>
+  <circle cx="35" cy="10" r="1.5" fill="#fde68a"/>
+  <circle cx="65" cy="10" r="1.5" fill="#fde68a"/>
+</svg>`
+        },
+        {
+            number: 8, word: 'Delapan', wordLower: 'delapan', emoji: '🐙', color: '#84cc16',
+            guide: '8: Buat lingkaran kecil di atas (1), lanjutkan membuat lingkaran besar di bawah (2). Seperti boneka salju!',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gurita lucu dengan 8 tentakel -->
+  <!-- Tentakel (8 buah) -->
+  <path d="M35,65 C28,72 22,80 18,90 C22,92 26,88 28,82 C30,88 34,92 38,90 C36,80 36,72 35,65 Z" fill="#a855f7" class="paintable"/>
+  <path d="M42,68 C38,76 36,84 34,94 C38,95 41,91 42,86 C44,91 47,95 51,94 C49,84 47,76 42,68 Z" fill="#c084fc" class="paintable"/>
+  <path d="M50,68 C50,76 50,84 50,94 C53,94 55,90 55,85 C57,90 59,94 62,93 C61,83 60,75 58,68 Z" fill="#a855f7" class="paintable"/>
+  <path d="M58,66 C62,74 66,82 68,92 C72,91 73,87 71,82 C74,86 77,89 80,87 C77,78 73,70 65,65 Z" fill="#c084fc" class="paintable"/>
+  <path d="M62,60 C68,66 76,72 82,80 C85,77 84,73 80,70 C84,72 87,74 88,70 C84,64 78,60 68,57 Z" fill="#a855f7" class="paintable"/>
+  <path d="M62,52 C68,54 76,54 84,58 C84,54 81,51 77,50 C81,50 84,48 82,44 C77,44 70,46 64,50 Z" fill="#c084fc" class="paintable"/>
+  <path d="M30,52 C24,54 18,58 14,64 C17,67 21,65 24,62 C22,66 22,70 26,70 C28,65 30,58 34,54 Z" fill="#a855f7" class="paintable"/>
+  <path d="M35,48 C28,46 20,46 14,50 C15,54 19,55 23,53 C20,56 19,60 23,61 C27,56 32,52 38,50 Z" fill="#c084fc" class="paintable"/>
+  <!-- Badan bulat -->
+  <circle cx="50" cy="42" r="28" fill="#a855f7" class="paintable"/>
+  <!-- Kilap -->
+  <ellipse cx="40" cy="30" rx="10" ry="14" fill="#e9d5ff" class="paintable" opacity="0.5" transform="rotate(-20 40 30)"/>
+  <!-- Mata lucu -->
+  <circle cx="42" cy="38" r="7" fill="white"/><circle cx="58" cy="38" r="7" fill="white"/>
+  <circle cx="44" cy="38" r="4.5" fill="#1e293b"/><circle cx="60" cy="38" r="4.5" fill="#1e293b"/>
+  <circle cx="45" cy="36" r="1.5" fill="white"/><circle cx="61" cy="36" r="1.5" fill="white"/>
+  <!-- Mulut senyum -->
+  <path d="M44,50 Q50,56 56,50" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Pipi merah -->
+  <circle cx="36" cy="48" r="4" fill="#f9a8d4" opacity="0.7"/>
+  <circle cx="64" cy="48" r="4" fill="#f9a8d4" opacity="0.7"/>
+</svg>`
+        },
+        {
+            number: 9, word: 'Sembilan', wordLower: 'sembilan', emoji: '🎈', color: '#f97316',
+            guide: '9: Buat lingkaran penuh di atas (1), lalu tarik garis tegak ke bawah dari kanan (2).',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- 9 Balon warna-warni berkelompok -->
+  <!-- Tali balon -->
+  <path d="M50,92 C50,85 46,82 44,78 M50,92 C50,85 52,82 54,76 M50,92 C48,86 42,84 38,80 M50,92 C52,86 58,84 62,80 M50,92 C46,86 38,82 32,76 M50,92 C54,86 62,82 68,76 M50,92 C46,88 36,86 28,80 M50,92 C54,88 64,86 72,80 M50,92 C48,88 42,86 38,82" stroke="#64748b" stroke-width="1.2" fill="none"/>
+  <!-- 9 balon (3 baris x 3) -->
+  <!-- Baris atas -->
+  <ellipse cx="28" cy="26" rx="12" ry="14" fill="#ef4444" class="paintable"/>
+  <ellipse cx="24" cy="20" rx="4" ry="5" fill="#fca5a5" opacity="0.5"/>
+  <path d="M28,40 L26,46" stroke="#ef4444" stroke-width="1.5"/>
+  <ellipse cx="50" cy="22" rx="12" ry="14" fill="#fbbf24" class="paintable"/>
+  <ellipse cx="46" cy="16" rx="4" ry="5" fill="#fde68a" opacity="0.5"/>
+  <path d="M50,36 L50,42" stroke="#fbbf24" stroke-width="1.5"/>
+  <ellipse cx="72" cy="26" rx="12" ry="14" fill="#4ade80" class="paintable"/>
+  <ellipse cx="68" cy="20" rx="4" ry="5" fill="#bbf7d0" opacity="0.5"/>
+  <path d="M72,40 L74,46" stroke="#4ade80" stroke-width="1.5"/>
+  <!-- Baris tengah -->
+  <ellipse cx="32" cy="54" rx="11" ry="13" fill="#3b82f6" class="paintable"/>
+  <ellipse cx="28" cy="48" rx="3.5" ry="4.5" fill="#bfdbfe" opacity="0.5"/>
+  <path d="M32,67 L30,73" stroke="#3b82f6" stroke-width="1.5"/>
+  <ellipse cx="50" cy="50" rx="11" ry="13" fill="#a855f7" class="paintable"/>
+  <ellipse cx="46" cy="44" rx="3.5" ry="4.5" fill="#e9d5ff" opacity="0.5"/>
+  <path d="M50,63 L50,69" stroke="#a855f7" stroke-width="1.5"/>
+  <ellipse cx="68" cy="54" rx="11" ry="13" fill="#ec4899" class="paintable"/>
+  <ellipse cx="64" cy="48" rx="3.5" ry="4.5" fill="#fbcfe8" opacity="0.5"/>
+  <path d="M68,67 L70,73" stroke="#ec4899" stroke-width="1.5"/>
+  <!-- Baris bawah (3 balon lebih kecil) -->
+  <ellipse cx="36" cy="78" rx="9" ry="11" fill="#f97316" class="paintable"/>
+  <ellipse cx="33" cy="73" rx="3" ry="4" fill="#fed7aa" opacity="0.5"/>
+  <ellipse cx="50" cy="76" rx="9" ry="11" fill="#06b6d4" class="paintable"/>
+  <ellipse cx="47" cy="71" rx="3" ry="4" fill="#a5f3fc" opacity="0.5"/>
+  <ellipse cx="64" cy="78" rx="9" ry="11" fill="#84cc16" class="paintable"/>
+  <ellipse cx="61" cy="73" rx="3" ry="4" fill="#d9f99d" opacity="0.5"/>
+</svg>`
+        },
+        {
+            number: 10, word: 'Sepuluh', wordLower: 'sepuluh', emoji: '🏆', color: '#eab308',
+            guide: '10: Tulis angka 1 dulu (garis tegak lurus), lalu angka 0 di sebelahnya (lingkaran penuh).',
+            svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <!-- Piala juara 1 dengan bintang -->
+  <!-- Alas piala -->
+  <rect x="32" y="86" width="36" height="8" rx="4" fill="#d97706" class="paintable"/>
+  <rect x="28" y="82" width="44" height="7" rx="3" fill="#f59e0b" class="paintable"/>
+  <!-- Tangkai piala -->
+  <rect x="43" y="68" width="14" height="16" rx="4" fill="#f59e0b" class="paintable"/>
+  <rect x="45" y="68" width="5" height="14" rx="2" fill="#fbbf24" class="paintable" opacity="0.6"/>
+  <!-- Badan piala -->
+  <path d="M20,28 C20,16 80,16 80,28 C80,54 68,66 50,68 C32,66 20,54 20,28 Z" fill="#fbbf24" class="paintable"/>
+  <!-- Kilap piala -->
+  <ellipse cx="36" cy="34" rx="8" ry="16" fill="white" opacity="0.25" transform="rotate(-15 36 34)"/>
+  <!-- Pegangan kiri -->
+  <path d="M20,32 C12,30 8,38 10,46 C12,52 18,54 22,50 C16,50 14,44 16,40 C18,36 22,36 22,40" fill="#f59e0b" class="paintable"/>
+  <!-- Pegangan kanan -->
+  <path d="M80,32 C88,30 92,38 90,46 C88,52 82,54 78,50 C84,50 86,44 84,40 C82,36 78,36 78,40" fill="#f59e0b" class="paintable"/>
+  <!-- Bintang besar di tengah -->
+  <path d="M50,30 L53,40 L63,40 L55,47 L58,57 L50,50 L42,57 L45,47 L37,40 L47,40 Z" fill="#fef9c3" class="paintable"/>
+  <path d="M50,32 L52.5,40 L61,40 L54,46 L56.5,55 L50,49 L43.5,55 L46,46 L39,40 L47.5,40 Z" fill="#fde047" class="paintable" opacity="0.7"/>
+  <!-- Tulisan 1 kecil -->
+  <text x="49" y="49" font-family="Fredoka, sans-serif" font-size="10" font-weight="bold" fill="#d97706" text-anchor="middle">1</text>
+  <!-- Bintang kecil hiasan -->
+  <circle cx="32" cy="22" r="3" fill="#fde047"/>
+  <circle cx="68" cy="22" r="3" fill="#fde047"/>
+  <circle cx="50" cy="18" r="2" fill="#fde047"/>
+  <!-- Kilap bintang -->
+  <path d="M26,14 L27,18 L31,18 L28,21 L29,25 L26,22 L23,25 L24,21 L21,18 L25,18 Z" fill="#fbbf24" class="paintable" opacity="0.8"/>
+  <path d="M74,14 L75,18 L79,18 L76,21 L77,25 L74,22 L71,25 L72,21 L69,18 L73,18 Z" fill="#fbbf24" class="paintable" opacity="0.8"/>
+  <!-- Confetti -->
+  <circle cx="15" cy="50" r="3" fill="#ef4444" class="paintable"/>
+  <circle cx="85" cy="50" r="3" fill="#3b82f6" class="paintable"/>
+  <rect x="12" y="60" width="6" height="4" rx="1" fill="#4ade80" class="paintable" transform="rotate(-20 12 60)"/>
+  <rect x="82" y="60" width="6" height="4" rx="1" fill="#a855f7" class="paintable" transform="rotate(20 82 60)"/>
+</svg>`
         }
+    ];
 
-        function getPos(e) {
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            if (e.touches) {
-                return {
-                    x: (e.touches[0].clientX - rect.left) * scaleX,
-                    y: (e.touches[0].clientY - rect.top) * scaleY
-                };
-            }
-            return {
-                x: (e.clientX - rect.left) * scaleX,
-                y: (e.clientY - rect.top) * scaleY
-            };
-        }
+    // ================================================
+    // STATE
+    // ================================================
+    let currentIdx = 0;
+    let brushColor = '#3b82f6';
+    let brushSize = 10;
+    let fillColor = '#ef4444';
+    let isDrawing = false;
+    let lastX = 0, lastY = 0;
+    let rainbowAngle = 0;
 
-        function startDraw(e) {
-            e.preventDefault();
-            isDrawing = true;
-            const pos = getPos(e);
-            lastX = pos.x;
-            lastY = pos.y;
-        }
+    const canvas = document.getElementById('canvas-tracing');
+    const ctx = canvas.getContext('2d');
 
-        function draw(e) {
-            if (!isDrawing) return;
-            e.preventDefault();
-            const pos = getPos(e);
-            ctx.beginPath();
-            ctx.lineWidth = brushSize;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
+    // ================================================
+    // CANVAS
+    // ================================================
+    function initCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    }
 
-            if (brushColor === 'rainbow') {
-                rainbowAngle += 3;
-                const hue = rainbowAngle % 360;
-                ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-            } else {
-                ctx.strokeStyle = brushColor;
-            }
+    function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        if (e.touches) return {
+            x: (e.touches[0].clientX - rect.left) * scaleX,
+            y: (e.touches[0].clientY - rect.top) * scaleY
+        };
+        return {
+            x: (e.clientX - rect.left) * scaleX,
+            y: (e.clientY - rect.top) * scaleY
+        };
+    }
 
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(pos.x, pos.y);
-            ctx.stroke();
-            lastX = pos.x;
-            lastY = pos.y;
-        }
+    function startDraw(e) { e.preventDefault(); isDrawing = true; const p = getPos(e); lastX = p.x; lastY = p.y; }
+    function draw(e) {
+        if (!isDrawing) return; e.preventDefault();
+        const p = getPos(e);
+        ctx.beginPath(); ctx.lineWidth = brushSize; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        if (brushColor === 'rainbow') {
+            rainbowAngle += 3;
+            ctx.strokeStyle = `hsl(${rainbowAngle % 360}, 100%, 50%)`;
+        } else { ctx.strokeStyle = brushColor; }
+        ctx.moveTo(lastX, lastY); ctx.lineTo(p.x, p.y); ctx.stroke();
+        lastX = p.x; lastY = p.y;
+    }
+    function stopDraw() { isDrawing = false; }
 
-        function stopDraw() { isDrawing = false; }
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('mouseleave', stopDraw);
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', stopDraw);
 
-        canvas.addEventListener('mousedown', startDraw);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDraw);
-        canvas.addEventListener('mouseleave', stopDraw);
-        canvas.addEventListener('touchstart', startDraw, { passive: false });
-        canvas.addEventListener('touchmove', draw, { passive: false });
-        canvas.addEventListener('touchend', stopDraw);
+    function resetCurrentCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-        function resetCurrentCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+    // ================================================
+    // BRUSH & FILL
+    // ================================================
+    function setBrushColor(color, btn) {
+        brushColor = color;
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('ring-2','ring-offset-1','scale-110'));
+        if (btn) btn.classList.add('ring-2','ring-offset-1','scale-110');
+    }
+    function updateBrushSize(val) { brushSize = parseInt(val); document.getElementById('brush-size-val').innerText = val + 'px'; }
 
-        // =============================================
-        // BRUSH CONTROLS
-        // =============================================
-        function setBrushColor(color, btn) {
-            brushColor = color;
-            document.querySelectorAll('.color-btn').forEach(b => {
-                b.classList.remove('ring-2', 'ring-offset-1', 'scale-110');
-                b.style.boxShadow = '';
+    function setFillColor(color) {
+        fillColor = color;
+        document.querySelectorAll('.fill-btn').forEach(b => b.style.outline = '');
+        event.target.style.outline = '3px solid #1e293b';
+    }
+
+    function setupPaintableListener() {
+        document.querySelectorAll('#illustration-holder .paintable').forEach(el => {
+            el.addEventListener('click', function() {
+                this.setAttribute('fill', fillColor);
             });
-            if (btn) {
-                btn.classList.add('ring-2', 'ring-offset-1', 'scale-110');
-            }
+        });
+    }
+
+    // ================================================
+    // TEXT TO SPEECH
+    // ================================================
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'id-ID'; u.rate = 0.85; u.pitch = 1.2;
+            window.speechSynthesis.speak(u);
         }
+    }
 
-        function updateBrushSize(val) {
-            brushSize = parseInt(val);
-            document.getElementById('brush-size-val').innerText = val + 'px';
-        }
+    // ================================================
+    // RENDER HALAMAN
+    // ================================================
+    function renderNumberPage() {
+        const item = numberData[currentIdx];
 
-        // =============================================
-        // TEXT TO SPEECH
-        // =============================================
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'id-ID';
-                utterance.rate = 0.85;
-                utterance.pitch = 1.2;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
+        document.getElementById('header-number-badge').innerText = item.number;
+        document.getElementById('header-number-badge').style.color = item.color;
+        document.getElementById('header-number-title').innerText = `${item.number} — ${item.word}`;
+        document.getElementById('number-word-label').innerText = item.word;
+        document.getElementById('guide-number-box').innerText = item.number;
+        document.getElementById('guide-number-box').style.color = item.color;
+        document.getElementById('guide-word-box').innerText = item.word;
+        document.getElementById('guide-directions-text').innerText = item.guide;
+        document.getElementById('page-indicator').innerText = `Angka ${item.number} dari 10`;
 
-        // =============================================
-        // IMAGE UPLOAD
-        // =============================================
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                uploadedImages[currentIdx] = ev.target.result;
-                showUploadedImage(ev.target.result);
-            };
-            reader.readAsDataURL(file);
-            // Reset input agar bisa upload file yang sama lagi
-            e.target.value = '';
-        }
+        // Render SVG ilustrasi
+        document.getElementById('illustration-holder').innerHTML = item.svg;
+        setupPaintableListener();
 
-        function showUploadedImage(src) {
-            const img = document.getElementById('uploaded-image');
-            const hint = document.getElementById('upload-hint-content');
-            img.src = src;
-            img.style.display = 'block';
-            hint.style.display = 'none';
-        }
-
-        function clearUploadedImage() {
-            const img = document.getElementById('uploaded-image');
-            const hint = document.getElementById('upload-hint-content');
-            img.src = '';
-            img.style.display = 'none';
-            hint.style.display = 'flex';
-        }
-
-        // =============================================
-        // RENDER HALAMAN ANGKA
-        // =============================================
-        function renderNumberPage() {
-            const item = numberData[currentIdx];
-
-            // Update header
-            document.getElementById('header-number-badge').innerText = item.number;
-            document.getElementById('header-number-badge').style.color = item.color;
-            document.getElementById('header-number-title').innerText = `${item.number} — ${item.word}`;
-
-            // Update label & emoji
-            document.getElementById('number-word-label').innerText = item.word;
-            document.getElementById('number-emoji-display').innerText = item.emoji;
-
-            // Update guide box
-            document.getElementById('guide-number-box').innerText = item.number;
-            document.getElementById('guide-number-box').style.color = item.color;
-            document.getElementById('guide-word-box').innerText = item.word;
-            document.getElementById('guide-directions-text').innerText = item.guide;
-
-            // Update tracing grid - angka
-            ['A','B','C','D','E'].forEach(id => {
-                const el = document.getElementById(`grid-number-row1-${id}`);
-                if (el) el.innerText = item.number;
-            });
-
-            // Update tracing grid - kata (hanya 3 kolom karena kata lebih panjang)
-            ['A','B','C'].forEach(id => {
-                const el = document.getElementById(`grid-word-row2-${id}`);
-                if (el) el.innerText = item.wordLower;
-            });
-
-            // Update page indicator
-            document.getElementById('page-indicator').innerText = `Angka ${item.number} dari 10`;
-
-            // Tampilkan hitung benda
-            renderCountObjects(item);
-
-            // Tampilkan gambar yang sudah diupload (jika ada)
-            if (uploadedImages[currentIdx]) {
-                showUploadedImage(uploadedImages[currentIdx]);
-            } else {
-                clearUploadedImage();
-            }
-
-            // Update lumi bubble
-            const lumiBubble = document.getElementById('lumi-bubble');
-            lumiBubble.innerText = `"${item.number}... ${item.word}! Ayo tebalkan angka ${item.number} di kotak tracing!"`;
-
-            // Update suara
-            document.getElementById('btn-sound-number').onclick = () => {
-                speakText(`Angka ${item.number}. ${item.word}. ${item.word}. ${item.word}.`);
-            };
-
-            // Update nav highlight
-            updateNavHighlight();
-
-            // Bersihkan kanvas
-            resetCurrentCanvas();
-        }
-
-        function renderCountObjects(item) {
-            const container = document.getElementById('count-objects-display');
-            container.innerHTML = '';
-            const count = Math.min(item.number, 10);
-            for (let i = 0; i < count; i++) {
-                const span = document.createElement('span');
-                span.className = 'text-2xl animate-bounce';
-                span.style.animationDelay = `${i * 0.1}s`;
-                span.innerText = item.emoji;
-                container.appendChild(span);
-            }
-        }
-
-        // =============================================
-        // NAVIGASI
-        // =============================================
-        function buildNavList() {
-            const container = document.getElementById('navigation-list');
-            container.innerHTML = '';
-            numberData.forEach((item, idx) => {
-                const btn = document.createElement('button');
-                btn.id = `nav-number-${idx}`;
-                btn.className = 'w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition-all border border-slate-100 hover:bg-emerald-50 text-slate-700 flex items-center gap-2';
-                btn.onclick = () => {
-                    currentIdx = idx;
-                    renderNumberPage();
-                };
-                btn.innerHTML = `
-                    <span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-sm">${item.number}</span>
-                    <span>${item.word}</span>
-                `;
-                container.appendChild(btn);
-            });
-        }
-
-        function updateNavHighlight() {
-            numberData.forEach((_, idx) => {
-                const btn = document.getElementById(`nav-number-${idx}`);
-                if (btn) btn.classList.remove('bg-emerald-100', 'text-emerald-900', 'border-emerald-300');
-            });
-            const activeBtn = document.getElementById(`nav-number-${currentIdx}`);
-            if (activeBtn) activeBtn.classList.add('bg-emerald-100', 'text-emerald-900', 'border-emerald-300');
-        }
-
-        function nextNumber() {
-            if (currentIdx < 9) {
-                currentIdx++;
-                renderNumberPage();
-            }
-        }
-
-        function prevNumber() {
-            if (currentIdx > 0) {
-                currentIdx--;
-                renderNumberPage();
-            }
-        }
-
-        // =============================================
-        // KEYBOARD NAVIGATION
-        // =============================================
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextNumber();
-            if (e.key === 'ArrowLeft') prevNumber();
+        // Tracing grid angka
+        ['A','B','C','D','E'].forEach(id => {
+            const el = document.getElementById(`grid-r1-${id}`);
+            if (el) el.innerText = item.number;
+        });
+        // Tracing grid kata
+        ['A','B','C'].forEach(id => {
+            const el = document.getElementById(`grid-r2-${id}`);
+            if (el) el.innerText = item.wordLower;
         });
 
-        // =============================================
-        // INIT
-        // =============================================
-        window.addEventListener('load', () => {
-            initCanvas();
-            buildNavList();
-            renderNumberPage();
-        });
+        // Hitung benda
+        const container = document.getElementById('count-objects-display');
+        container.innerHTML = '';
+        for (let i = 0; i < Math.min(item.number, 10); i++) {
+            const s = document.createElement('span');
+            s.className = 'text-2xl';
+            s.style.animationDelay = `${i * 0.08}s`;
+            s.innerText = item.emoji;
+            container.appendChild(s);
+        }
 
-        window.addEventListener('resize', () => {
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            initCanvas();
-            ctx.putImageData(imageData, 0, 0);
+        document.getElementById('lumi-bubble').innerText =
+            `"Angka ${item.number}! ${item.word}! Ayo warnai gambarnya dan tebalkan angkanya!"`;
+
+        document.getElementById('btn-sound-number').onclick = () =>
+            speakText(`Angka ${item.number}. ${item.word}. ${item.word}. ${item.word}.`);
+
+        updateNavHighlight();
+        resetCurrentCanvas();
+    }
+
+    // ================================================
+    // NAVIGASI
+    // ================================================
+    function buildNavList() {
+        const container = document.getElementById('navigation-list');
+        numberData.forEach((item, idx) => {
+            const btn = document.createElement('button');
+            btn.id = `nav-number-${idx}`;
+            btn.className = 'w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition-all border border-slate-100 hover:bg-emerald-50 text-slate-700 flex items-center gap-2';
+            btn.onclick = () => { currentIdx = idx; renderNumberPage(); };
+            btn.innerHTML = `<span class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-sm">${item.number}</span><span>${item.word}</span>`;
+            container.appendChild(btn);
         });
+    }
+
+    function updateNavHighlight() {
+        numberData.forEach((_, idx) => {
+            const b = document.getElementById(`nav-number-${idx}`);
+            if (b) b.classList.remove('bg-emerald-100','text-emerald-900','border-emerald-300');
+        });
+        const active = document.getElementById(`nav-number-${currentIdx}`);
+        if (active) active.classList.add('bg-emerald-100','text-emerald-900','border-emerald-300');
+    }
+
+    function nextNumber() { if (currentIdx < 9) { currentIdx++; renderNumberPage(); } }
+    function prevNumber() { if (currentIdx > 0) { currentIdx--; renderNumberPage(); } }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') nextNumber();
+        if (e.key === 'ArrowLeft') prevNumber();
+    });
+
+    window.addEventListener('load', () => {
+        initCanvas();
+        buildNavList();
+        renderNumberPage();
+    });
+
+    window.addEventListener('resize', () => {
+        const d = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        initCanvas();
+        ctx.putImageData(d, 0, 0);
+    });
     </script>
 </body>
 </html>
