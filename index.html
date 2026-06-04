@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Garis & Huruf LumiBell - Workbook Tracing Anak TK</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts untuk font ramah anak -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #FFFDF0;
+            user-select: none;
+        }
+        h1, h2, h3, .brand-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+        /* Grid Penuntun Menulis 3 Garis */
+        .tracing-guideline {
+            background: linear-gradient(to bottom, 
+                transparent 0px, transparent 19px, 
+                #f43f5e 20px, #f43f5e 21px, 
+                transparent 22px, transparent 49px, 
+                #3b82f6 50px, #3b82f6 51px, 
+                transparent 52px, transparent 79px, 
+                #f43f5e 80px, #f43f5e 81px, 
+                transparent 82px) left top / 100% 100px;
+        }
+        /* Efek Dot/Putus-putus Font Tracing */
+        .dotted-letter {
+            font-family: 'Fredoka', sans-serif;
+            color: rgba(148, 163, 184, 0.25);
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.9);
+            letter-spacing: 0.15em;
+            -webkit-text-stroke: 2px dashed #94a3b8;
+            font-size: 5rem;
+            line-height: 100px;
+            display: inline-block;
+        }
+        /* Kertas Print Mode */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-page {
+                page-break-after: always;
+                border: none !important;
+                box-shadow: none !important;
+                background: white !important;
+                display: block !important;
+                width: 100% !important;
+                height: auto !important;
+            }
+            .tracing-canvas {
+                border: 1px solid #ccc !important;
+            }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFDF0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FCD34D;
+            border-radius: 10px;
+        }
+        /* Animasi Mengapung Lumi */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased text-slate-800 pb-12">
+
+    <!-- Header Navbar -->
+    <header class="bg-amber-300 shadow-md p-4 sticky top-0 z-50 no-print">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <!-- Icon Lonceng LumiBell -->
+                <div class="bg-white p-2.5 rounded-full shadow-inner border-2 border-amber-400">
+                    <svg class="w-8 h-8 text-amber-500 animate-bounce" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-amber-900 tracking-wide">LumiBell</h1>
+                    <p class="text-xs font-semibold text-amber-800 uppercase tracking-widest">Petualangan Garis & Huruf</p>
+                </div>
+            </div>
+            
+            <!-- Menu Navigasi Sektor Modul -->
+            <div class="flex items-center gap-2 bg-white/60 p-1.5 rounded-full border border-amber-200">
+                <button onclick="switchTab('warmup')" id="btn-warmup" class="tab-btn px-4 py-1.5 rounded-full text-sm font-bold bg-amber-500 text-white transition-all">
+                    🌱 Pemanasan
+                </button>
+                <button onclick="switchTab('alphabet')" id="btn-alphabet" class="tab-btn px-4 py-1.5 rounded-full text-sm font-bold text-amber-900 hover:bg-amber-100 transition-all">
+                    🎨 Huruf A-Z
+                </button>
+                <button onclick="switchTab('games')" id="btn-games" class="tab-btn px-4 py-1.5 rounded-full text-sm font-bold text-amber-900 hover:bg-amber-100 transition-all">
+                    🎮 Main Game
+                </button>
+                <a href="angka.html" class="px-4 py-1.5 rounded-full text-sm font-bold bg-emerald-500 text-white hover:bg-emerald-600 transition-all" style="text-decoration:none;">
+                    🔢 Angka 1-10
+                </a>
+            </div>
+
+            <!-- Tombol Aksi Tambahan -->
+            <div class="flex items-center gap-2">
+                <button onclick="openPrintModal()" class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow flex items-center gap-1.5 transition-transform active:scale-95">
+                    <i class="fa-solid fa-print"></i> Cetak PDF / Cetak Fisik
+                </button>
+                <button onclick="resetCanvasCurrent()" class="bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-full font-bold text-sm shadow flex items-center justify-center w-9 h-9 transition-transform active:scale-95" title="Bersihkan Coretan">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="flex-grow max-w-6xl w-full mx-auto p-4 flex flex-col md:flex-row gap-6 mt-4">
+        
+        <!-- Sidebar Karakter & Kontrol -->
+        <aside class="md:w-1/4 flex flex-col gap-4 no-print">
+            <!-- Maskot Lumi -->
+            <div class="bg-gradient-to-br from-amber-100 to-amber-200 border-4 border-amber-400 rounded-3xl p-5 shadow-lg relative overflow-hidden flex flex-col items-center text-center">
+                <div class="absolute top-2 right-2 bg-white text-xs px-2.5 py-1 rounded-full text-amber-600 font-bold border border-amber-300">Maskot</div>
+                <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md border-2 border-amber-300 mb-3 animate-float">
+                    <!-- Ilustrasi Lonceng Lumi Lucu -->
+                    <svg class="w-16 h-16 text-amber-500" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M32 8C20.9543 8 12 16.9543 12 28V40H52V28C52 16.9543 43.0457 8 32 8Z" fill="#FCD34D" stroke="#D97706" stroke-width="4" stroke-linejoin="round"/>
+                        <circle cx="32" cy="52" r="6" fill="#F59E0B" stroke="#D97706" stroke-width="3"/>
+                        <!-- Mata Lucu -->
+                        <circle cx="25" cy="26" r="4" fill="#1E293B"/>
+                        <circle cx="39" cy="26" r="4" fill="#1E293B"/>
+                        <circle cx="26" cy="25" r="1" fill="white"/>
+                        <circle cx="40" cy="25" r="1" fill="white"/>
+                        <!-- Pipi Merah -->
+                        <circle cx="21" cy="30" r="3" fill="#F87171" opacity="0.6"/>
+                        <circle cx="43" cy="30" r="3" fill="#F87171" opacity="0.6"/>
+                        <!-- Senyum manis -->
+                        <path d="M29 32C29 33.6569 30.3431 35 32 35C33.6569 35 35 33.6569 35 32" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-amber-900">Halo, Aku Lumi!</h3>
+                <p id="lumi-bubble" class="text-sm text-amber-800 mt-2 bg-white/80 p-3 rounded-2xl border border-amber-300 relative">
+                    "Ayo kita mulai petualangan menulis hari ini! Pilih menu di atas atau klik tombol hijau di bawah."
+                </p>
+            </div>
+
+            <!-- Palet Warna Kuas Tracing -->
+            <div class="bg-white border-2 border-slate-200 rounded-3xl p-4 shadow-md flex flex-col gap-3">
+                <h4 class="font-bold text-slate-700 text-sm flex items-center gap-1.5 border-b pb-2">
+                    <i class="fa-solid fa-palette text-indigo-500"></i> Warna Kuas Menulismu:
+                </h4>
+                <div class="grid grid-cols-4 gap-2" id="brush-colors">
+                    <button onclick="setBrushColor('#3b82f6', this)" class="color-btn w-10 h-10 rounded-full bg-blue-500 border-4 border-white shadow ring-2 ring-blue-500/50 transform scale-110"></button>
+                    <button onclick="setBrushColor('#f43f5e', this)" class="color-btn w-10 h-10 rounded-full bg-rose-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#10b981', this)" class="color-btn w-10 h-10 rounded-full bg-emerald-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#eab308', this)" class="color-btn w-10 h-10 rounded-full bg-yellow-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#8b5cf6', this)" class="color-btn w-10 h-10 rounded-full bg-violet-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#ec4899', this)" class="color-btn w-10 h-10 rounded-full bg-pink-500 border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('#000000', this)" class="color-btn w-10 h-10 rounded-full bg-black border-4 border-white shadow hover:scale-105 transition-transform"></button>
+                    <button onclick="setBrushColor('rainbow', this)" class="color-btn w-10 h-10 rounded-full bg-gradient-to-tr from-rose-400 via-yellow-300 to-indigo-500 border-4 border-white shadow hover:scale-105 transition-transform" title="Efek Pelangi"></button>
+                </div>
+                
+                <!-- Ukuran Kuas -->
+                <div class="mt-2">
+                    <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
+                        <span>Ukuran Kuas</span>
+                        <span id="brush-size-val">10px</span>
+                    </div>
+                    <input type="range" id="brush-size" min="4" max="25" value="10" oninput="updateBrushSize(this.value)" class="w-full accent-indigo-500 bg-slate-200 rounded-lg cursor-pointer h-2">
+                </div>
+            </div>
+
+            <!-- Panel Navigasi Lembar Kerja -->
+            <div id="sidebar-nav" class="bg-white border-2 border-slate-200 rounded-3xl p-4 shadow-md flex-grow overflow-y-auto max-h-[300px] md:max-h-[400px]">
+                <h4 class="font-bold text-slate-700 text-sm border-b pb-2 mb-2 sticky top-0 bg-white z-10">Daftar Latihan:</h4>
+                <div id="navigation-list" class="flex flex-col gap-1.5">
+                    <!-- Akan diisi dinamis oleh Javascript -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Area Lembar Kerja (Workbook Canvas) -->
+        <section class="flex-grow flex flex-col gap-4">
+            
+            <!-- SECTION 1: PEMANASAN MOTORIK (WARM UP) -->
+            <div id="section-warmup" class="tab-content">
+                <div class="bg-white border-4 border-emerald-400 rounded-3xl shadow-xl p-6 relative print-page">
+                    <!-- Header halaman -->
+                    <div class="flex justify-between items-start border-b-2 border-slate-100 pb-4 mb-4">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">Halaman Pemanasan</span>
+                            <h2 class="text-3xl font-bold text-slate-800 mt-1">Latihan Menggerakkan Tangan</h2>
+                            <p class="text-slate-500 text-sm mt-0.5">Menebalkan berbagai pola garis lurus, zig-zag, dan lengkung.</p>
+                        </div>
+                        <div class="no-print">
+                            <button onclick="speakText('Mari melatih jari tangan dengan menebalkan garis pola berikut ini')" class="bg-emerald-500 hover:bg-emerald-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-transform active:scale-90" title="Dengar Suara">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Kertas Gambar Interaktif Pola -->
+                    <div class="relative bg-slate-50 rounded-2xl border-2 border-slate-200 overflow-hidden flex flex-col p-4 md:p-8 select-none">
+                        <!-- Pola Garis 1 -->
+                        <div class="relative mb-8 text-slate-700">
+                            <div class="flex justify-between items-center text-xs text-slate-500 font-bold mb-1">
+                                <span>🐞 Bantu Kumbang terbang ke Bunga! (Garis Lurus)</span>
+                                <span class="no-print text-indigo-500">Tarik dari kiri ke kanan</span>
+                            </div>
+                            <div class="relative w-full h-16 bg-white rounded-lg border border-dashed border-slate-300 flex items-center justify-between px-6">
+                                <span class="text-2xl z-10 animate-bounce">🐞</span>
+                                <!-- Pola Garis Putus-putus sebagai background visual guide -->
+                                <div class="absolute left-14 right-14 h-1 border-t-4 border-dashed border-slate-300 pointer-events-none top-1/2 transform -translate-y-1/2"></div>
+                                <span class="text-2xl z-10">🌸</span>
+                            </div>
+                        </div>
+
+                        <!-- Pola Garis 2 -->
+                        <div class="relative mb-8 text-slate-700">
+                            <div class="flex justify-between items-center text-xs text-slate-500 font-bold mb-1">
+                                <span>🐰 Bantu Kelinci melompati rumput! (Garis Zig-zag)</span>
+                            </div>
+                            <div class="relative w-full h-24 bg-white rounded-lg border border-dashed border-slate-300 flex items-center justify-between px-6 overflow-hidden">
+                                <span class="text-2xl z-10 mt-6 animate-bounce">🐰</span>
+                                <!-- SVG Zig-zag Guideline -->
+                                <svg class="absolute inset-x-12 top-0 h-full w-[calc(100%-6rem)] pointer-events-none text-slate-300" preserveAspectRatio="none" viewBox="0 0 100 100" fill="none">
+                                    <path d="M 0,70 L 12.5,30 L 25,70 L 37.5,30 L 50,70 L 62.5,30 L 75,70 L 87.5,30 L 100,70" stroke="currentColor" stroke-dasharray="2,2" stroke-width="2" stroke-linecap="round" fill="none"></path>
+                                </svg>
+                                <span class="text-2xl z-10 mt-6">🥕</span>
+                            </div>
+                        </div>
+
+                        <!-- Pola Garis 3 -->
+                        <div class="relative mb-4 text-slate-700">
+                            <div class="flex justify-between items-center text-xs text-slate-500 font-bold mb-1">
+                                <span>🐬 Ikuti lompatan Lumba-lumba melompat air! (Garis Lengkung)</span>
+                            </div>
+                            <div class="relative w-full h-24 bg-white rounded-lg border border-dashed border-slate-300 flex items-center justify-between px-6 overflow-hidden">
+                                <span class="text-2xl z-10 mt-6 animate-bounce">🐬</span>
+                                <!-- SVG Lengkung Guideline -->
+                                <svg class="absolute inset-x-12 top-0 h-full w-[calc(100%-6rem)] pointer-events-none text-slate-300" preserveAspectRatio="none" viewBox="0 0 100 100" fill="none">
+                                    <path d="M 0,70 Q 12.5,10 25,70 Q 37.5,10 50,70 Q 62.5,10 75,70 Q 87.5,10 100,70" stroke="currentColor" stroke-dasharray="2,2" stroke-width="2" stroke-linecap="round" fill="none"></path>
+                                </svg>
+                                <span class="text-2xl z-10 mt-6">🏖️</span>
+                            </div>
+                        </div>
+
+                        <!-- Lapisan Kanvas Gambar Transparan untuk Tracing -->
+                        <canvas id="canvas-warmup" class="tracing-canvas absolute inset-0 w-full h-full cursor-crosshair z-20"></canvas>
+                    </div>
+
+                    <!-- Tips Instruksi -->
+                    <div class="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-center gap-2 no-print">
+                        <span class="text-lg">💡</span>
+                        <span>Silakan gunakan <strong>mouse</strong> atau <strong>sentuhan jari tangan</strong> (di HP/Tablet) untuk langsung menggambar di kertas abu-abu di atas!</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- SECTION 2: ALPHABET TRACING (A - Z) -->
+            <div id="section-alphabet" class="tab-content hidden">
+                <div class="bg-white border-4 border-indigo-400 rounded-3xl shadow-xl p-4 md:p-6 relative print-page">
+                    <!-- Info Halaman -->
+                    <div class="flex justify-between items-start border-b-2 border-slate-100 pb-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-indigo-100 text-indigo-700 w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-2xl" id="header-letter-badge">
+                                A
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">Halaman Tracing Huruf</span>
+                                </div>
+                                <h2 class="text-2xl font-bold text-slate-800" id="header-letter-title">A a — Apel</h2>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2 no-print">
+                            <button id="btn-sound-letter" class="bg-indigo-500 hover:bg-indigo-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-transform active:scale-90" title="Bunyi Huruf">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Layout Kerja Utama Huruf (Grid 2 Kolom) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                        
+                        <!-- Kolom Kiri: Ilustrasi Gambar (Bisa diwarnai!) -->
+                        <div class="lg:col-span-4 flex flex-col gap-3">
+                            <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 flex flex-col items-center justify-center relative min-h-[220px]">
+                                <div class="absolute top-2 left-2 text-[10px] font-bold text-indigo-600 bg-white border px-2 py-0.5 rounded-full">
+                                    Warna & Tebalkan!
+                                </div>
+                                <div id="illustration-holder" class="w-full h-44 flex items-center justify-center">
+                                    <!-- Diisi SVG Dinamis Gambar Hewan/Objek Terkait Huruf -->
+                                </div>
+                                <div class="text-center font-bold text-slate-700 mt-2 text-lg uppercase tracking-wide" id="illustration-word">
+                                    Apel
+                                </div>
+                            </div>
+                            
+                            <!-- Mini-Game Mengisi Warna Sederhana pada Ilustrasi -->
+                            <div class="bg-indigo-50/50 p-2.5 rounded-2xl border border-indigo-100 no-print">
+                                <span class="text-xs font-bold text-indigo-800 block mb-1.5 text-center">🎨 Klik warna & warnai Gambar di atas!</span>
+                                <div class="flex justify-center gap-1.5" id="color-fill-palette">
+                                    <button onclick="setFillObjectColor('#ef4444')" class="w-6 h-6 rounded-full bg-red-500 border border-white hover:scale-110 shadow"></button>
+                                    <button onclick="setFillObjectColor('#10b981')" class="w-6 h-6 rounded-full bg-emerald-500 border border-white hover:scale-110 shadow"></button>
+                                    <button onclick="setFillObjectColor('#3b82f6')" class="w-6 h-6 rounded-full bg-blue-500 border border-white hover:scale-110 shadow"></button>
+                                    <button onclick="setFillObjectColor('#f59e0b')" class="w-6 h-6 rounded-full bg-amber-500 border border-white hover:scale-110 shadow"></button>
+                                    <button onclick="setFillObjectColor('#a855f7')" class="w-6 h-6 rounded-full bg-purple-500 border border-white hover:scale-110 shadow"></button>
+                                    <button onclick="setFillObjectColor('#ec4899')" class="w-6 h-6 rounded-full bg-pink-500 border border-white hover:scale-110 shadow"></button>
+                                    <button onclick="setFillObjectColor('#ffffff')" class="w-6 h-6 rounded-full bg-white border border-slate-300 hover:scale-110 shadow" title="Reset putih"></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kolom Kanan: Area Tracing Lembar Kerja -->
+                        <div class="lg:col-span-8 flex flex-col gap-3">
+                            
+                            <!-- Box Pemandu Menulis & Panah -->
+                            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-3 flex flex-col sm:flex-row gap-4 items-center">
+                                <div class="flex gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <span class="text-xs font-bold text-amber-800 mb-0.5">Besar</span>
+                                        <div class="w-16 h-16 bg-white border border-amber-300 rounded-xl flex items-center justify-center font-bold text-4xl text-amber-600 relative" id="guide-uppercase-box">
+                                            A
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <span class="text-xs font-bold text-amber-800 mb-0.5">Kecil</span>
+                                        <div class="w-16 h-16 bg-white border border-amber-300 rounded-xl flex items-center justify-center font-bold text-4xl text-amber-600 relative" id="guide-lowercase-box">
+                                            a
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <span class="text-xs font-bold text-amber-900 block mb-1">✍️ Panduan Arah Tarikan:</span>
+                                    <p class="text-xs text-amber-800 leading-relaxed" id="guide-directions-text">
+                                        A: Tarik garis miring kiri (1), miring kanan (2), lalu mendatar di tengah (3).<br>
+                                        a: Buat lengkungan bulat (1), lalu tarik garis lurus ke bawah di sebelah kanan (2).
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Kanvas Tracing Terpadu (Baris & Grid Panduan) -->
+                            <div class="relative bg-white rounded-2xl border-2 border-slate-200 shadow-inner overflow-hidden select-none" style="height: 340px;">
+                                
+                                <!-- Lapisan Background Grid Panduan Tulisan Tradisional Anak-anak (3 garis horizontal per baris) -->
+                                <div class="absolute inset-0 flex flex-col justify-around p-3 pointer-events-none" id="grid-lines-background">
+                                    
+                                    <!-- Baris 1: Huruf Besar -->
+                                    <div class="h-[100px] w-full tracing-guideline relative opacity-80 flex items-center justify-around px-4">
+                                        <span class="dotted-letter" id="grid-letter-row1-A">A</span>
+                                        <span class="dotted-letter" id="grid-letter-row1-B">A</span>
+                                        <span class="dotted-letter" id="grid-letter-row1-C">A</span>
+                                        <span class="dotted-letter" id="grid-letter-row1-D">A</span>
+                                        <span class="dotted-letter" id="grid-letter-row1-E">A</span>
+                                    </div>
+
+                                    <!-- Baris 2: Huruf Kecil -->
+                                    <div class="h-[100px] w-full tracing-guideline relative opacity-80 flex items-center justify-around px-4">
+                                        <span class="dotted-letter" id="grid-letter-row2-A">a</span>
+                                        <span class="dotted-letter" id="grid-letter-row2-B">a</span>
+                                        <span class="dotted-letter" id="grid-letter-row2-C">a</span>
+                                        <span class="dotted-letter" id="grid-letter-row2-D">a</span>
+                                        <span class="dotted-letter" id="grid-letter-row2-E">a</span>
+                                    </div>
+
+                                    <!-- Baris 3: Latihan Mandiri / Kosong hanya ada titik hitam mulai -->
+                                    <div class="h-[100px] w-full tracing-guideline relative opacity-80 flex items-center justify-around px-4">
+                                        <div class="relative w-16 text-center">
+                                            <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full" title="Titik awal mulai menulis!"></div>
+                                            <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
+                                        </div>
+                                        <div class="relative w-16 text-center">
+                                            <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div>
+                                            <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
+                                        </div>
+                                        <div class="relative w-16 text-center">
+                                            <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div>
+                                            <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
+                                        </div>
+                                        <div class="relative w-16 text-center">
+                                            <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div>
+                                            <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
+                                        </div>
+                                        <div class="relative w-16 text-center">
+                                            <div class="absolute top-[20px] left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full"></div>
+                                            <span class="text-xs text-slate-400 font-bold block pt-16">Mulai</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Label Samping Kertas no-print -->
+                                <div class="absolute left-1 top-4 flex flex-col gap-16 pointer-events-none no-print">
+                                    <span class="bg-indigo-200 text-indigo-800 text-[10px] font-bold px-1.5 py-0.5 rounded">Huruf Besar</span>
+                                    <span class="bg-rose-200 text-rose-800 text-[10px] font-bold px-1.5 py-0.5 rounded">Huruf Kecil</span>
+                                    <span class="bg-emerald-200 text-emerald-800 text-[10px] font-bold px-1.5 py-0.5 rounded">Coba Sendiri</span>
+                                </div>
+
+                                <!-- Kanvas Menggambar Realtime -->
+                                <canvas id="canvas-alphabet" class="tracing-canvas absolute inset-0 w-full h-full cursor-crosshair z-20"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Tombol Navigasi Lembar Kerja -->
+                    <div class="flex justify-between items-center mt-6 pt-4 border-t border-slate-100 no-print">
+                        <button onclick="prevLetter()" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 px-5 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 transition-all">
+                            <i class="fa-solid fa-arrow-left"></i> Kembali
+                        </button>
+                        <div class="text-xs font-bold text-slate-400" id="page-indicator">
+                            Halaman 1 dari 26
+                        </div>
+                        <button onclick="nextLetter()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 transition-all shadow-md">
+                            Lanjut <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- SECTION 3: FUN GAMES (MATCH THE PAIRS) -->
+            <div id="section-games" class="tab-content hidden">
+                <div class="bg-white border-4 border-amber-400 rounded-3xl shadow-xl p-6 relative">
+                    
+                    <div class="border-b-2 border-slate-100 pb-4 mb-4 text-center">
+                        <span class="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">Permainan Menyenangkan</span>
+                        <h2 class="text-3xl font-bold text-slate-800 mt-1">🎮 Tarik Garis Huruf Kembar</h2>
+                        <p class="text-slate-500 text-sm mt-0.5">Hubungkan Huruf Besar di kiri ke Huruf Kecil yang tepat di sebelah kanan!</p>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row gap-6 items-center justify-center">
+                        
+                        <!-- Area Game Board Canvas -->
+                        <div class="relative bg-amber-50/50 border-2 border-amber-200 rounded-3xl p-6 max-w-lg w-full" style="height: 380px;">
+                            <!-- Kanvas Utama Game (z-30 agar menerima semua klik secara absolut) -->
+                            <canvas id="canvas-game" class="absolute inset-0 w-full h-full z-30 cursor-pointer"></canvas>
+                            
+                            <!-- Element Titik Hubung (Menggunakan pointer-events-none agar tidak menghalangi sentuhan kanvas) -->
+                            <div class="absolute inset-0 flex justify-between px-10 py-6 pointer-events-none z-20">
+                                <!-- Sisi Kiri (Huruf Besar) -->
+                                <div class="flex flex-col justify-around h-full items-center pointer-events-none" id="game-left-letters">
+                                    <!-- Dinamis -->
+                                </div>
+                                
+                                <!-- Sisi Kanan (Huruf Kecil) -->
+                                <div class="flex flex-col justify-around h-full items-center pointer-events-none" id="game-right-letters">
+                                    <!-- Dinamis -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scoreboard & Restart -->
+                        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 text-center flex flex-col items-center w-full lg:w-64">
+                            <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center text-3xl mb-2">
+                                🏆
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg">Skormu</h3>
+                            <div class="text-4xl font-black text-amber-500 my-2" id="game-score">0 / 4</div>
+                            <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                                Tarik garis dari bulatan dekat huruf besar ke bulatan huruf kecil pasangannya.
+                            </p>
+                            <button onclick="initGame()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl transition-all active:scale-95 shadow flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-rotate"></i> Acak Huruf Baru
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Modal Cetak (Custom Modal) -->
+    <div id="print-modal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center hidden no-print p-4">
+        <div class="bg-white rounded-3xl border-4 border-sky-400 p-6 max-w-md w-full shadow-2xl relative animate-float">
+            <!-- Close Button -->
+            <button onclick="closePrintModal()" class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 transition-colors w-8 h-8 rounded-full border flex items-center justify-center bg-slate-50">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-3">
+                    🖨️
+                </div>
+                <h3 class="text-xl font-bold text-sky-950">Pilih Mode Cetak LumiBell</h3>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                    Kami menyiapkan dokumen ramah tinta hitam-putih khusus untuk dicetak fisik dan ditulis menggunakan pensil riil.
+                </p>
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <!-- Option 1: Print All Workbook (A-Z + Warmup) -->
+                <button onclick="printWorkbook('all')" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-4 rounded-2xl shadow transition-transform active:scale-95 flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-lg">📚</div>
+                    <div class="text-left">
+                        <span class="block text-sm">Cetak Seluruh Buku Latihan (A-Z)</span>
+                        <span class="block text-[10px] font-normal text-sky-100">Cetak semua 27 halaman bersih siap pakai</span>
+                    </div>
+                </button>
+
+                <!-- Option 2: Print Current Page -->
+                <button onclick="printWorkbook('current')" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-3 px-4 rounded-2xl border border-slate-200 transition-transform active:scale-95 flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-slate-200 flex items-center justify-center text-lg">📄</div>
+                    <div class="text-left">
+                        <span class="block text-sm">Cetak Halaman Aktif Saat Ini</span>
+                        <span class="block text-[10px] font-normal text-slate-500">Mencetak halaman aktif saja beserta coretan Anda</span>
+                    </div>
+                </button>
+            </div>
+
+            <div class="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-200 text-[10px] text-amber-900 leading-relaxed">
+                ℹ️ <strong>Informasi Keamanan:</strong> Demi kelancaran pencetakan, kami akan membuka halaman cetak di tab baru agar tidak diblokir oleh keamanan platform.
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer no-print -->
+    <footer class="text-center text-xs text-slate-400 mt-12 no-print">
+        <p>© 2026 Petualangan Garis & Huruf LumiBell. Dibuat dengan penuh ❤️ untuk Generasi Emas Indonesia.</p>
+    </footer>
+
+    <!-- Script Utama Logika Aplikasi -->
+    <script>
+        // --- DATA DICTIONARY ALPHABET A-Z RAMAH ANAK INDONESIA ---
+        const alphabetData = [
+            {
+                letter: 'A', lowercase: 'a', word: 'Apel',
+                guide: 'A: Tarik garis miring kiri (1), miring kanan (2), lalu mendatar di tengah (3).<br>a: Buat lengkungan bulat (1), lalu tarik garis lurus ke bawah di sebelah kanan (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M50,15 C30,15 20,35 20,60 C20,80 35,90 50,90 C65,90 80,80 80,60 C80,35 70,15 50,15 Z" fill="#ffffff" class="paintable"/><path d="M50,15 C52,10 56,5 62,8" stroke-width="3" stroke-linecap="round"/><path d="M50,15 C45,11 40,12 38,8 C36,4 40,2 45,6 Z" fill="#ffffff" class="paintable"/></svg>`
+            },
+            {
+                letter: 'B', lowercase: 'b', word: 'Bebek',
+                guide: 'B: Tarik garis tegak ke bawah (1), buat lengkung atas (2), lalu lengkung bawah (3).<br>b: Tarik garis tegak ke bawah (1), lalu buat lengkung perut di kanan bawah (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M30,30 C30,15 55,10 65,25 C75,35 60,50 45,50 C30,50 25,65 30,80 C35,95 80,95 85,80 C90,75 80,65 70,65" fill="#ffffff" class="paintable"/><circle cx="55" cy="22" r="2" fill="#000"/><path d="M65,22 L75,20 L68,26 Z" fill="#f59e0b"/></svg>`
+            },
+            {
+                letter: 'C', lowercase: 'c', word: 'Ceri',
+                guide: 'C: Mulai dari kanan atas, buat lengkungan besar ke kiri sampai bawah (1).<br>c: Mulai dari kanan atas, buat lengkungan kecil ke kiri sampai bawah (1).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="35" cy="65" r="15" fill="#ffffff" class="paintable"/><circle cx="65" cy="65" r="15" fill="#ffffff" class="paintable"/><path d="M35,50 Q50,20 60,15" stroke-width="3"/><path d="M65,50 Q60,30 60,15" stroke-width="3"/><path d="M60,15 Q75,12 80,22" stroke-width="2"/></svg>`
+            },
+            {
+                letter: 'D', lowercase: 'd', word: 'Domba',
+                guide: 'D: Tarik garis lurus dari atas ke bawah (1), buat perut melengkung besar dari atas ke bawah (2).<br>d: Buat lengkungan perut di sebelah kiri (1), lalu tarik garis tegak panjang ke bawah di sisi kanan (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="50" cy="50" r="25" fill="#ffffff" class="paintable"/><circle cx="50" cy="50" r="18" fill="none" stroke-dasharray="3,3"/><circle cx="32" cy="40" r="6" fill="#ffffff" class="paintable"/><circle cx="68" cy="40" r="6" fill="#ffffff" class="paintable"/><circle cx="43" cy="48" r="1.5" fill="#000"/><circle cx="57" cy="48" r="1.5" fill="#000"/><path d="M30,70 L25,85 M70,70 L75,85" stroke-width="4" stroke-linecap="round"/></svg>`
+            },
+            {
+                letter: 'E', lowercase: 'e', word: 'Ember',
+                guide: 'E: Garis tegak ke bawah (1), buat garis mendatar di atas (2), tengah (3), bawah (4).<br>e: Tarik garis mendatar pendek di tengah (1), lalu buat melingkar ke atas dan bawah (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M25,30 L75,30 L65,85 L35,85 Z" fill="#ffffff" class="paintable"/><path d="M25,30 Q50,5 75,30" fill="none" stroke-width="3"/><path d="M30,55 L70,55" stroke-dasharray="2,2"/></svg>`
+            },
+            {
+                letter: 'F', lowercase: 'f', word: 'Foto',
+                guide: 'F: Garis tegak ke bawah (1), buat garis mendatar di atas (2), dan tengah (3).<br>f: Buat payung melengkung ke bawah (1), lalu garis lintang di tengah (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><rect x="20" y="25" width="60" height="50" rx="5" fill="#ffffff" class="paintable"/><rect x="28" y="32" width="44" height="36" fill="#ffffff" class="paintable"/><circle cx="40" cy="45" r="5" fill="#ffffff" class="paintable"/><path d="M55,60 L65,48 L72,55" stroke-linecap="round"/></svg>`
+            },
+            {
+                letter: 'G', lowercase: 'g', word: 'Gajah',
+                guide: 'G: Buat lengkungan besar hampir satu lingkaran (1), lalu garis siku mendatar ke dalam (2).<br>g: Buat perut melengkung di atas (1), tarik garis tegak ke bawah dengan ekor melengkung ke kiri (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M40,30 C15,30 15,75 40,75 C55,75 70,65 70,50 C70,30 55,30 40,30 Z" fill="#ffffff" class="paintable"/><path d="M70,45 C75,45 85,55 80,70" stroke-width="3"/><circle cx="35" cy="45" r="3" fill="#000"/><path d="M55,30 C55,15 45,15 45,30" fill="#ffffff" class="paintable"/></svg>`
+            },
+            {
+                letter: 'H', lowercase: 'h', word: 'Harimau',
+                guide: 'H: Tarik garis tegak kiri (1), tegak kanan (2), sambungkan garis tengah (3).<br>h: Tarik garis tegak lurus panjang (1), buat bukit melengkung ke kanan lalu ke bawah (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="50" cy="50" r="30" fill="#ffffff" class="paintable"/><path d="M35,30 L25,15 L35,22 Z M65,30 L75,15 L65,22 Z" fill="#ffffff" class="paintable"/><circle cx="40" cy="45" r="3" fill="#000"/><circle cx="60" cy="45" r="3" fill="#000"/><path d="M45,55 Q50,60 55,55" stroke-linecap="round"/><path d="M20,50 L30,50 M80,50 L70,50 M50,20 L50,28" stroke-width="3"/></svg>`
+            },
+            {
+                letter: 'I', lowercase: 'i', word: 'Ikan',
+                guide: 'I: Tarik garis tegak lurus ke bawah (1), tambah topi mendatar (2), dan alas bawah (3).<br>i: Tarik garis tegak kecil (1), beri titik di atasnya (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M15,50 C30,30 65,30 85,50 C65,70 30,70 15,50 Z" fill="#ffffff" class="paintable"/><path d="M85,50 L95,35 L90,50 L95,65 Z" fill="#ffffff" class="paintable"/><circle cx="30" cy="45" r="3" fill="#000"/><path d="M45,40 Q40,50 45,60" stroke-linecap="round"/></svg>`
+            },
+            {
+                letter: 'J', lowercase: 'j', word: 'Jagung',
+                guide: 'J: Tarik garis tegak ke bawah, melengkung payung ke kiri (1), beri atap mendatar di atas (2).<br>j: Tarik garis tegak ke bawah melengkung ke kiri (1), beri titik di atasnya (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M35,20 C45,20 65,40 65,70 C65,85 55,90 45,90 C35,90 25,75 25,60 Z" fill="#ffffff" class="paintable"/><path d="M45,20 Q55,10 50,5 M45,20 Q35,10 40,5" stroke-width="2"/><circle cx="35" cy="45" r="2" fill="#000"/><circle cx="45" cy="55" r="2" fill="#000"/><circle cx="35" cy="65" r="2" fill="#000"/><circle cx="50" cy="45" r="2" fill="#000"/><circle cx="55" cy="65" r="2" fill="#000"/></svg>`
+            },
+            {
+                letter: 'K', lowercase: 'k', word: 'Kelinci',
+                guide: 'K: Garis tegak ke bawah (1), garis miring masuk ke tengah (2), miring keluar ke bawah (3).<br>k: Garis tegak lurus (1), garis miring kecil kanan atas (2), miring keluar kanan bawah (3).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M40,55 C40,40 60,40 60,55 C60,70 40,70 40,55 Z" fill="#ffffff" class="paintable"/><path d="M43,45 C43,20 48,15 48,42" fill="#ffffff" class="paintable"/><path d="M57,45 C57,20 52,15 52,42" fill="#ffffff" class="paintable"/><circle cx="47" cy="52" r="1.5" fill="#000"/><circle cx="53" cy="52" r="1.5" fill="#000"/><path d="M48,58 Q50,60 52,58" stroke-linecap="round"/></svg>`
+            },
+            {
+                letter: 'L', lowercase: 'l', word: 'Lemon',
+                guide: 'L: Tarik garis lurus tegak (1), lalu buat garis mendatar ke kanan di bagian bawah (2).<br>l: Cukup tarik garis tegak lurus dari atas ke bawah (1).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M20,50 C20,30 40,25 50,25 C70,25 80,40 80,50 C80,70 60,75 50,75 C30,75 20,70 20,50 Z" fill="#ffffff" class="paintable"/><path d="M15,50 Q20,50 20,50 M80,50 Q85,50 85,50" stroke-width="3"/></svg>`
+            },
+            {
+                letter: 'M', lowercase: 'm', word: 'Mobil',
+                guide: 'M: Garis tegak (1), miring ke tengah bawah (2), miring naik kanan (3), tegak ke bawah (4).<br>m: Garis tegak pendek (1), buat dua bukit melengkung berurutan ke kanan (2, 3).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M15,60 L20,40 L70,40 L80,60 L85,60 L85,75 L15,75 Z" fill="#ffffff" class="paintable"/><circle cx="30" cy="75" r="10" fill="#ffffff" class="paintable"/><circle cx="70" cy="75" r="10" fill="#ffffff" class="paintable"/><rect x="30" y="45" width="15" height="12" fill="#ffffff" class="paintable"/><rect x="52" y="45" width="15" height="12" fill="#ffffff" class="paintable"/></svg>`
+            },
+            {
+                letter: 'N', lowercase: 'n', word: 'Nanas',
+                guide: 'N: Tarik garis tegak kiri (1), miring ke kanan bawah (2), tegak kanan ke atas (3).<br>n: Tarik garis tegak pendek (1), buat satu bukit melengkung ke kanan dan bawah (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M35,40 C35,25 65,25 65,40 C65,65 60,85 50,85 C40,85 35,65 35,40 Z" fill="#ffffff" class="paintable"/><path d="M50,25 L45,10 L50,25 L55,10" stroke-width="3" stroke-linecap="round"/><path d="M38,45 L62,45 M36,55 L64,55 M38,65 L62,65 M42,75 L58,75" stroke-dasharray="3,3"/></svg>`
+            },
+            {
+                letter: 'O', lowercase: 'o', word: 'Obor',
+                guide: 'O: Mulai dari atas, buat satu lingkaran bulat besar sempurna (1).<br>o: Mulai dari atas, buat satu lingkaran bulat kecil sempurna (1).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M45,45 L55,45 L60,85 L40,85 Z" fill="#ffffff" class="paintable"/><path d="M50,45 C50,45 65,30 60,15 C55,30 45,30 50,45 Z" fill="#ffffff" class="paintable"/><path d="M50,45 C50,45 35,30 40,15 C45,30 50,45 50,45 Z" fill="#ffffff" class="paintable"/></svg>`
+            },
+            {
+                letter: 'P', lowercase: 'p', word: 'Pisang',
+                guide: 'P: Garis tegak ke bawah (1), buat kepala melengkung di kanan atas (2).<br>p: Garis tegak lurus meluncur ke bawah (1), buat kepala bulat melengkung di kanan atas (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M25,20 Q50,25 75,15 Q80,45 60,75 Q40,90 25,20" fill="#ffffff" class="paintable"/><path d="M22,17 Q25,12 25,20" stroke-width="3"/></svg>`
+            },
+            {
+                letter: 'Q', lowercase: 'q', word: 'Quran',
+                guide: 'Q: Buat lingkaran bulat besar (1), lalu garis miring kecil di kanan bawah keluar (2).<br>q: Buat kepala melengkung di kiri (1), tarik garis tegak lurus panjang ke bawah di kanan (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><rect x="25" y="35" width="50" height="35" rx="3" fill="#ffffff" class="paintable"/><path d="M50,35 L50,70" stroke-width="2"/><path d="M30,45 L45,45 M30,55 L45,55 M55,45 L70,45 M55,55 L70,55" stroke-dasharray="2,2"/></svg>`
+            },
+            {
+                letter: 'R', lowercase: 'r', word: 'Roti',
+                guide: 'R: Garis tegak ke bawah (1), buat kepala melengkung (2), lalu kaki miring keluar kanan (3).<br>r: Garis tegak pendek ke bawah (1), lalu buat lengkungan cabang kecil ke kanan (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><rect x="25" y="35" width="50" height="40" rx="10" fill="#ffffff" class="paintable"/><path d="M20,35 C20,25 80,25 80,35" stroke-width="3"/><path d="M35,50 L40,50 M60,50 L65,50 M45,60 Q50,65 55,60" stroke-linecap="round"/></svg>`
+            },
+            {
+                letter: 'S', lowercase: 's', word: 'Semangka',
+                guide: 'S: Mulai dari kanan atas, lengkung ke kiri, lalu liuk ke kanan dan balik ke kiri (1).<br>s: Versi mini dari huruf S besar dengan gerakan meliuk yang sama (1).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M15,35 Q50,85 85,35" fill="#ffffff" class="paintable"/><path d="M15,35 Z" fill="none"/><circle cx="35" cy="45" r="2" fill="#000"/><circle cx="50" cy="55" r="2" fill="#000"/><circle cx="65" cy="45" r="2" fill="#000"/></svg>`
+            },
+            {
+                letter: 'T', lowercase: 't', word: 'Topi',
+                guide: 'T: Garis tegak ke bawah (1), lalu garis penutup mendatar di atas (2).<br>t: Garis tegak ke bawah sedikit melengkung di ujung bawah (1), garis lintang tengah (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M30,60 C30,30 70,30 70,60 Z" fill="#ffffff" class="paintable"/><path d="M15,60 L85,60 L80,70 L20,70 Z" fill="#ffffff" class="paintable"/><rect x="42" y="30" width="16" height="8" fill="#ffffff" class="paintable"/></svg>`
+            },
+            {
+                letter: 'U', lowercase: 'u', word: 'Ulat',
+                guide: 'U: Tarik garis ke bawah melengkung lebar di bawah dan naik lagi ke atas (1).<br>u: Tarik garis melengkung bawah (1), tambah ekor garis tegak pendek di kanan (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="25" cy="50" r="10" fill="#ffffff" class="paintable"/><circle cx="41" cy="50" r="10" fill="#ffffff" class="paintable"/><circle cx="57" cy="50" r="10" fill="#ffffff" class="paintable"/><circle cx="73" cy="50" r="10" fill="#ffffff" class="paintable"/><circle cx="21" cy="46" r="1.5" fill="#000"/><path d="M15,38 L22,43" stroke-width="2"/></svg>`
+            },
+            {
+                letter: 'V', lowercase: 'v', word: 'Vas',
+                guide: 'V: Tarik garis miring turun ke kanan bawah (1), lalu miring naik ke kanan atas (2).<br>v: Versi kecil dari huruf V besar (1, 2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M35,30 L65,30 L58,80 L42,80 Z" fill="#ffffff" class="paintable"/><path d="M30,30 Q50,45 70,30" stroke-width="2"/><path d="M42,80 L35,90 L65,90 L58,80" stroke-width="2"/></svg>`
+            },
+            {
+                letter: 'W', lowercase: 'w', word: 'Wortel',
+                guide: 'W: Garis miring turun (1), naik (2), turun (3), naik kanan atas (4).<br>w: Versi kecil dari huruf W besar (1, 2, 3, 4).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M50,85 L35,25 L65,25 Z" fill="#ffffff" class="paintable"/><path d="M50,25 Q50,10 40,5 M50,25 Q55,10 60,5" stroke-width="3"/><path d="M42,40 L58,40 M45,55 L55,55 M48,70 L52,70" stroke-dasharray="2,2"/></svg>`
+            },
+            {
+                letter: 'X', lowercase: 'x', word: 'Xilofon',
+                guide: 'X: Tarik garis miring silang kanan (1), lalu miring silang kiri (2).<br>x: Versi kecil dari huruf X besar (1, 2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><rect x="15" y="30" width="12" height="40" fill="#ffffff" class="paintable"/><rect x="32" y="25" width="50" height="50" fill="#ffffff" class="paintable"/><rect x="49" y="20" width="12" height="60" fill="#ffffff" class="paintable"/><rect x="66" y="15" width="12" height="70" fill="#ffffff" class="paintable"/><path d="M10,48 L85,48" stroke-width="3"/></svg>`
+            },
+            {
+                letter: 'Y', lowercase: 'y', word: 'Yoyo',
+                guide: 'Y: Garis miring pendek kiri (1), miring pendek kanan bertemu di tengah (2), garis lurus ke bawah (3).<br>y: Garis miring pendek turun ke kanan (1), garis miring panjang meluncur ke kiri bawah (2).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="50" cy="50" r="25" fill="#ffffff" class="paintable"/><circle cx="50" cy="50" r="18" fill="#ffffff" class="paintable"/><circle cx="50" cy="50" r="5" fill="#ffffff" class="paintable"/><path d="M50,25 L50,5 Q55,-2 70,5" stroke-width="2"/></svg>`
+            },
+            {
+                letter: 'Z', lowercase: 'z', word: 'Zebra',
+                guide: 'Z: Tarik garis mendatar atas (1), miring turun ke kiri bawah (2), mendatar bawah ke kanan (3).<br>z: Versi kecil dari huruf Z besar dengan gerakan yang sama (1, 2, 3).',
+                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M30,30 C30,30 20,45 35,55 C50,65 50,85 70,80 C90,75 80,45 65,40" fill="#ffffff" class="paintable"/><path d="M35,30 L40,15 M65,40 L70,25" stroke-width="4"/><path d="M40,43 L48,48 M50,55 L58,60 M55,68 L63,73" stroke-width="3"/></svg>`
+            }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let currentTab = 'warmup'; // warmup, alphabet, games
+        let currentLetterIdx = 0;
+        let brushColor = '#3b82f6'; // Default: Biru
+        let isRainbow = false;
+        let brushSize = 10;
+        let fillModeColor = '#ef4444'; // Default warna mewarnai
+
+        // Canvas State
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let hue = 0; // untuk efek kuas pelangi
+
+        // Game State (Match the pairs)
+        let gamePairs = [];
+        let selectedStartNode = null;
+        let drawnLines = []; // Menyimpan garis yang ditarik {startId, endPoint, color}
+        let matchesFound = 0;
+
+        // Sound System (Web Speech API)
+        const synth = window.speechSynthesis;
+
+        // --- DOM ELEMENTS ---
+        const canvasWarmup = document.getElementById('canvas-warmup');
+        const canvasAlphabet = document.getElementById('canvas-alphabet');
+        const canvasGame = document.getElementById('canvas-game');
+        
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            // Setup canvas sizes & event listeners
+            initCanvas(canvasWarmup);
+            initCanvas(canvasAlphabet);
+            initCanvas(canvasGame);
+
+            // Buat menu navigasi samping
+            generateSidebarNav();
+
+            // Render Alphabet Halaman Pertama
+            renderAlphabetPage();
+
+            // Event listener resize jendela
+            window.addEventListener('resize', () => {
+                resizeCanvas(canvasWarmup);
+                resizeCanvas(canvasAlphabet);
+                resizeCanvas(canvasGame);
+                if (currentTab === 'games') {
+                    drawGameScene();
+                }
+            });
+
+            // Start Speech Welcome
+            setTimeout(() => {
+                speakText("Halo! Aku Lumi. Mari kita belajar menulis bersama!");
+            }, 800);
+        };
+
+        // --- INTERACTION TABS ---
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Sembunyikan semua tab
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Tampilkan tab aktif
+            document.getElementById(`section-${tabName}`).classList.remove('hidden');
+
+            // Update status tombol tab navbar
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-white');
+                btn.classList.add('text-amber-900', 'hover:bg-amber-100');
+            });
+            const activeBtn = document.getElementById(`btn-${tabName}`);
+            activeBtn.classList.remove('text-amber-900', 'hover:bg-amber-100');
+            activeBtn.classList.add('bg-amber-500', 'text-white');
+
+            // Set up bubble maskot
+            const bubble = document.getElementById('lumi-bubble');
+            if (tabName === 'warmup') {
+                bubble.innerText = '"Bantu hewan-hewan lucu ini mencapai tujuannya dengan menebalkan jalurnya ya!"';
+                speakText("Ayo lakukan pemanasan motorik dengan menebalkan garis!");
+                setTimeout(() => {
+                    resizeCanvas(canvasWarmup);
+                }, 50);
+            } else if (tabName === 'alphabet') {
+                bubble.innerText = '"Mari tebalkan huruf besar dan kecil. Warnai juga gambar hewannya ya!"';
+                speakText("Mari belajar menulis huruf dari A sampai Z!");
+                setTimeout(() => {
+                    resizeCanvas(canvasAlphabet);
+                    renderAlphabetPage();
+                }, 50);
+            } else if (tabName === 'games') {
+                bubble.innerText = '"Wah, ayo uji ingatanmu! Tarik garis pasangkan huruf besar dengan huruf kecil yang sama."';
+                speakText("Ayo bermain menghubungkan huruf!");
+                setTimeout(() => {
+                    resizeCanvas(canvasGame);
+                    initGame();
+                }, 50);
+            }
+        }
+
+        // --- SIDEBAR NAVIGATION GENERATOR ---
+        function generateSidebarNav() {
+            const listContainer = document.getElementById('navigation-list');
+            listContainer.innerHTML = '';
+
+            // Latihan Pemanasan Button
+            const warmupBtn = document.createElement('button');
+            warmupBtn.className = "w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition-all border border-slate-100 hover:bg-emerald-50 text-emerald-800 flex items-center gap-2";
+            warmupBtn.onclick = () => switchTab('warmup');
+            warmupBtn.innerHTML = `<span>🌱</span> <span>Latihan Pemanasan</span>`;
+            listContainer.appendChild(warmupBtn);
+
+            // A-Z Buttons
+            alphabetData.forEach((item, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `nav-letter-${idx}`;
+                btn.className = `w-full text-left px-3 py-1.5 rounded-xl text-xs font-bold transition-all border border-slate-100 flex items-center justify-between hover:bg-indigo-50 text-slate-700`;
+                btn.onclick = () => {
+                    switchTab('alphabet');
+                    goToLetter(idx);
+                };
+                btn.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="w-5 h-5 rounded bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">${item.letter}</span>
+                        <span>${item.word}</span>
+                    </div>
+                    <span class="text-[10px] text-slate-400 font-normal">Hal ${idx+1}</span>
+                `;
+                listContainer.appendChild(btn);
+            });
+
+            // Latihan Game
+            const gameBtn = document.createElement('button');
+            gameBtn.className = "w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition-all border border-slate-100 hover:bg-amber-50 text-amber-800 flex items-center gap-2 mt-2";
+            gameBtn.onclick = () => switchTab('games');
+            gameBtn.innerHTML = `<span>🎮</span> <span>Game Hubung Huruf</span>`;
+            listContainer.appendChild(gameBtn);
+        }
+
+        function updateActiveSidebarHighlight() {
+            alphabetData.forEach((_, idx) => {
+                const btn = document.getElementById(`nav-letter-${idx}`);
+                if (btn) btn.classList.remove('bg-indigo-100', 'text-indigo-900', 'border-indigo-300');
+            });
+            if (currentTab === 'alphabet') {
+                const activeBtn = document.getElementById(`nav-letter-${currentLetterIdx}`);
+                if (activeBtn) activeBtn.classList.add('bg-indigo-100', 'text-indigo-900', 'border-indigo-300');
+            }
+        }
+
+        // --- ALPHABET PAGE RENDERING ---
+        function renderAlphabetPage() {
+            const currentItem = alphabetData[currentLetterIdx];
+
+            // Render Header & Info
+            document.getElementById('header-letter-badge').innerText = currentItem.letter;
+            document.getElementById('header-letter-title').innerText = `${currentItem.letter} ${currentItem.lowercase} — ${currentItem.word}`;
+            document.getElementById('illustration-word').innerText = currentItem.word;
+            document.getElementById('page-indicator').innerText = `Halaman ${currentLetterIdx + 1} dari 26`;
+
+            // Render Ilustrasi
+            const holder = document.getElementById('illustration-holder');
+            holder.innerHTML = currentItem.svg;
+
+            setupMewarnaiListener();
+
+            // Render Guide Box
+            document.getElementById('guide-uppercase-box').innerText = currentItem.letter;
+            document.getElementById('guide-lowercase-box').innerText = currentItem.lowercase;
+            document.getElementById('guide-directions-text').innerHTML = currentItem.guide;
+
+            // Render Background Text Tracing
+            document.getElementById('grid-letter-row1-A').innerText = currentItem.letter;
+            document.getElementById('grid-letter-row1-B').innerText = currentItem.letter;
+            document.getElementById('grid-letter-row1-C').innerText = currentItem.letter;
+            document.getElementById('grid-letter-row1-D').innerText = currentItem.letter;
+            document.getElementById('grid-letter-row1-E').innerText = currentItem.letter;
+
+            document.getElementById('grid-letter-row2-A').innerText = currentItem.lowercase;
+            document.getElementById('grid-letter-row2-B').innerText = currentItem.lowercase;
+            document.getElementById('grid-letter-row2-C').innerText = currentItem.lowercase;
+            document.getElementById('grid-letter-row2-D').innerText = currentItem.lowercase;
+            document.getElementById('grid-letter-row2-E').innerText = currentItem.lowercase;
+
+            document.getElementById('btn-sound-letter').onclick = () => {
+                speakLetterAndWord(currentItem.letter, currentItem.word);
+            };
+
+            resetCanvas(canvasAlphabet);
+            updateActiveSidebarHighlight();
+        }
+
+        function goToLetter(idx) {
+            currentLetterIdx = idx;
+            renderAlphabetPage();
+        }
+
+        function nextLetter() {
+            if (currentLetterIdx < 25) {
+                currentLetterIdx++;
+                renderAlphabetPage();
+            } else {
+                switchTab('games');
+            }
+        }
+
+        // --- MODEL POPUP PRINTING HANDLERS ---
+        function openPrintModal() {
+            document.getElementById('print-modal').classList.remove('hidden');
+        }
+
+        function closePrintModal() {
+            document.getElementById('print-modal').classList.add('hidden');
+        }
+
+        /**
+         * Membuka halaman cetak di tab/jendela baru untuk melompati pembatasan iframe sandbox.
+         */
+        function printWorkbook(mode) {
+            closePrintModal();
+            
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                // Beritahu pengguna jika popup diblokir oleh browser
+                const bubble = document.getElementById('lumi-bubble');
+                bubble.innerText = '"Oops! Layar pop-up Anda diblokir. Harap izinkan pop-up untuk mencetak workbook!"';
+                speakText("Harap izinkan layar pop-up di browser Anda agar dapat mencetak!");
+                return;
+            }
+
+            // Membangun dokumen baru khusus untuk dicetak
+            let printContentHtml = '';
+
+            if (mode === 'all') {
+                // 1. HALAMAN PEMANASAN MOTORIK
+                printContentHtml += `
+                    <div class="print-page">
+                        <div class="header">
+                            <span class="badge">PETUALANGAN LUMIBELL</span>
+                            <h1>Lembar Pemanasan Motorik Halus</h1>
+                            <p class="sub">Tebalkan garis-garis di bawah ini secara perlahan menggunakan pensil!</p>
+                        </div>
+                        
+                        <div class="warmup-section">
+                            <div class="warmup-item">
+                                <p class="label">🐞 Bantu Kumbang terbang ke Bunga! (Garis Lurus)</p>
+                                <div class="warmup-row">
+                                    <span>🐞</span>
+                                    <div class="line-guide dashed-line"></div>
+                                    <span>🌸</span>
+                                </div>
+                            </div>
+                            
+                            <div class="warmup-item">
+                                <p class="label">🐰 Bantu Kelinci melompati rumput! (Garis Zig-zag)</p>
+                                <div class="warmup-row" style="height: 100px; position: relative;">
+                                    <span style="position: absolute; left: 10px; bottom: 10px;">🐰</span>
+                                    <svg style="width: 80%; height: 60px; margin: 0 auto;" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                        <path d="M 0,80 L 12.5,20 L 25,80 L 37.5,20 L 50,80 L 62.5,20 L 75,80 L 87.5,20 L 100,80" stroke="#94a3b8" stroke-dasharray="4,4" stroke-width="3" fill="none"></path>
+                                    </svg>
+                                    <span style="position: absolute; right: 10px; bottom: 10px;">🥕</span>
+                                </div>
+                            </div>
+                            
+                            <div class="warmup-item" style="margin-bottom: 0;">
+                                <p class="label">🐬 Ikuti lompatan Lumba-lumba melompat air! (Garis Lengkung)</p>
+                                <div class="warmup-row" style="height: 100px; position: relative;">
+                                    <span style="position: absolute; left: 10px; bottom: 10px;">🐬</span>
+                                    <svg style="width: 80%; height: 60px; margin: 0 auto;" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                        <path d="M 0,80 Q 12.5,10 25,80 Q 37.5,10 50,80 Q 62.5,10 75,80 Q 87.5,10 100,80" stroke="#94a3b8" stroke-dasharray="4,4" stroke-width="3" fill="none"></path>
+                                    </svg>
+                                    <span style="position: absolute; right: 10px; bottom: 10px;">🏖️</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">LumiBell Alphabet Workbook - Halaman Pemanasan</div>
+                    </div>
+                `;
+
+                // 2. 26 HALAMAN HURUF A SAMPAI Z
+                alphabetData.forEach((item, index) => {
+                    printContentHtml += `
+                        <div class="print-page">
+                            <div class="header-split">
+                                <div class="title-area">
+                                    <span class="badge">PETUALANGAN HURUF</span>
+                                    <h1>Menulis Huruf ${item.letter} & ${item.lowercase}</h1>
+                                    <p class="sub">${item.word} — Ikuti instruksi panah dan garis bantu!</p>
+                                </div>
+                                <div class="letter-giant-badge">${item.letter}${item.lowercase}</div>
+                            </div>
+
+                            <div class="main-split">
+                                <!-- Ilustrasi Mewarnai -->
+                                <div class="color-box">
+                                    <div class="svg-container">${item.svg}</div>
+                                    <p class="word-label">${item.word.toUpperCase()}</p>
+                                    <p class="color-hint">Ayo warnai gambar ini!</p>
+                                </div>
+                                
+                                <!-- Panduan Menulis -->
+                                <div class="direction-guide">
+                                    <h3>✍️ Cara Menarik Garis:</h3>
+                                    <p>${item.guide}</p>
+                                </div>
+                            </div>
+
+                            <!-- Area Tracing Guideline -->
+                            <div class="practice-area">
+                                <div class="row-title">Tebalkan Huruf Besar (${item.letter}):</div>
+                                <div class="practice-row">
+                                    <div class="dotted-block">${item.letter}</div>
+                                    <div class="dotted-block">${item.letter}</div>
+                                    <div class="dotted-block">${item.letter}</div>
+                                    <div class="dotted-block">${item.letter}</div>
+                                    <div class="dotted-block">${item.letter}</div>
+                                </div>
+
+                                <div class="row-title" style="margin-top: 15px;">Tebalkan Huruf Kecil (${item.lowercase}):</div>
+                                <div class="practice-row">
+                                    <div class="dotted-block">${item.lowercase}</div>
+                                    <div class="dotted-block">${item.lowercase}</div>
+                                    <div class="dotted-block">${item.lowercase}</div>
+                                    <div class="dotted-block">${item.lowercase}</div>
+                                    <div class="dotted-block">${item.lowercase}</div>
+                                </div>
+
+                                <div class="row-title" style="margin-top: 15px;">Coba Tulis Mandiri:</div>
+                                <div class="practice-row">
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="footer">LumiBell Alphabet Workbook - Halaman ${index + 1}</div>
+                        </div>
+                    `;
+                });
+
+            } else {
+                // MODE SINGLE: Hanya halaman saat ini dengan coretan kanvas (jika ada)
+                const currentItem = alphabetData[currentLetterIdx];
+                let canvasImageTag = '';
+                
+                // Mengkonversi coretan kanvas digital anak saat ini menjadi gambar agar ikut tercetak di kertas
+                if (currentTab === 'alphabet') {
+                    const dataUrl = canvasAlphabet.toDataURL();
+                    canvasImageTag = `<img src="${dataUrl}" class="canvas-print-overlay" />`;
+                } else if (currentTab === 'warmup') {
+                    const dataUrl = canvasWarmup.toDataURL();
+                    canvasImageTag = `<img src="${dataUrl}" class="canvas-print-overlay" />`;
+                }
+
+                if (currentTab === 'warmup') {
+                    printContentHtml += `
+                        <div class="print-page">
+                            <div class="header">
+                                <span class="badge">HASIL KARYAKU</span>
+                                <h1>Lembar Pemanasan Motorik Halus</h1>
+                                <p class="sub">Berikut adalah hasil tebakan garis latihan tanganku!</p>
+                            </div>
+                            
+                            <div class="warmup-section" style="position: relative;">
+                                ${canvasImageTag}
+                                <div class="warmup-item">
+                                    <p class="label">🐞 Bantu Kumbang terbang ke Bunga! (Garis Lurus)</p>
+                                    <div class="warmup-row">
+                                        <span>🐞</span>
+                                        <div class="line-guide dashed-line"></div>
+                                        <span>🌸</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="warmup-item">
+                                    <p class="label">🐰 Bantu Kelinci melompati rumput! (Garis Zig-zag)</p>
+                                    <div class="warmup-row" style="height: 100px; position: relative;">
+                                        <span style="position: absolute; left: 10px; bottom: 10px;">🐰</span>
+                                        <svg style="width: 80%; height: 60px; margin: 0 auto;" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                            <path d="M 0,80 L 12.5,20 L 25,80 L 37.5,20 L 50,80 L 62.5,20 L 75,80 L 87.5,20 L 100,80" stroke="#94a3b8" stroke-dasharray="4,4" stroke-width="3" fill="none"></path>
+                                        </svg>
+                                        <span style="position: absolute; right: 10px; bottom: 10px;">🥕</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="warmup-item" style="margin-bottom: 0;">
+                                    <p class="label">🐬 Ikuti lompatan Lumba-lumba melompat air! (Garis Lengkung)</p>
+                                    <div class="warmup-row" style="height: 100px; position: relative;">
+                                        <span style="position: absolute; left: 10px; bottom: 10px;">🐬</span>
+                                        <svg style="width: 80%; height: 60px; margin: 0 auto;" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                            <path d="M 0,80 Q 12.5,10 25,80 Q 37.5,10 50,80 Q 62.5,10 75,80 Q 87.5,10 100,80" stroke="#94a3b8" stroke-dasharray="4,4" stroke-width="3" fill="none"></path>
+                                        </svg>
+                                        <span style="position: absolute; right: 10px; bottom: 10px;">🏖️</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footer">LumiBell - Halaman Pemanasan</div>
+                        </div>
+                    `;
+                } else if (currentTab === 'alphabet') {
+                    printContentHtml += `
+                        <div class="print-page">
+                            <div class="header-split">
+                                <div class="title-area">
+                                    <span class="badge">HASIL KARYAKU</span>
+                                    <h1>Menulis Huruf ${currentItem.letter} & ${currentItem.lowercase}</h1>
+                                    <p class="sub">${currentItem.word} — Hasil latihan menulis mandiri di layar!</p>
+                                </div>
+                                <div class="letter-giant-badge">${currentItem.letter}${currentItem.lowercase}</div>
+                            </div>
+
+                            <div class="main-split">
+                                <div class="color-box">
+                                    <div class="svg-container">${currentItem.svg}</div>
+                                    <p class="word-label">${currentItem.word.toUpperCase()}</p>
+                                </div>
+                                <div class="direction-guide">
+                                    <h3>✍️ Petunjuk Tarikan:</h3>
+                                    <p>${currentItem.guide}</p>
+                                </div>
+                            </div>
+
+                            <div class="practice-area" style="position: relative;">
+                                ${canvasImageTag}
+                                <div class="row-title">Tebalkan Huruf Besar (${currentItem.letter}):</div>
+                                <div class="practice-row">
+                                    <div class="dotted-block">${currentItem.letter}</div>
+                                    <div class="dotted-block">${currentItem.letter}</div>
+                                    <div class="dotted-block">${currentItem.letter}</div>
+                                    <div class="dotted-block">${currentItem.letter}</div>
+                                    <div class="dotted-block">${currentItem.letter}</div>
+                                </div>
+
+                                <div class="row-title" style="margin-top: 15px;">Tebalkan Huruf Kecil (${currentItem.lowercase}):</div>
+                                <div class="practice-row">
+                                    <div class="dotted-block">${currentItem.lowercase}</div>
+                                    <div class="dotted-block">${currentItem.lowercase}</div>
+                                    <div class="dotted-block">${currentItem.lowercase}</div>
+                                    <div class="dotted-block">${currentItem.lowercase}</div>
+                                    <div class="dotted-block">${currentItem.lowercase}</div>
+                                </div>
+
+                                <div class="row-title" style="margin-top: 15px;">Coba Tulis Mandiri:</div>
+                                <div class="practice-row">
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                    <div class="blank-block"><span class="start-dot"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="footer">LumiBell - Halaman ${currentLetterIdx + 1}</div>
+                        </div>
+                    `;
+                } else {
+                    // Jika di Tab Game
+                    printContentHtml += `
+                        <div class="print-page text-center" style="padding: 40px;">
+                            <span class="badge">GAME REPORT</span>
+                            <h1 style="font-size: 2.5rem; margin-top: 10px;">Permainan Menghubungkan Huruf</h1>
+                            <p class="sub" style="font-size: 1.2rem;">LumiBell Edu-Game - Scoreboard</p>
+                            <div style="margin: 60px auto; width: 200px; height: 200px; border-radius: 50%; border: 10px solid #eab308; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Fredoka', sans-serif;">
+                                <span style="font-size: 4rem;">🏆</span>
+                                <span style="font-size: 2rem; font-weight: bold; color: #1e293b;">${matchesFound} / 4</span>
+                            </div>
+                            <h2 style="color: #10b981;">Hebat Sekali!</h2>
+                            <p style="color: #64748b; margin-top: 10px;">Terus tingkatkan latihan menulis dan membaca ya!</p>
+                            <div class="footer">LumiBell Alphabet Workbook - Hasil Permainan</div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Memasukkan template CSS khusus cetak kertas A4 resolusi tinggi
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Cetak Workbook - LumiBell</title>
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Quicksand:wght@500;700&display=swap');
+                        
+                        @page {
+                            size: A4 portrait;
+                            margin: 1.5cm 1.2cm 1.5cm 1.2cm;
+                        }
+                        
+                        body {
+                            font-family: 'Quicksand', sans-serif;
+                            color: #1e293b;
+                            background: white;
+                            margin: 0;
+                            padding: 0;
+                            -webkit-print-color-adjust: exact;
+                            print-color-adjust: exact;
+                        }
+
+                        h1, h2, h3, .badge {
+                            font-family: 'Fredoka', sans-serif;
+                        }
+
+                        .print-page {
+                            width: 100%;
+                            height: 100%;
+                            page-break-after: always;
+                            box-sizing: border-box;
+                            position: relative;
+                            display: flex;
+                            flex-direction: col;
+                            display: -webkit-box;
+                            display: flex;
+                            -webkit-box-orient: vertical;
+                            -webkit-box-direction: normal;
+                            flex-direction: column;
+                        }
+
+                        .print-page:last-child {
+                            page-break-after: avoid;
+                        }
+
+                        /* Header */
+                        .header {
+                            border-bottom: 2px solid #e2e8f0;
+                            padding-bottom: 12px;
+                            margin-bottom: 20px;
+                        }
+
+                        .header-split {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            border-bottom: 2px solid #e2e8f0;
+                            padding-bottom: 12px;
+                            margin-bottom: 20px;
+                        }
+
+                        .title-area {
+                            flex: 1;
+                        }
+
+                        .badge {
+                            background-color: #f1f5f9;
+                            color: #475569;
+                            font-size: 10px;
+                            font-weight: bold;
+                            padding: 4px 10px;
+                            border-radius: 9999px;
+                            letter-spacing: 0.05em;
+                            display: inline-block;
+                        }
+
+                        h1 {
+                            font-size: 24px;
+                            color: #0f172a;
+                            margin: 6px 0 2px 0;
+                        }
+
+                        .sub {
+                            font-size: 11px;
+                            color: #64748b;
+                            margin: 0;
+                        }
+
+                        .letter-giant-badge {
+                            font-family: 'Fredoka', sans-serif;
+                            font-size: 38px;
+                            font-weight: bold;
+                            color: #3b82f6;
+                            background-color: #eff6ff;
+                            border: 3px solid #bfdbfe;
+                            width: 90px;
+                            height: 60px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 16px;
+                        }
+
+                        /* Main Split */
+                        .main-split {
+                            display: flex;
+                            gap: 20px;
+                            margin-bottom: 20px;
+                        }
+
+                        .color-box {
+                            width: 170px;
+                            border: 2px solid #cbd5e1;
+                            border-radius: 16px;
+                            padding: 10px;
+                            text-align: center;
+                            background: #fafafa;
+                        }
+
+                        .svg-container {
+                            width: 140px;
+                            height: 120px;
+                            margin: 0 auto;
+                        }
+
+                        .svg-container svg {
+                            width: 100%;
+                            height: 100%;
+                        }
+
+                        .word-label {
+                            font-family: 'Fredoka', sans-serif;
+                            font-weight: bold;
+                            font-size: 18px;
+                            color: #0f172a;
+                            margin: 6px 0 2px 0;
+                            letter-spacing: 0.05em;
+                        }
+
+                        .color-hint {
+                            font-size: 9px;
+                            color: #94a3b8;
+                            margin: 0;
+                        }
+
+                        .direction-guide {
+                            flex: 1;
+                            background: #fffdf5;
+                            border: 2px dashed #fcd34d;
+                            border-radius: 16px;
+                            padding: 12px 16px;
+                        }
+
+                        .direction-guide h3 {
+                            margin: 0 0 6px 0;
+                            font-size: 14px;
+                            color: #b45309;
+                        }
+
+                        .direction-guide p {
+                            font-size: 11px;
+                            line-height: 1.5;
+                            color: #78350f;
+                            margin: 0;
+                        }
+
+                        /* Practice Grid Area (Garis Buku Sekolah Indonesia) */
+                        .practice-area {
+                            flex-grow: 1;
+                            margin-bottom: 20px;
+                        }
+
+                        .row-title {
+                            font-size: 11px;
+                            font-weight: bold;
+                            color: #475569;
+                            margin-bottom: 5px;
+                        }
+
+                        .practice-row {
+                            height: 80px;
+                            border-radius: 12px;
+                            border: 1px solid #cbd5e1;
+                            display: flex;
+                            justify-content: space-around;
+                            align-items: center;
+                            background: linear-gradient(to bottom, 
+                                transparent 0px, transparent 15px, 
+                                #f43f5e 16px, #f43f5e 17px, 
+                                transparent 18px, transparent 39px, 
+                                #3b82f6 40px, #3b82f6 41px, 
+                                transparent 42px, transparent 63px, 
+                                #f43f5e 64px, #f43f5e 65px, 
+                                transparent 66px) left top / 100% 80px;
+                            overflow: hidden;
+                        }
+
+                        .dotted-block {
+                            font-family: 'Fredoka', sans-serif;
+                            font-size: 3.5rem;
+                            color: rgba(148, 163, 184, 0.15);
+                            -webkit-text-stroke: 1.5px dashed #94a3b8;
+                            line-height: 80px;
+                            width: 70px;
+                            text-align: center;
+                        }
+
+                        .blank-block {
+                            width: 70px;
+                            height: 80px;
+                            position: relative;
+                        }
+
+                        .start-dot {
+                            position: absolute;
+                            top: 15px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            width: 10px;
+                            height: 10px;
+                            background-color: black;
+                            border-radius: 50%;
+                        }
+
+                        /* Pemanasan Motorik */
+                        .warmup-section {
+                            flex-grow: 1;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-around;
+                        }
+
+                        .warmup-item {
+                            border: 2px dashed #cbd5e1;
+                            border-radius: 16px;
+                            padding: 15px;
+                            background-color: #f8fafc;
+                            margin-bottom: 20px;
+                        }
+
+                        .warmup-item .label {
+                            font-size: 13px;
+                            font-weight: bold;
+                            margin: 0 0 10px 0;
+                            color: #334155;
+                        }
+
+                        .warmup-row {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            background: white;
+                            border: 1px solid #e2e8f0;
+                            border-radius: 12px;
+                            padding: 10px 20px;
+                            font-size: 24px;
+                        }
+
+                        .line-guide {
+                            flex-grow: 1;
+                            margin: 0 20px;
+                        }
+
+                        .dashed-line {
+                            border-top: 3px dashed #94a3b8;
+                        }
+
+                        /* Canvas Overlay */
+                        .canvas-print-overlay {
+                            position: absolute;
+                            inset: 0;
+                            width: 100%;
+                            height: 100%;
+                            object-fit: fill;
+                            z-index: 10;
+                            opacity: 0.85;
+                            pointer-events: none;
+                        }
+
+                        /* Footer */
+                        .footer {
+                            border-top: 1px solid #e2e8f0;
+                            padding-top: 8px;
+                            font-size: 10px;
+                            color: #94a3b8;
+                            text-align: center;
+                            margin-top: auto;
+                        }
+
+                        /* Force SVG to be black & white */
+                        svg path, svg circle {
+                            stroke: #334155 !important;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${printContentHtml}
+                    <script>
+                        window.onload = function() {
+                            // Berikan waktu jeda singkat agar peramban merender SVG dengan sempurna
+                            setTimeout(function() {
+                                window.print();
+                                window.close();
+                            }, 500);
+                        }
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
+        // --- PREV LETTER & NEXT LETTER LOGIC ---
+        function prevLetter() {
+            if (currentLetterIdx > 0) {
+                currentLetterIdx--;
+                renderAlphabetPage();
+            } else {
+                switchTab('warmup');
+            }
+        }
+
+        function nextLetter() {
+            if (currentLetterIdx < 25) {
+                currentLetterIdx++;
+                renderAlphabetPage();
+            } else {
+                switchTab('games');
+            }
+        }
+
+        // --- LOGIKA MEWARNAI (COLOR FILL) ---
+        function setFillObjectColor(color) {
+            fillModeColor = color;
+            const bubble = document.getElementById('lumi-bubble');
+            bubble.innerText = `"Kamu memilih warna kuas gambar baru! Sekarang, klik di dalam gambar hewannya ya!"`;
+        }
+
+        function setupMewarnaiListener() {
+            const svgEl = document.getElementById('svg-color-obj');
+            if (svgEl) {
+                const paintables = svgEl.querySelectorAll('.paintable');
+                paintables.forEach(elem => {
+                    elem.style.cursor = 'pointer';
+                    elem.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        this.setAttribute('fill', fillModeColor);
+                        speakText("Keren!");
+                    });
+                });
+            }
+        }
+
+        // --- CANVA TRACING LOGIC (DRAWING SYSTEM) ---
+        function initCanvas(canvas) {
+            resizeCanvas(canvas);
+
+            // Desktop Mouse Events
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Touch events untuk Tablet & HP secara native (Mencegah offset penekanan koordinat)
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                isDrawing = true;
+                
+                lastX = touch.clientX - rect.left;
+                lastY = touch.clientY - rect.top;
+
+                if (canvas.id === 'canvas-game') {
+                    handleGameClickStart(lastX, lastY);
+                }
+            }, { passive: false });
+
+            canvas.addEventListener('touchmove', (e) => {
+                if (!isDrawing) return;
+                e.preventDefault();
+                
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const currentX = touch.clientX - rect.left;
+                const currentY = touch.clientY - rect.top;
+                
+                if (canvas.id === 'canvas-game') {
+                    handleGameDrag(currentX, currentY);
+                    return;
+                }
+
+                const ctx = canvas.getContext('2d');
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(currentX, currentY);
+
+                if (isRainbow) {
+                    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+                    hue = (hue + 2) % 360;
+                } else {
+                    ctx.strokeStyle = brushColor;
+                }
+
+                ctx.lineWidth = brushSize;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+
+                lastX = currentX;
+                lastY = currentY;
+            }, { passive: false });
+
+            canvas.addEventListener('touchend', (e) => {
+                if (canvas.id === 'canvas-game') {
+                    handleGameRelease();
+                }
+                isDrawing = false;
+            }, { passive: false });
+        }
+
+        function resizeCanvas(canvas) {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const canvas = e.target;
+            const rect = canvas.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+
+            if (canvas.id === 'canvas-game') {
+                handleGameClickStart(lastX, lastY);
+            }
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const canvas = e.target;
+            const rect = canvas.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+            const ctx = canvas.getContext('2d');
+
+            if (canvas.id === 'canvas-game') {
+                handleGameDrag(currentX, currentY);
+                return;
+            }
+
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(currentX, currentY);
+
+            if (isRainbow) {
+                ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+                hue = (hue + 2) % 360;
+            } else {
+                ctx.strokeStyle = brushColor;
+            }
+
+            ctx.lineWidth = brushSize;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+
+            lastX = currentX;
+            lastY = currentY;
+        }
+
+        function stopDrawing(e) {
+            if (!isDrawing) return;
+            isDrawing = false;
+
+            const canvas = e.target;
+            if (canvas.id === 'canvas-game') {
+                handleGameRelease();
+            }
+        }
+
+        function setBrushColor(color, btn) {
+            document.querySelectorAll('.color-btn').forEach(b => {
+                b.classList.remove('scale-110', 'ring-2', 'ring-blue-500/50', 'ring-indigo-500/50');
+                b.classList.add('hover:scale-105');
+            });
+
+            btn.classList.add('scale-110', 'ring-2', 'ring-indigo-500/50');
+            btn.classList.remove('hover:scale-105');
+
+            if (color === 'rainbow') {
+                isRainbow = true;
+            } else {
+                isRainbow = false;
+                brushColor = color;
+            }
+        }
+
+        function updateBrushSize(val) {
+            brushSize = val;
+            document.getElementById('brush-size-val').innerText = `${val}px`;
+        }
+
+        function resetCanvas(canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function resetCanvasCurrent() {
+            if (currentTab === 'warmup') {
+                resetCanvas(canvasWarmup);
+            } else if (currentTab === 'alphabet') {
+                resetCanvas(canvasAlphabet);
+            } else if (currentTab === 'games') {
+                initGame();
+            }
+            speakText("Bersih!");
+        }
+
+        // --- AUDIO / SPEECH SYNTHESIS SYSTEM ---
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                synth.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.9;
+                utterance.pitch = 1.25;
+                synth.speak(utterance);
+            }
+        }
+
+        function speakLetterAndWord(letter, word) {
+            const spelling = `${letter}... untuk... ${word}`;
+            speakText(spelling);
+        }
+
+        // --- GAME SYSTEM: MATCH THE PAIRS ---
+        function initGame() {
+            matchesFound = 0;
+            selectedStartNode = null;
+            drawnLines = [];
+            document.getElementById('game-score').innerText = `0 / 4`;
+
+            const shuffled = [...alphabetData].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 4);
+
+            const leftSide = selected.map((item, index) => ({
+                id: `left-${index}`,
+                letter: item.letter,
+                matchLetter: item.lowercase,
+                x: 0,
+                y: 0
+            }));
+
+            const rightSide = selected.map((item, index) => ({
+                id: `right-${index}`,
+                letter: item.lowercase,
+                matchLetter: item.letter,
+                x: 0,
+                y: 0
+            })).sort(() => 0.5 - Math.random());
+
+            gamePairs = { left: leftSide, right: rightSide };
+
+            renderGameElements();
+            
+            // Atur ukuran kanvas dan gambar
+            resizeCanvas(canvasGame);
+            setTimeout(() => {
+                drawGameScene();
+            }, 100);
+        }
+
+        function renderGameElements() {
+            const leftContainer = document.getElementById('game-left-letters');
+            const rightContainer = document.getElementById('game-right-letters');
+
+            leftContainer.innerHTML = '';
+            rightContainer.innerHTML = '';
+
+            // Render kiri (Huruf Besar) - Ditambahkan pointer-events-none agar event mousedown langsung lolos ke Canvas
+            gamePairs.left.forEach((node, index) => {
+                const div = document.createElement('div');
+                div.className = "flex items-center gap-3 my-2 pointer-events-none";
+                div.innerHTML = `
+                    <div class="w-14 h-14 bg-white border-4 border-indigo-400 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-md text-indigo-700 pointer-events-none">
+                        ${node.letter}
+                    </div>
+                    <div id="dot-left-${index}" class="w-6 h-6 rounded-full bg-indigo-500 border-4 border-white shadow flex items-center justify-center pointer-events-none">
+                        <span class="w-2 h-2 bg-white rounded-full"></span>
+                    </div>
+                `;
+                leftContainer.appendChild(div);
+            });
+
+            // Render kanan (Huruf Kecil) - Ditambahkan pointer-events-none agar event mouseup terbaca penuh di Canvas
+            gamePairs.right.forEach((node, index) => {
+                const div = document.createElement('div');
+                div.className = "flex items-center gap-3 my-2 pointer-events-none";
+                div.innerHTML = `
+                    <div id="dot-right-${index}" class="w-6 h-6 rounded-full bg-rose-500 border-4 border-white shadow flex items-center justify-center pointer-events-none">
+                        <span class="w-2 h-2 bg-white rounded-full"></span>
+                    </div>
+                    <div class="w-14 h-14 bg-white border-4 border-rose-400 rounded-2xl flex items-center justify-center text-3xl font-bold shadow-md text-rose-700 pointer-events-none">
+                        ${node.letter}
+                    </div>
+                `;
+                rightContainer.appendChild(div);
+            });
+        }
+
+        function calculateNodeCoordinates() {
+            const rect = canvasGame.getBoundingClientRect();
+
+            gamePairs.left.forEach((node, index) => {
+                const dot = document.getElementById(`dot-left-${index}`);
+                if (dot) {
+                    const dotRect = dot.getBoundingClientRect();
+                    node.x = (dotRect.left + dotRect.width / 2) - rect.left;
+                    node.y = (dotRect.top + dotRect.height / 2) - rect.top;
+                }
+            });
+
+            gamePairs.right.forEach((node, index) => {
+                const dot = document.getElementById(`dot-right-${index}`);
+                if (dot) {
+                    const dotRect = dot.getBoundingClientRect();
+                    node.x = (dotRect.left + dotRect.width / 2) - rect.left;
+                    node.y = (dotRect.top + dotRect.height / 2) - rect.top;
+                }
+            });
+        }
+
+        function drawGameScene(tempLine = null) {
+            calculateNodeCoordinates();
+            const ctx = canvasGame.getContext('2d');
+            ctx.clearRect(0, 0, canvasGame.width, canvasGame.height);
+
+            // Gambar lingkaran penanda aktif jika ada huruf yang dipilih
+            if (selectedStartNode) {
+                ctx.beginPath();
+                ctx.arc(selectedStartNode.x, selectedStartNode.y, 18, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(234, 179, 8, 0.3)';
+                ctx.fill();
+            }
+
+            // Gambar garis permanen yang sudah terhubung
+            drawnLines.forEach(line => {
+                ctx.beginPath();
+                ctx.moveTo(line.startX, line.startY);
+                ctx.lineTo(line.endX, line.endY);
+                ctx.strokeStyle = line.color;
+                ctx.lineWidth = 6;
+                ctx.stroke();
+            });
+
+            // Gambar garis seret sementara
+            if (tempLine && selectedStartNode) {
+                ctx.beginPath();
+                ctx.moveTo(selectedStartNode.x, selectedStartNode.y);
+                ctx.lineTo(tempLine.x, tempLine.y);
+                ctx.strokeStyle = '#eab308';
+                ctx.lineWidth = 5;
+                ctx.setLineDash([5, 5]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+
+        function handleGameClickStart(x, y) {
+            calculateNodeCoordinates();
+            const tolerance = 40; // Area toleransi sentuhan yang lebih luas untuk anak-anak
+
+            const foundNode = gamePairs.left.find(node => {
+                const dist = Math.hypot(node.x - x, node.y - y);
+                return dist < tolerance;
+            });
+
+            if (foundNode) {
+                const alreadyMatched = drawnLines.some(line => line.startId === foundNode.id);
+                if (!alreadyMatched) {
+                    selectedStartNode = foundNode;
+                    speakText(foundNode.letter);
+                    drawGameScene({ x, y });
+                }
+            }
+        }
+
+        // Sinkronisasi posisi koordinat seret
+        function handleGameDrag(x, y) {
+            if (selectedStartNode) {
+                lastX = x;
+                lastY = y;
+                drawGameScene({ x, y });
+            }
+        }
+
+        function handleGameRelease() {
+            if (!selectedStartNode) return;
+
+            const x = lastX;
+            const y = lastY;
+            const tolerance = 45; // Area toleransi pelepasan yang lebih fleksibel
+
+            const targetNode = gamePairs.right.find(node => {
+                const dist = Math.hypot(node.x - x, node.y - y);
+                return dist < tolerance;
+            });
+
+            if (targetNode) {
+                // Validasi kecocokan huruf
+                if (selectedStartNode.matchLetter === targetNode.letter) {
+                    drawnLines.push({
+                        startId: selectedStartNode.id,
+                        startX: selectedStartNode.x,
+                        startY: selectedStartNode.y,
+                        endX: targetNode.x,
+                        endY: targetNode.y,
+                        color: '#10b981'
+                    });
+                    
+                    matchesFound++;
+                    document.getElementById('game-score').innerText = `${matchesFound} / 4`;
+                    speakText("Hebat!");
+
+                    // Beri penanda visual pada bulatan yang sukses
+                    const dotLeft = document.getElementById(`dot-${selectedStartNode.id}`);
+                    if (dotLeft) {
+                        dotLeft.classList.remove('bg-indigo-500');
+                        dotLeft.classList.add('bg-emerald-500');
+                    }
+                    const dotRight = document.getElementById(`dot-${targetNode.id}`);
+                    if (dotRight) {
+                        dotRight.classList.remove('bg-rose-500');
+                        dotRight.classList.add('bg-emerald-500');
+                    }
+                    
+                    if (matchesFound === 4) {
+                        setTimeout(() => {
+                            speakText("Hore! Kamu hebat sekali!");
+                            document.getElementById('lumi-bubble').innerText = '"Wah, kamu luar biasa! Kamu berhasil mencocokkan semua huruf besar dan huruf kecil dengan sempurna!"';
+                        }, 800);
+                    }
+                } else {
+                    speakText("Coba cari pasangannya ya!");
+                }
+            }
+
+            selectedStartNode = null;
+            drawGameScene();
+        }
+    </script>
+</body>
+</html>
