@@ -554,132 +554,490 @@
             {
                 letter: 'A', lowercase: 'a', word: 'Apel',
                 guide: 'A: Tarik garis miring kiri (1), miring kanan (2), lalu mendatar di tengah (3).<br>a: Buat lengkungan bulat (1), lalu tarik garis lurus ke bawah di sebelah kanan (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M50,15 C30,15 20,35 20,60 C20,80 35,90 50,90 C65,90 80,80 80,60 C80,35 70,15 50,15 Z" fill="#ffffff" class="paintable"/><path d="M50,15 C52,10 56,5 62,8" stroke-width="3" stroke-linecap="round"/><path d="M50,15 C45,11 40,12 38,8 C36,4 40,2 45,6 Z" fill="#ffffff" class="paintable"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M50,22 C32,22 20,38 20,58 C20,78 33,90 50,90 C67,90 80,78 80,58 C80,38 68,22 50,22 Z" fill="#ef4444" class="paintable"/>
+  <path d="M50,22 C38,22 32,32 35,45 C40,30 60,30 65,45 C68,32 62,22 50,22 Z" fill="#f87171" class="paintable"/>
+  <path d="M50,22 C50,12 55,8 58,5" stroke="#92400e" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M54,14 C60,8 68,10 65,18 C60,16 55,18 54,14 Z" fill="#22c55e" class="paintable"/>
+  <ellipse cx="38" cy="38" rx="6" ry="9" fill="white" opacity="0.3" transform="rotate(-20 38 38)"/>
+  <path d="M50,25 C48,40 48,70 50,88" stroke="#dc2626" stroke-width="1" fill="none" opacity="0.4"/>
+</svg>`
             },
             {
                 letter: 'B', lowercase: 'b', word: 'Bebek',
                 guide: 'B: Tarik garis tegak ke bawah (1), buat lengkung atas (2), lalu lengkung bawah (3).<br>b: Tarik garis tegak ke bawah (1), lalu buat lengkung perut di kanan bawah (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M30,30 C30,15 55,10 65,25 C75,35 60,50 45,50 C30,50 25,65 30,80 C35,95 80,95 85,80 C90,75 80,65 70,65" fill="#ffffff" class="paintable"/><circle cx="55" cy="22" r="2" fill="#000"/><path d="M65,22 L75,20 L68,26 Z" fill="#f59e0b"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="50" cy="68" rx="28" ry="22" fill="#fbbf24" class="paintable"/>
+  <circle cx="68" cy="42" r="18" fill="#fbbf24" class="paintable"/>
+  <circle cx="62" cy="37" r="8" fill="#fde68a" class="paintable" opacity="0.6"/>
+  <path d="M82,42 L94,38 L92,45 Z" fill="#f97316" class="paintable"/>
+  <circle cx="74" cy="38" r="4" fill="white"/>
+  <circle cx="75" cy="38" r="2.5" fill="#1e293b"/>
+  <circle cx="76" cy="37" r="0.8" fill="white"/>
+  <path d="M24,62 C18,50 22,40 32,45 C28,55 30,65 24,62 Z" fill="#f59e0b" class="paintable"/>
+  <path d="M40,88 L35,96 M40,88 L42,96 M40,88 L38,96" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M58,88 L53,96 M58,88 L60,96 M58,88 L56,96" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
+</svg>`
             },
             {
                 letter: 'C', lowercase: 'c', word: 'Ceri',
                 guide: 'C: Mulai dari kanan atas, buat lengkungan besar ke kiri sampai bawah (1).<br>c: Mulai dari kanan atas, buat lengkungan kecil ke kiri sampai bawah (1).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="35" cy="65" r="15" fill="#ffffff" class="paintable"/><circle cx="65" cy="65" r="15" fill="#ffffff" class="paintable"/><path d="M35,50 Q50,20 60,15" stroke-width="3"/><path d="M65,50 Q60,30 60,15" stroke-width="3"/><path d="M60,15 Q75,12 80,22" stroke-width="2"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M38,52 Q45,30 55,20 Q65,30 62,52" stroke="#4d7c0f" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M55,20 C55,10 68,12 65,22 C60,18 55,20 55,20 Z" fill="#4ade80" class="paintable"/>
+  <circle cx="35" cy="63" r="16" fill="#dc2626" class="paintable"/>
+  <ellipse cx="31" cy="58" rx="4" ry="5" fill="white" opacity="0.25"/>
+  <circle cx="65" cy="63" r="16" fill="#dc2626" class="paintable"/>
+  <ellipse cx="61" cy="58" rx="4" ry="5" fill="white" opacity="0.25"/>
+</svg>`
             },
             {
                 letter: 'D', lowercase: 'd', word: 'Domba',
                 guide: 'D: Tarik garis lurus dari atas ke bawah (1), buat perut melengkung besar dari atas ke bawah (2).<br>d: Buat lengkungan perut di sebelah kiri (1), lalu tarik garis tegak panjang ke bawah di sisi kanan (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="50" cy="50" r="25" fill="#ffffff" class="paintable"/><circle cx="50" cy="50" r="18" fill="none" stroke-dasharray="3,3"/><circle cx="32" cy="40" r="6" fill="#ffffff" class="paintable"/><circle cx="68" cy="40" r="6" fill="#ffffff" class="paintable"/><circle cx="43" cy="48" r="1.5" fill="#000"/><circle cx="57" cy="48" r="1.5" fill="#000"/><path d="M30,70 L25,85 M70,70 L75,85" stroke-width="4" stroke-linecap="round"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="50" cy="62" rx="28" ry="20" fill="#f1f5f9" class="paintable"/>
+  <circle cx="32" cy="58" r="10" fill="#f8fafc" class="paintable"/>
+  <circle cx="50" cy="50" r="12" fill="#f8fafc" class="paintable"/>
+  <circle cx="68" cy="58" r="10" fill="#f8fafc" class="paintable"/>
+  <circle cx="40" cy="68" r="9" fill="#f1f5f9" class="paintable"/>
+  <circle cx="60" cy="68" r="9" fill="#f1f5f9" class="paintable"/>
+  <ellipse cx="50" cy="36" rx="14" ry="13" fill="#e2e8f0" class="paintable"/>
+  <ellipse cx="38" cy="36" rx="5" ry="7" fill="#cbd5e1" class="paintable" transform="rotate(-20 38 36)"/>
+  <ellipse cx="62" cy="36" rx="5" ry="7" fill="#cbd5e1" class="paintable" transform="rotate(20 62 36)"/>
+  <circle cx="45" cy="34" r="2.5" fill="#1e293b"/>
+  <circle cx="55" cy="34" r="2.5" fill="#1e293b"/>
+  <circle cx="46" cy="33" r="0.8" fill="white"/>
+  <circle cx="56" cy="33" r="0.8" fill="white"/>
+  <ellipse cx="50" cy="40" rx="3" ry="2" fill="#f9a8d4"/>
+  <path d="M47,42 Q50,45 53,42" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <rect x="36" y="78" width="7" height="14" rx="3" fill="#94a3b8" class="paintable"/>
+  <rect x="47" y="78" width="7" height="14" rx="3" fill="#94a3b8" class="paintable"/>
+  <rect x="57" y="78" width="7" height="14" rx="3" fill="#94a3b8" class="paintable"/>
+</svg>`
             },
             {
                 letter: 'E', lowercase: 'e', word: 'Ember',
                 guide: 'E: Garis tegak ke bawah (1), buat garis mendatar di atas (2), tengah (3), bawah (4).<br>e: Tarik garis mendatar pendek di tengah (1), lalu buat melingkar ke atas dan bawah (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M25,30 L75,30 L65,85 L35,85 Z" fill="#ffffff" class="paintable"/><path d="M25,30 Q50,5 75,30" fill="none" stroke-width="3"/><path d="M30,55 L70,55" stroke-dasharray="2,2"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M32,28 Q50,18 68,28" stroke="#64748b" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M25,32 L32,88 L68,88 L75,32 Z" fill="#3b82f6" class="paintable"/>
+  <rect x="22" y="28" width="56" height="8" rx="4" fill="#60a5fa" class="paintable"/>
+  <path d="M30,60 Q50,52 70,60 L68,88 L32,88 Z" fill="#93c5fd" class="paintable" opacity="0.8"/>
+  <ellipse cx="42" cy="68" rx="7" ry="3" fill="white" opacity="0.3" transform="rotate(-15 42 68)"/>
+  <path d="M28,48 L72,48" stroke="#2563eb" stroke-width="1.5" opacity="0.4"/>
+</svg>`
             },
             {
-                letter: 'F', lowercase: 'f', word: 'Foto',
+                letter: 'F', lowercase: 'f', word: 'Flamingo',
                 guide: 'F: Garis tegak ke bawah (1), buat garis mendatar di atas (2), dan tengah (3).<br>f: Buat payung melengkung ke bawah (1), lalu garis lintang di tengah (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><rect x="20" y="25" width="60" height="50" rx="5" fill="#ffffff" class="paintable"/><rect x="28" y="32" width="44" height="36" fill="#ffffff" class="paintable"/><circle cx="40" cy="45" r="5" fill="#ffffff" class="paintable"/><path d="M55,60 L65,48 L72,55" stroke-linecap="round"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M55,80 L55,95 L60,95" stroke="#f9a8d4" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M50,78 L48,95 L43,95" stroke="#f9a8d4" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <ellipse cx="50" cy="65" rx="22" ry="18" fill="#f9a8d4" class="paintable"/>
+  <path d="M30,60 C20,55 18,70 28,72 C30,65 35,62 30,60 Z" fill="#f472b6" class="paintable"/>
+  <path d="M50,48 C48,38 42,28 48,18 C52,14 56,16 58,22 C55,20 52,22 52,28 C54,36 56,42 55,50" stroke="#f9a8d4" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <circle cx="56" cy="18" r="10" fill="#f9a8d4" class="paintable"/>
+  <path d="M63,18 L75,20 Q72,25 63,22 Z" fill="#1e293b"/>
+  <path d="M63,18 L75,20 L63,20 Z" fill="#fbbf24"/>
+  <circle cx="60" cy="15" r="2.5" fill="#1e293b"/>
+  <circle cx="61" cy="14" r="0.8" fill="white"/>
+</svg>`
             },
             {
                 letter: 'G', lowercase: 'g', word: 'Gajah',
                 guide: 'G: Buat lengkungan besar hampir satu lingkaran (1), lalu garis siku mendatar ke dalam (2).<br>g: Buat perut melengkung di atas (1), tarik garis tegak ke bawah dengan ekor melengkung ke kiri (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M40,30 C15,30 15,75 40,75 C55,75 70,65 70,50 C70,30 55,30 40,30 Z" fill="#ffffff" class="paintable"/><path d="M70,45 C75,45 85,55 80,70" stroke-width="3"/><circle cx="35" cy="45" r="3" fill="#000"/><path d="M55,30 C55,15 45,15 45,30" fill="#ffffff" class="paintable"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <rect x="24" y="74" width="13" height="18" rx="6" fill="#94a3b8" class="paintable"/>
+  <rect x="42" y="74" width="13" height="18" rx="6" fill="#94a3b8" class="paintable"/>
+  <rect x="58" y="74" width="13" height="18" rx="6" fill="#94a3b8" class="paintable"/>
+  <ellipse cx="50" cy="66" rx="30" ry="20" fill="#94a3b8" class="paintable"/>
+  <circle cx="30" cy="48" r="20" fill="#94a3b8" class="paintable"/>
+  <ellipse cx="14" cy="48" rx="12" ry="16" fill="#cbd5e1" class="paintable"/>
+  <ellipse cx="14" cy="48" rx="8" ry="11" fill="#f9a8d4" class="paintable" opacity="0.6"/>
+  <path d="M22,60 C16,68 12,76 18,84 C22,88 26,86 22,80" stroke="#64748b" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <circle cx="36" cy="44" r="4" fill="white"/>
+  <circle cx="37" cy="44" r="2.5" fill="#1e293b"/>
+  <circle cx="38" cy="43" r="0.8" fill="white"/>
+  <path d="M22,58 L14,65" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <path d="M78,60 C85,58 88,65 84,68" stroke="#64748b" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>`
             },
             {
                 letter: 'H', lowercase: 'h', word: 'Harimau',
                 guide: 'H: Tarik garis tegak kiri (1), tegak kanan (2), sambungkan garis tengah (3).<br>h: Tarik garis tegak lurus panjang (1), buat bukit melengkung ke kanan lalu ke bawah (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="50" cy="50" r="30" fill="#ffffff" class="paintable"/><path d="M35,30 L25,15 L35,22 Z M65,30 L75,15 L65,22 Z" fill="#ffffff" class="paintable"/><circle cx="40" cy="45" r="3" fill="#000"/><circle cx="60" cy="45" r="3" fill="#000"/><path d="M45,55 Q50,60 55,55" stroke-linecap="round"/><path d="M20,50 L30,50 M80,50 L70,50 M50,20 L50,28" stroke-width="3"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="50" cy="70" rx="26" ry="20" fill="#f97316" class="paintable"/>
+  <path d="M30,62 C35,58 38,65 30,70" stroke="#92400e" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M70,62 C65,58 62,65 70,70" stroke="#92400e" stroke-width="3" fill="none" opacity="0.6"/>
+  <ellipse cx="34" cy="86" rx="9" ry="7" fill="#fb923c" class="paintable"/>
+  <ellipse cx="66" cy="86" rx="9" ry="7" fill="#fb923c" class="paintable"/>
+  <circle cx="50" cy="44" r="26" fill="#f97316" class="paintable"/>
+  <path d="M26,24 L20,10 L36,18 Z" fill="#f97316" class="paintable"/>
+  <path d="M74,24 L80,10 L64,18 Z" fill="#f97316" class="paintable"/>
+  <path d="M28,23 L24,14 L34,20 Z" fill="#fde68a" class="paintable"/>
+  <path d="M72,23 L76,14 L66,20 Z" fill="#fde68a" class="paintable"/>
+  <ellipse cx="50" cy="52" rx="18" ry="14" fill="#fef3c7" class="paintable"/>
+  <path d="M40,22 C38,30 40,36 38,42" stroke="#92400e" stroke-width="3" fill="none"/>
+  <path d="M50,18 L50,28" stroke="#92400e" stroke-width="3"/>
+  <path d="M60,22 C62,30 60,36 62,42" stroke="#92400e" stroke-width="3" fill="none"/>
+  <circle cx="42" cy="42" r="5" fill="#fef9c3"/>
+  <circle cx="58" cy="42" r="5" fill="#fef9c3"/>
+  <circle cx="43" cy="42" r="3" fill="#1e293b"/>
+  <circle cx="59" cy="42" r="3" fill="#1e293b"/>
+  <circle cx="44" cy="41" r="1" fill="white"/>
+  <circle cx="60" cy="41" r="1" fill="white"/>
+  <ellipse cx="50" cy="50" rx="4" ry="3" fill="#1e293b"/>
+  <path d="M20,50 L38,52 M20,56 L38,54" stroke="#92400e" stroke-width="1.5"/>
+  <path d="M80,50 L62,52 M80,56 L62,54" stroke="#92400e" stroke-width="1.5"/>
+  <path d="M44,55 Q50,61 56,55" stroke="#92400e" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>`
             },
             {
                 letter: 'I', lowercase: 'i', word: 'Ikan',
                 guide: 'I: Tarik garis tegak lurus ke bawah (1), tambah topi mendatar (2), dan alas bawah (3).<br>i: Tarik garis tegak kecil (1), beri titik di atasnya (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M15,50 C30,30 65,30 85,50 C65,70 30,70 15,50 Z" fill="#ffffff" class="paintable"/><path d="M85,50 L95,35 L90,50 L95,65 Z" fill="#ffffff" class="paintable"/><circle cx="30" cy="45" r="3" fill="#000"/><path d="M45,40 Q40,50 45,60" stroke-linecap="round"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M72,50 L90,32 L88,50 L90,68 Z" fill="#818cf8" class="paintable"/>
+  <ellipse cx="48" cy="50" rx="32" ry="20" fill="#6366f1" class="paintable"/>
+  <ellipse cx="46" cy="56" rx="22" ry="12" fill="#a5b4fc" class="paintable" opacity="0.7"/>
+  <path d="M40,30 C45,22 55,22 60,30" stroke="#4338ca" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M45,70 C48,78 52,78 55,70" stroke="#4338ca" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M52,36 Q58,42 52,50 M40,38 Q46,44 40,52 M28,42 Q34,48 28,56" stroke="#4338ca" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <circle cx="26" cy="46" r="7" fill="white"/>
+  <circle cx="27" cy="46" r="4" fill="#1e293b"/>
+  <circle cx="28" cy="45" r="1.5" fill="white"/>
+  <path d="M18,52 Q15,50 18,48" stroke="#4338ca" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <circle cx="12" cy="38" r="3" fill="none" stroke="#93c5fd" stroke-width="1.5"/>
+  <circle cx="8" cy="30" r="2" fill="none" stroke="#93c5fd" stroke-width="1.5"/>
+</svg>`
             },
             {
-                letter: 'J', lowercase: 'j', word: 'Jagung',
+                letter: 'J', lowercase: 'j', word: 'Jerapah',
                 guide: 'J: Tarik garis tegak ke bawah, melengkung payung ke kiri (1), beri atap mendatar di atas (2).<br>j: Tarik garis tegak ke bawah melengkung ke kiri (1), beri titik di atasnya (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M35,20 C45,20 65,40 65,70 C65,85 55,90 45,90 C35,90 25,75 25,60 Z" fill="#ffffff" class="paintable"/><path d="M45,20 Q55,10 50,5 M45,20 Q35,10 40,5" stroke-width="2"/><circle cx="35" cy="45" r="2" fill="#000"/><circle cx="45" cy="55" r="2" fill="#000"/><circle cx="35" cy="65" r="2" fill="#000"/><circle cx="50" cy="45" r="2" fill="#000"/><circle cx="55" cy="65" r="2" fill="#000"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <rect x="34" y="72" width="9" height="22" rx="4" fill="#d97706" class="paintable"/>
+  <rect x="57" y="72" width="9" height="22" rx="4" fill="#d97706" class="paintable"/>
+  <ellipse cx="50" cy="66" rx="20" ry="16" fill="#fbbf24" class="paintable"/>
+  <path d="M36,60 C40,56 46,60 42,66 C38,66 34,64 36,60 Z" fill="#d97706" class="paintable" opacity="0.6"/>
+  <path d="M54,70 C58,66 64,70 60,76 C56,76 52,74 54,70 Z" fill="#d97706" class="paintable" opacity="0.6"/>
+  <path d="M46,52 L44,18 L56,18 L58,52 Z" fill="#fbbf24" class="paintable"/>
+  <ellipse cx="52" cy="38" rx="5" ry="6" fill="#d97706" class="paintable" opacity="0.5"/>
+  <ellipse cx="47" cy="26" rx="4" ry="5" fill="#d97706" class="paintable" opacity="0.5"/>
+  <ellipse cx="50" cy="14" rx="12" ry="10" fill="#fbbf24" class="paintable"/>
+  <rect x="44" y="5" width="4" height="8" rx="2" fill="#d97706" class="paintable"/>
+  <rect x="52" y="5" width="4" height="8" rx="2" fill="#d97706" class="paintable"/>
+  <ellipse cx="38" cy="15" rx="5" ry="7" fill="#fbbf24" class="paintable"/>
+  <ellipse cx="62" cy="15" rx="5" ry="7" fill="#fbbf24" class="paintable"/>
+  <circle cx="44" cy="12" r="3" fill="#1e293b"/>
+  <circle cx="45" cy="11" r="1" fill="white"/>
+  <ellipse cx="58" cy="17" rx="6" ry="4" fill="#fde68a" class="paintable"/>
+  <circle cx="56" cy="17" r="1" fill="#92400e"/>
+  <circle cx="60" cy="17" r="1" fill="#92400e"/>
+</svg>`
             },
             {
-                letter: 'K', lowercase: 'k', word: 'Kelinci',
+                letter: 'K', lowercase: 'k', word: 'Kupu-kupu',
                 guide: 'K: Garis tegak ke bawah (1), garis miring masuk ke tengah (2), miring keluar ke bawah (3).<br>k: Garis tegak lurus (1), garis miring kecil kanan atas (2), miring keluar kanan bawah (3).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M40,55 C40,40 60,40 60,55 C60,70 40,70 40,55 Z" fill="#ffffff" class="paintable"/><path d="M43,45 C43,20 48,15 48,42" fill="#ffffff" class="paintable"/><path d="M57,45 C57,20 52,15 52,42" fill="#ffffff" class="paintable"/><circle cx="47" cy="52" r="1.5" fill="#000"/><circle cx="53" cy="52" r="1.5" fill="#000"/><path d="M48,58 Q50,60 52,58" stroke-linecap="round"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M50,48 C44,38 28,22 18,28 C10,34 14,52 26,54 C36,56 46,50 50,48 Z" fill="#a855f7" class="paintable"/>
+  <path d="M50,48 C44,40 30,28 22,32 C16,36 18,48 28,50 C38,52 48,50 50,48 Z" fill="#c084fc" class="paintable" opacity="0.6"/>
+  <path d="M50,48 C56,38 72,22 82,28 C90,34 86,52 74,54 C64,56 54,50 50,48 Z" fill="#a855f7" class="paintable"/>
+  <path d="M50,48 C56,40 70,28 78,32 C84,36 82,48 72,50 C62,52 52,50 50,48 Z" fill="#c084fc" class="paintable" opacity="0.6"/>
+  <path d="M50,55 C44,62 28,72 22,80 C18,86 28,92 38,86 C46,80 50,65 50,55 Z" fill="#e879f9" class="paintable"/>
+  <path d="M50,55 C56,62 72,72 78,80 C82,86 72,92 62,86 C54,80 50,65 50,55 Z" fill="#e879f9" class="paintable"/>
+  <circle cx="32" cy="40" r="5" fill="#fde68a" class="paintable" opacity="0.8"/>
+  <circle cx="68" cy="40" r="5" fill="#fde68a" class="paintable" opacity="0.8"/>
+  <circle cx="30" cy="72" r="4" fill="#fde68a" class="paintable" opacity="0.8"/>
+  <circle cx="70" cy="72" r="4" fill="#fde68a" class="paintable" opacity="0.8"/>
+  <ellipse cx="50" cy="55" rx="5" ry="20" fill="#581c87"/>
+  <circle cx="50" cy="34" r="7" fill="#581c87"/>
+  <path d="M47,28 C44,20 40,16 38,14" stroke="#581c87" stroke-width="2" fill="none"/>
+  <circle cx="38" cy="14" r="2.5" fill="#fde68a"/>
+  <path d="M53,28 C56,20 60,16 62,14" stroke="#581c87" stroke-width="2" fill="none"/>
+  <circle cx="62" cy="14" r="2.5" fill="#fde68a"/>
+</svg>`
             },
             {
                 letter: 'L', lowercase: 'l', word: 'Lemon',
                 guide: 'L: Tarik garis lurus tegak (1), lalu buat garis mendatar ke kanan di bagian bawah (2).<br>l: Cukup tarik garis tegak lurus dari atas ke bawah (1).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M20,50 C20,30 40,25 50,25 C70,25 80,40 80,50 C80,70 60,75 50,75 C30,75 20,70 20,50 Z" fill="#ffffff" class="paintable"/><path d="M15,50 Q20,50 20,50 M80,50 Q85,50 85,50" stroke-width="3"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22,50 C22,28 36,15 50,15 C64,15 78,28 78,50 C78,72 64,85 50,85 C36,85 22,72 22,50 Z" fill="#fde047" class="paintable"/>
+  <ellipse cx="36" cy="30" rx="10" ry="14" fill="#fef9c3" class="paintable" opacity="0.5" transform="rotate(-20 36 30)"/>
+  <path d="M22,50 C18,50 12,44 10,38 C14,36 20,44 22,50 Z" fill="#facc15" class="paintable"/>
+  <path d="M78,50 C82,50 88,44 90,38 C86,36 80,44 78,50 Z" fill="#facc15" class="paintable"/>
+  <path d="M50,15 C46,6 38,4 36,10 C40,12 46,14 50,15 Z" fill="#4ade80" class="paintable"/>
+  <path d="M50,20 L50,80 M30,35 L70,65 M30,65 L70,35" stroke="#fbbf24" stroke-width="1" opacity="0.4"/>
+</svg>`
             },
             {
                 letter: 'M', lowercase: 'm', word: 'Mobil',
                 guide: 'M: Garis tegak (1), miring ke tengah bawah (2), miring naik kanan (3), tegak ke bawah (4).<br>m: Garis tegak pendek (1), buat dua bukit melengkung berurutan ke kanan (2, 3).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M15,60 L20,40 L70,40 L80,60 L85,60 L85,75 L15,75 Z" fill="#ffffff" class="paintable"/><circle cx="30" cy="75" r="10" fill="#ffffff" class="paintable"/><circle cx="70" cy="75" r="10" fill="#ffffff" class="paintable"/><rect x="30" y="45" width="15" height="12" fill="#ffffff" class="paintable"/><rect x="52" y="45" width="15" height="12" fill="#ffffff" class="paintable"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="58" width="80" height="24" rx="8" fill="#ef4444" class="paintable"/>
+  <path d="M25,58 L32,36 L68,36 L75,58 Z" fill="#dc2626" class="paintable"/>
+  <path d="M68,40 L72,58 L56,58 L60,40 Z" fill="#bfdbfe" class="paintable" opacity="0.9"/>
+  <path d="M32,40 L28,58 L44,58 L40,40 Z" fill="#bfdbfe" class="paintable" opacity="0.9"/>
+  <rect x="44" y="40" width="12" height="18" rx="2" fill="#bfdbfe" class="paintable" opacity="0.9"/>
+  <circle cx="25" cy="82" r="12" fill="#1e293b" class="paintable"/>
+  <circle cx="25" cy="82" r="7" fill="#475569"/>
+  <circle cx="25" cy="82" r="3" fill="#94a3b8"/>
+  <circle cx="75" cy="82" r="12" fill="#1e293b" class="paintable"/>
+  <circle cx="75" cy="82" r="7" fill="#475569"/>
+  <circle cx="75" cy="82" r="3" fill="#94a3b8"/>
+  <ellipse cx="87" cy="65" rx="5" ry="4" fill="#fde68a"/>
+  <ellipse cx="13" cy="65" rx="4" ry="3" fill="#fca5a5"/>
+  <rect x="30" y="60" width="17" height="16" rx="3" fill="#dc2626" stroke="#c21e1e" stroke-width="1" class="paintable"/>
+  <rect x="53" y="60" width="17" height="16" rx="3" fill="#dc2626" stroke="#c21e1e" stroke-width="1" class="paintable"/>
+  <ellipse cx="47" cy="68" rx="2" ry="1.5" fill="#fbbf24"/>
+  <ellipse cx="70" cy="68" rx="2" ry="1.5" fill="#fbbf24"/>
+</svg>`
             },
             {
                 letter: 'N', lowercase: 'n', word: 'Nanas',
                 guide: 'N: Tarik garis tegak kiri (1), miring ke kanan bawah (2), tegak kanan ke atas (3).<br>n: Tarik garis tegak pendek (1), buat satu bukit melengkung ke kanan dan bawah (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M35,40 C35,25 65,25 65,40 C65,65 60,85 50,85 C40,85 35,65 35,40 Z" fill="#ffffff" class="paintable"/><path d="M50,25 L45,10 L50,25 L55,10" stroke-width="3" stroke-linecap="round"/><path d="M38,45 L62,45 M36,55 L64,55 M38,65 L62,65 M42,75 L58,75" stroke-dasharray="3,3"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M50,22 C48,10 40,4 38,8 C42,14 46,18 50,22 Z" fill="#16a34a" class="paintable"/>
+  <path d="M50,22 C52,10 60,4 62,8 C58,14 54,18 50,22 Z" fill="#16a34a" class="paintable"/>
+  <path d="M50,22 C44,8 36,8 36,14 C40,16 46,20 50,22 Z" fill="#4ade80" class="paintable"/>
+  <path d="M50,22 C56,8 64,8 64,14 C60,16 54,20 50,22 Z" fill="#4ade80" class="paintable"/>
+  <path d="M50,22 L50,10" stroke="#16a34a" stroke-width="4" stroke-linecap="round"/>
+  <path d="M28,40 C28,28 36,22 50,22 C64,22 72,28 72,40 C72,65 64,88 50,88 C36,88 28,65 28,40 Z" fill="#fbbf24" class="paintable"/>
+  <path d="M36,32 L50,26 L64,32 L70,48 L64,64 L50,70 L36,64 L30,48 Z" stroke="#d97706" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M36,48 L50,42 L64,48 L64,64 L50,70 L36,64 Z" stroke="#d97706" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M50,26 L50,88 M36,32 L36,64 M64,32 L64,64" stroke="#d97706" stroke-width="1" fill="none" opacity="0.3"/>
+  <ellipse cx="40" cy="38" rx="7" ry="10" fill="white" opacity="0.2" transform="rotate(-20 40 38)"/>
+</svg>`
             },
             {
                 letter: 'O', lowercase: 'o', word: 'Obor',
                 guide: 'O: Mulai dari atas, buat satu lingkaran bulat besar sempurna (1).<br>o: Mulai dari atas, buat satu lingkaran bulat kecil sempurna (1).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M45,45 L55,45 L60,85 L40,85 Z" fill="#ffffff" class="paintable"/><path d="M50,45 C50,45 65,30 60,15 C55,30 45,30 50,45 Z" fill="#ffffff" class="paintable"/><path d="M50,45 C50,45 35,30 40,15 C45,30 50,45 50,45 Z" fill="#ffffff" class="paintable"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <rect x="44" y="60" width="12" height="35" rx="6" fill="#92400e" class="paintable"/>
+  <rect x="46" y="62" width="4" height="30" rx="2" fill="#b45309" class="paintable" opacity="0.5"/>
+  <path d="M38,55 L42,62 L58,62 L62,55 Z" fill="#78350f" class="paintable"/>
+  <path d="M50,10 C42,18 36,26 38,40 C40,52 44,58 50,60 C56,58 60,52 62,40 C64,26 58,18 50,10 Z" fill="#f97316" class="paintable"/>
+  <path d="M50,18 C44,26 40,34 42,44 C44,52 47,57 50,58 C53,57 56,52 58,44 C60,34 56,26 50,18 Z" fill="#fbbf24" class="paintable"/>
+  <path d="M50,26 C46,32 44,40 46,48 C48,54 50,57 50,57 C50,57 52,54 54,48 C56,40 54,32 50,26 Z" fill="#fef9c3" class="paintable"/>
+  <circle cx="38" cy="25" r="2.5" fill="#fb923c" opacity="0.8"/>
+  <circle cx="62" cy="20" r="2" fill="#fb923c" opacity="0.7"/>
+  <circle cx="34" cy="35" r="1.5" fill="#fbbf24" opacity="0.7"/>
+  <circle cx="65" cy="32" r="2" fill="#fbbf24" opacity="0.6"/>
+</svg>`
             },
             {
                 letter: 'P', lowercase: 'p', word: 'Pisang',
                 guide: 'P: Garis tegak ke bawah (1), buat kepala melengkung di kanan atas (2).<br>p: Garis tegak lurus meluncur ke bawah (1), buat kepala bulat melengkung di kanan atas (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M25,20 Q50,25 75,15 Q80,45 60,75 Q40,90 25,20" fill="#ffffff" class="paintable"/><path d="M22,17 Q25,12 25,20" stroke-width="3"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M62,28 C72,24 80,32 78,52 C74,68 68,76 60,74 C58,66 60,52 62,28 Z" fill="#fde047" class="paintable"/>
+  <path d="M38,28 C28,24 20,32 22,52 C26,68 32,76 40,74 C42,66 40,52 38,28 Z" fill="#fde047" class="paintable"/>
+  <path d="M50,22 C38,22 28,38 30,62 C32,78 40,86 50,86 C60,86 68,78 70,62 C72,38 62,22 50,22 Z" fill="#facc15" class="paintable"/>
+  <ellipse cx="42" cy="42" rx="5" ry="12" fill="white" opacity="0.3" transform="rotate(-10 42 42)"/>
+  <path d="M50,22 C48,14 44,10 42,8 C44,8 48,14 50,22 Z" fill="#a16207" class="paintable"/>
+  <ellipse cx="50" cy="86" rx="5" ry="3" fill="#a16207" class="paintable"/>
+</svg>`
             },
             {
                 letter: 'Q', lowercase: 'q', word: 'Quran',
                 guide: 'Q: Buat lingkaran bulat besar (1), lalu garis miring kecil di kanan bawah keluar (2).<br>q: Buat kepala melengkung di kiri (1), tarik garis tegak lurus panjang ke bawah di kanan (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><rect x="25" y="35" width="50" height="35" rx="3" fill="#ffffff" class="paintable"/><path d="M50,35 L50,70" stroke-width="2"/><path d="M30,45 L45,45 M30,55 L45,55 M55,45 L70,45 M55,55 L70,55" stroke-dasharray="2,2"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <rect x="24" y="18" width="52" height="68" rx="6" fill="#d97706" opacity="0.4"/>
+  <rect x="20" y="14" width="52" height="68" rx="6" fill="#16a34a" class="paintable"/>
+  <rect x="20" y="14" width="10" height="68" rx="4" fill="#15803d" class="paintable"/>
+  <rect x="32" y="20" width="34" height="56" rx="3" fill="#fef9c3" class="paintable"/>
+  <path d="M38,26 Q49,20 60,26" stroke="#d97706" stroke-width="2" fill="none"/>
+  <path d="M38,36 C42,33 46,36 46,40 C46,44 42,46 40,44" stroke="#16a34a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M50,36 L56,36 L56,44 L50,44" stroke="#16a34a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M40,52 L56,52" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M40,58 L56,58" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M42,64 L54,64" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M49,28 L50,24 L51,28 L55,28 L52,31 L53,35 L50,32 L47,35 L48,31 L45,28 Z" fill="#fbbf24" class="paintable"/>
+  <path d="M60,14 L60,32 L57,28 L54,32 L54,14" fill="#ef4444" class="paintable"/>
+</svg>`
             },
             {
                 letter: 'R', lowercase: 'r', word: 'Roti',
                 guide: 'R: Garis tegak ke bawah (1), buat kepala melengkung (2), lalu kaki miring keluar kanan (3).<br>r: Garis tegak pendek ke bawah (1), lalu buat lengkungan cabang kecil ke kanan (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><rect x="25" y="35" width="50" height="40" rx="10" fill="#ffffff" class="paintable"/><path d="M20,35 C20,25 80,25 80,35" stroke-width="3"/><path d="M35,50 L40,50 M60,50 L65,50 M45,60 Q50,65 55,60" stroke-linecap="round"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="51" cy="88" rx="30" ry="5" fill="#d97706" opacity="0.3"/>
+  <rect x="18" y="58" width="64" height="28" rx="10" fill="#fbbf24" class="paintable"/>
+  <path d="M18,62 C18,38 82,38 82,62 Z" fill="#fde68a" class="paintable"/>
+  <path d="M18,62 C18,42 82,42 82,62" stroke="#d97706" stroke-width="2" fill="none"/>
+  <rect x="18" y="62" width="64" height="3" fill="#d97706" opacity="0.3"/>
+  <circle cx="34" cy="48" r="2" fill="#d97706" opacity="0.6"/>
+  <circle cx="44" cy="44" r="2" fill="#d97706" opacity="0.6"/>
+  <circle cx="54" cy="44" r="2" fill="#d97706" opacity="0.6"/>
+  <circle cx="64" cy="48" r="2" fill="#d97706" opacity="0.6"/>
+  <circle cx="50" cy="52" r="2" fill="#d97706" opacity="0.6"/>
+  <path d="M36,32 C34,26 38,22 36,16" stroke="#94a3b8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M50,28 C48,22 52,18 50,12" stroke="#94a3b8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M64,32 C62,26 66,22 64,16" stroke="#94a3b8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+</svg>`
             },
             {
                 letter: 'S', lowercase: 's', word: 'Semangka',
                 guide: 'S: Mulai dari kanan atas, lengkung ke kiri, lalu liuk ke kanan dan balik ke kiri (1).<br>s: Versi mini dari huruf S besar dengan gerakan meliuk yang sama (1).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M15,35 Q50,85 85,35" fill="#ffffff" class="paintable"/><path d="M15,35 Z" fill="none"/><circle cx="35" cy="45" r="2" fill="#000"/><circle cx="50" cy="55" r="2" fill="#000"/><circle cx="65" cy="45" r="2" fill="#000"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10,75 A45,45 0 0,1 90,75 Z" fill="#16a34a" class="paintable"/>
+  <path d="M14,75 A41,41 0 0,1 86,75 Z" fill="#f0fdf4" class="paintable"/>
+  <path d="M18,75 A37,37 0 0,1 82,75 Z" fill="#f43f5e" class="paintable"/>
+  <ellipse cx="30" cy="65" rx="3" ry="4" fill="#1e293b" transform="rotate(-30 30 65)" class="paintable"/>
+  <ellipse cx="45" cy="58" rx="3" ry="4" fill="#1e293b" transform="rotate(-10 45 58)" class="paintable"/>
+  <ellipse cx="60" cy="58" rx="3" ry="4" fill="#1e293b" transform="rotate(10 60 58)" class="paintable"/>
+  <ellipse cx="72" cy="65" rx="3" ry="4" fill="#1e293b" transform="rotate(25 72 65)" class="paintable"/>
+  <ellipse cx="50" cy="62" rx="3" ry="4" fill="#1e293b" class="paintable"/>
+  <ellipse cx="36" cy="62" rx="6" ry="4" fill="white" opacity="0.3" transform="rotate(-20 36 62)"/>
+  <path d="M10,75 A45,45 0 0,1 90,75" stroke="#15803d" stroke-width="2" fill="none"/>
+</svg>`
             },
             {
                 letter: 'T', lowercase: 't', word: 'Topi',
                 guide: 'T: Garis tegak ke bawah (1), lalu garis penutup mendatar di atas (2).<br>t: Garis tegak ke bawah sedikit melengkung di ujung bawah (1), garis lintang tengah (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M30,60 C30,30 70,30 70,60 Z" fill="#ffffff" class="paintable"/><path d="M15,60 L85,60 L80,70 L20,70 Z" fill="#ffffff" class="paintable"/><rect x="42" y="30" width="16" height="8" fill="#ffffff" class="paintable"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="50" cy="78" rx="38" ry="10" fill="#8b5cf6" class="paintable"/>
+  <ellipse cx="50" cy="78" rx="32" ry="7" fill="#a78bfa" class="paintable"/>
+  <path d="M50,10 L18,78 L82,78 Z" fill="#ec4899" class="paintable"/>
+  <path d="M50,10 L30,55 M50,10 L70,55" stroke="#fbbf24" stroke-width="3" opacity="0.6"/>
+  <circle cx="34" cy="48" r="4" fill="#fbbf24" class="paintable"/>
+  <circle cx="66" cy="48" r="4" fill="#4ade80" class="paintable"/>
+  <circle cx="40" cy="65" r="3" fill="white" class="paintable"/>
+  <circle cx="60" cy="65" r="3" fill="#38bdf8" class="paintable"/>
+  <circle cx="50" cy="40" r="3" fill="white" class="paintable"/>
+  <circle cx="50" cy="6" r="4" fill="#fbbf24" class="paintable"/>
+</svg>`
             },
             {
                 letter: 'U', lowercase: 'u', word: 'Ulat',
                 guide: 'U: Tarik garis ke bawah melengkung lebar di bawah dan naik lagi ke atas (1).<br>u: Tarik garis melengkung bawah (1), tambah ekor garis tegak pendek di kanan (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="25" cy="50" r="10" fill="#ffffff" class="paintable"/><circle cx="41" cy="50" r="10" fill="#ffffff" class="paintable"/><circle cx="57" cy="50" r="10" fill="#ffffff" class="paintable"/><circle cx="73" cy="50" r="10" fill="#ffffff" class="paintable"/><circle cx="21" cy="46" r="1.5" fill="#000"/><path d="M15,38 L22,43" stroke-width="2"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="78" cy="62" r="11" fill="#4ade80" class="paintable"/>
+  <circle cx="64" cy="56" r="12" fill="#22c55e" class="paintable"/>
+  <circle cx="50" cy="58" r="12" fill="#4ade80" class="paintable"/>
+  <circle cx="36" cy="56" r="12" fill="#22c55e" class="paintable"/>
+  <circle cx="24" cy="60" r="11" fill="#4ade80" class="paintable"/>
+  <circle cx="30" cy="42" r="16" fill="#16a34a" class="paintable"/>
+  <path d="M30,70 L26,82 M22,68 L18,80 M42,66 L40,78 M56,68 L54,80 M68,64 L66,76 M80,70 L78,82" stroke="#15803d" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="24" cy="38" r="5" fill="white"/>
+  <circle cx="36" cy="38" r="5" fill="white"/>
+  <circle cx="25" cy="38" r="3" fill="#1e293b"/>
+  <circle cx="37" cy="38" r="3" fill="#1e293b"/>
+  <circle cx="26" cy="37" r="1" fill="white"/>
+  <circle cx="38" cy="37" r="1" fill="white"/>
+  <path d="M24,28 C22,20 18,16 16,14" stroke="#15803d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <circle cx="16" cy="14" r="3" fill="#fde047"/>
+  <path d="M36,28 C38,20 42,16 44,14" stroke="#15803d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <circle cx="44" cy="14" r="3" fill="#fde047"/>
+  <path d="M26,46 Q30,50 34,46" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <circle cx="20" cy="44" r="3" fill="#f9a8d4" opacity="0.7"/>
+  <circle cx="40" cy="44" r="3" fill="#f9a8d4" opacity="0.7"/>
+</svg>`
             },
             {
-                letter: 'V', lowercase: 'v', word: 'Vas',
+                letter: 'V', lowercase: 'v', word: 'Vas Bunga',
                 guide: 'V: Tarik garis miring turun ke kanan bawah (1), lalu miring naik ke kanan atas (2).<br>v: Versi kecil dari huruf V besar (1, 2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M35,30 L65,30 L58,80 L42,80 Z" fill="#ffffff" class="paintable"/><path d="M30,30 Q50,45 70,30" stroke-width="2"/><path d="M42,80 L35,90 L65,90 L58,80" stroke-width="2"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="38" cy="22" r="8" fill="#ef4444" class="paintable"/>
+  <circle cx="30" cy="16" r="7" fill="#ef4444" class="paintable"/>
+  <circle cx="46" cy="16" r="7" fill="#ef4444" class="paintable"/>
+  <circle cx="38" cy="10" r="7" fill="#ef4444" class="paintable"/>
+  <circle cx="38" cy="18" r="6" fill="#fca5a5" class="paintable"/>
+  <circle cx="64" cy="20" r="7" fill="#fbbf24" class="paintable"/>
+  <circle cx="57" cy="14" r="6" fill="#fbbf24" class="paintable"/>
+  <circle cx="71" cy="14" r="6" fill="#fbbf24" class="paintable"/>
+  <circle cx="64" cy="8" r="6" fill="#fbbf24" class="paintable"/>
+  <circle cx="64" cy="16" r="5" fill="#fde68a" class="paintable"/>
+  <path d="M42,32 C46,24 52,22 50,32 C48,26 44,28 42,32 Z" fill="#4ade80" class="paintable"/>
+  <path d="M58,30 C54,22 48,20 50,30 C52,24 56,26 58,30 Z" fill="#4ade80" class="paintable"/>
+  <path d="M38,28 L45,42 M64,26 L55,42" stroke="#15803d" stroke-width="2.5" fill="none"/>
+  <path d="M32,42 L28,78 L72,78 L68,42 Z" fill="#8b5cf6" class="paintable"/>
+  <rect x="38" y="38" width="24" height="8" rx="4" fill="#7c3aed" class="paintable"/>
+  <ellipse cx="50" cy="38" rx="16" ry="5" fill="#a78bfa" class="paintable"/>
+  <ellipse cx="50" cy="78" rx="24" ry="6" fill="#7c3aed" class="paintable"/>
+  <path d="M36,52 Q50,48 64,52 Q50,60 36,52 Z" fill="#a78bfa" class="paintable" opacity="0.5"/>
+</svg>`
             },
             {
                 letter: 'W', lowercase: 'w', word: 'Wortel',
                 guide: 'W: Garis miring turun (1), naik (2), turun (3), naik kanan atas (4).<br>w: Versi kecil dari huruf W besar (1, 2, 3, 4).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M50,85 L35,25 L65,25 Z" fill="#ffffff" class="paintable"/><path d="M50,25 Q50,10 40,5 M50,25 Q55,10 60,5" stroke-width="3"/><path d="M42,40 L58,40 M45,55 L55,55 M48,70 L52,70" stroke-dasharray="2,2"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M50,20 C44,8 32,6 30,14 C36,16 44,18 50,20 Z" fill="#16a34a" class="paintable"/>
+  <path d="M50,20 C50,6 44,2 40,8 C44,12 48,16 50,20 Z" fill="#4ade80" class="paintable"/>
+  <path d="M50,20 C56,8 68,6 70,14 C64,16 56,18 50,20 Z" fill="#16a34a" class="paintable"/>
+  <path d="M50,20 C50,6 56,2 60,8 C56,12 52,16 50,20 Z" fill="#4ade80" class="paintable"/>
+  <path d="M34,24 C38,20 62,20 66,24 C70,40 60,70 50,88 C40,70 30,40 34,24 Z" fill="#f97316" class="paintable"/>
+  <path d="M36,32 Q50,28 64,32" stroke="#ea580c" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M34,42 Q50,38 66,42" stroke="#ea580c" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M36,54 Q50,50 64,54" stroke="#ea580c" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M38,66 Q50,62 62,66" stroke="#ea580c" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <ellipse cx="42" cy="38" rx="6" ry="14" fill="white" opacity="0.2" transform="rotate(-10 42 38)"/>
+</svg>`
             },
             {
                 letter: 'X', lowercase: 'x', word: 'Xilofon',
                 guide: 'X: Tarik garis miring silang kanan (1), lalu miring silang kiri (2).<br>x: Versi kecil dari huruf X besar (1, 2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><rect x="15" y="30" width="12" height="40" fill="#ffffff" class="paintable"/><rect x="32" y="25" width="50" height="50" fill="#ffffff" class="paintable"/><rect x="49" y="20" width="12" height="60" fill="#ffffff" class="paintable"/><rect x="66" y="15" width="12" height="70" fill="#ffffff" class="paintable"/><path d="M10,48 L85,48" stroke-width="3"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <rect x="14" y="30" width="10" height="50" rx="4" fill="#ef4444" class="paintable"/>
+  <rect x="26" y="34" width="10" height="46" rx="4" fill="#f97316" class="paintable"/>
+  <rect x="38" y="28" width="10" height="52" rx="4" fill="#fbbf24" class="paintable"/>
+  <rect x="50" y="32" width="10" height="48" rx="4" fill="#4ade80" class="paintable"/>
+  <rect x="62" y="26" width="10" height="54" rx="4" fill="#3b82f6" class="paintable"/>
+  <rect x="74" y="30" width="10" height="50" rx="4" fill="#a855f7" class="paintable"/>
+  <circle cx="19" cy="46" r="3" fill="#dc2626"/>
+  <circle cx="31" cy="50" r="3" fill="#ea580c"/>
+  <circle cx="43" cy="44" r="3" fill="#d97706"/>
+  <circle cx="55" cy="48" r="3" fill="#16a34a"/>
+  <circle cx="67" cy="42" r="3" fill="#2563eb"/>
+  <circle cx="79" cy="46" r="3" fill="#7c3aed"/>
+  <rect x="10" y="78" width="80" height="8" rx="4" fill="#78350f" class="paintable"/>
+  <line x1="22" y1="20" x2="30" y2="28" stroke="#92400e" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="22" cy="18" r="6" fill="#fbbf24" class="paintable"/>
+  <line x1="78" y1="20" x2="70" y2="28" stroke="#92400e" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="78" cy="18" r="6" fill="#f9a8d4" class="paintable"/>
+</svg>`
             },
             {
                 letter: 'Y', lowercase: 'y', word: 'Yoyo',
                 guide: 'Y: Garis miring pendek kiri (1), miring pendek kanan bertemu di tengah (2), garis lurus ke bawah (3).<br>y: Garis miring pendek turun ke kanan (1), garis miring panjang meluncur ke kiri bawah (2).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><circle cx="50" cy="50" r="25" fill="#ffffff" class="paintable"/><circle cx="50" cy="50" r="18" fill="#ffffff" class="paintable"/><circle cx="50" cy="50" r="5" fill="#ffffff" class="paintable"/><path d="M50,25 L50,5 Q55,-2 70,5" stroke-width="2"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <path d="M50,10 L50,38" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="50" cy="60" rx="30" ry="28" fill="#6366f1" class="paintable"/>
+  <ellipse cx="52" cy="60" rx="28" ry="26" fill="#818cf8" class="paintable"/>
+  <ellipse cx="50" cy="60" rx="8" ry="26" fill="#4f46e5" class="paintable"/>
+  <path d="M50,34 L78,74 L22,74 Z" fill="#a5b4fc" class="paintable" opacity="0.3"/>
+  <path d="M50,86 L78,46 L22,46 Z" fill="#c7d2fe" class="paintable" opacity="0.3"/>
+  <circle cx="50" cy="60" r="6" fill="white" class="paintable"/>
+  <circle cx="50" cy="60" r="3" fill="#4f46e5"/>
+  <ellipse cx="38" cy="46" rx="8" ry="6" fill="white" opacity="0.25" transform="rotate(-20 38 46)"/>
+  <path d="M50,44 L52,50 L58,50 L53,54 L55,60 L50,56 L45,60 L47,54 L42,50 L48,50 Z" fill="#fbbf24" class="paintable" opacity="0.8"/>
+</svg>`
             },
             {
                 letter: 'Z', lowercase: 'z', word: 'Zebra',
                 guide: 'Z: Tarik garis mendatar atas (1), miring turun ke kiri bawah (2), mendatar bawah ke kanan (3).<br>z: Versi kecil dari huruf Z besar dengan gerakan yang sama (1, 2, 3).',
-                svg: `<svg viewBox="0 0 100 100" class="w-full h-full fill-none stroke-current text-slate-700" stroke-width="2" id="svg-color-obj"><path d="M30,30 C30,30 20,45 35,55 C50,65 50,85 70,80 C90,75 80,45 65,40" fill="#ffffff" class="paintable"/><path d="M35,30 L40,15 M65,40 L70,25" stroke-width="4"/><path d="M40,43 L48,48 M50,55 L58,60 M55,68 L63,73" stroke-width="3"/></svg>`
+                svg: `<svg viewBox="0 0 100 100" id="svg-color-obj" xmlns="http://www.w3.org/2000/svg">
+  <rect x="27" y="74" width="10" height="20" rx="5" fill="#f1f5f9" class="paintable"/>
+  <rect x="30" y="74" width="4" height="16" rx="2" fill="#1e293b" opacity="0.3"/>
+  <rect x="44" y="74" width="10" height="20" rx="5" fill="#f1f5f9" class="paintable"/>
+  <rect x="47" y="74" width="4" height="16" rx="2" fill="#1e293b" opacity="0.3"/>
+  <rect x="58" y="74" width="10" height="20" rx="5" fill="#f1f5f9" class="paintable"/>
+  <rect x="61" y="74" width="4" height="16" rx="2" fill="#1e293b" opacity="0.3"/>
+  <ellipse cx="50" cy="65" rx="30" ry="18" fill="#f8fafc" class="paintable"/>
+  <path d="M32,54 C36,50 38,58 32,64 Z" fill="#1e293b" class="paintable"/>
+  <path d="M46,52 C50,48 52,56 46,62 Z" fill="#1e293b" class="paintable"/>
+  <path d="M60,54 C64,50 66,58 60,64 Z" fill="#1e293b" class="paintable"/>
+  <path d="M72,58 C76,54 78,62 72,68 Z" fill="#1e293b" class="paintable"/>
+  <ellipse cx="28" cy="50" rx="18" ry="14" fill="#f8fafc" class="paintable"/>
+  <ellipse cx="16" cy="55" rx="12" ry="8" fill="#f1f5f9" class="paintable"/>
+  <ellipse cx="12" cy="56" rx="2" ry="1.5" fill="#94a3b8"/>
+  <ellipse cx="18" cy="57" rx="2" ry="1.5" fill="#94a3b8"/>
+  <path d="M24,38 C26,44 24,50 22,54" stroke="#1e293b" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M34,36 C36,42 34,48 32,52" stroke="#1e293b" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M30,36 L26,24 L36,30 Z" fill="#f8fafc" class="paintable"/>
+  <path d="M31,35 L28,26 L35,31 Z" fill="#f9a8d4"/>
+  <path d="M30,36 L36,30 L34,36 L40,28 L38,36 L44,30 L42,36" stroke="#1e293b" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="36" cy="48" r="4" fill="white"/>
+  <circle cx="37" cy="48" r="2.5" fill="#1e293b"/>
+  <circle cx="38" cy="47" r="0.8" fill="white"/>
+  <path d="M78,62 C86,58 90,64 86,70 C84,66 80,64 78,62 Z" fill="#1e293b" class="paintable"/>
+</svg>`
             }
         ];
 
