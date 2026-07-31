@@ -401,7 +401,8 @@
             worksheetData.forEach((item, idx) => {
                 const btn = document.createElement('button');
                 btn.className = `text-left px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-3 transition-colors ${idx === currentIndex ? `bg-${theme.color}-100 text-${theme.color}-700 border border-${theme.color}-200` : `text-slate-600 hover:bg-slate-50`}`;
-                btn.innerHTML = `<span class="text-xl w-6 text-center">${item.Emoji || ''}</span> ${item.Display_Text} - ${item.Word}`;
+                const navLabel = currentCategory === 'warmup' ? item.Word : `${item.Display_Text} - ${item.Word}`;
+                btn.innerHTML = `<span class="text-xl w-6 text-center">${item.Emoji || ''}</span> ${navLabel}`;
                 btn.onclick = () => loadItem(idx);
                 btn.id = `nav-btn-${idx}`;
                 
@@ -479,27 +480,40 @@
 
             // Update Header
             let priColor = currentItem.Primary_Color || theme.hex;
-            document.getElementById('header-badge').innerText = currentItem.Display_Text.split(' ')[0] || currentItem.Emoji;
+            // Warmup: gunakan emoji di badge, bukan kata pertama yg bisa overflow
+            const badgeText = currentCategory === 'warmup' ? currentItem.Emoji : (currentItem.Display_Text.split(' ')[0] || currentItem.Emoji);
+            document.getElementById('header-badge').innerText = badgeText;
             document.getElementById('header-badge').style.backgroundColor = `${priColor}20`; // 20% opacity
             document.getElementById('header-badge').style.color = priColor;
-            
+
             document.getElementById('header-tag').style.backgroundColor = `${priColor}20`;
             document.getElementById('header-tag').style.color = priColor;
-            document.getElementById('header-tag').innerText = `Mengenal ${currentItem.Word}`;
-            
-            document.getElementById('header-title').innerText = `${currentItem.Display_Text} — ${currentItem.Word}`;
-            
+            document.getElementById('header-tag').innerText = currentCategory === 'warmup' ? 'Latihan Motorik' : `Mengenal ${currentItem.Word}`;
+
+            // Warmup: Display_Text = Word (duplikat), cukup tampilkan Word saja
+            const titleText = currentCategory === 'warmup' ? currentItem.Word : `${currentItem.Display_Text} — ${currentItem.Word}`;
+            document.getElementById('header-title').innerText = titleText;
+
             // Update Guide
-            document.getElementById('guide-display').innerText = currentItem.Display_Text.split(' ')[0] || currentItem.Emoji;
+            // Warmup: guide-display pakai emoji supaya tidak overflow
+            const guideChar = currentCategory === 'warmup' ? currentItem.Emoji : (currentItem.Display_Text.split(' ')[0] || currentItem.Emoji);
+            document.getElementById('guide-display').innerText = guideChar;
             document.getElementById('guide-display').style.color = priColor;
             document.getElementById('guide-text').innerText = currentItem.Guide_Text;
-            
+
             // Update Audio
-            document.getElementById('btn-sound').onclick = () => speakText(`${currentItem.Display_Text}... ${currentItem.Word}. ${currentItem.Guide_Text}`);
+            const speakStr = currentCategory === 'warmup'
+                ? `${currentItem.Word}. ${currentItem.Guide_Text}`
+                : `${currentItem.Display_Text}... ${currentItem.Word}. ${currentItem.Guide_Text}`;
+            document.getElementById('btn-sound').onclick = () => speakText(speakStr);
             
             // Render Illustration
             const illuContainer = document.getElementById('illustration-container');
-            if (currentItem.SVG_Code && currentItem.SVG_Code.includes('<svg')) {
+            if (currentCategory === 'warmup') {
+                // Warmup: tampilkan SVG preview pola latihan, bukan emoji
+                illuContainer.innerHTML = getWarmupIllustrationHTML(currentItem.Item_ID, priColor, currentItem.Word);
+                document.getElementById('fill-palette-box').classList.add('hidden');
+            } else if (currentItem.SVG_Code && currentItem.SVG_Code.includes('<svg')) {
                 illuContainer.innerHTML = `
                     <div class="absolute top-2 left-2 text-[10px] font-bold bg-white border px-2 py-0.5 rounded-full z-10" style="color: ${priColor}; border-color: ${priColor}">Warna & Tebalkan!</div>
                     <div id="svg-color-obj" class="w-full h-44 flex items-center justify-center">${currentItem.SVG_Code}</div>
@@ -543,8 +557,9 @@
             updatePaginationDots();
 
             // Set Mascot
-            speakText(`Ini ${currentItem.Word}`);
-            document.getElementById('lumi-bubble').innerText = `"Ayo belajar ${currentItem.Display_Text}!"`;
+            speakText(currentCategory === 'warmup' ? `Ayo berlatih ${currentItem.Word}` : `Ini ${currentItem.Word}`);
+            const lumiMsg = currentCategory === 'warmup' ? `“Ayo berlatih ${currentItem.Word}!”` : `“Ayo belajar ${currentItem.Display_Text}!”`;
+            document.getElementById('lumi-bubble').innerText = lumiMsg;
             document.getElementById('lumi-smile').setAttribute('d', 'M29 32C29 33.6569 30.3431 35 32 35C33.6569 35 35 33.6569 35 32'); // reset smile
         }
 
@@ -584,7 +599,7 @@
                         </div>
                     </div>
                 `;
-            } else if (currentCategory === 'shape' || currentCategory === 'warmup') {
+            } else if (currentCategory === 'shape') {
                 // Blank canvas with just dashed border inside
                 bgEl.innerHTML = `
                     <div class="absolute inset-4 border-4 border-dashed rounded-xl opacity-30" style="border-color: ${priColor}"></div>
@@ -592,7 +607,163 @@
                         <span style="font-size: 15rem">${currentItem.Emoji}</span>
                     </div>
                 `;
+            } else if (currentCategory === 'warmup') {
+                // Panduan visual khusus per jenis latihan motorik
+                bgEl.innerHTML = getWarmupGuideOverlaySVG(currentItem.Item_ID, priColor);
             }
+        }
+
+        // --- Warmup Visual Guide Functions ---
+        function getWarmupIllustrationHTML(itemId, color, word) {
+            const c = color;
+            const body = {
+                'straight_line_h': `
+                    <line x1="22" y1="50" x2="218" y2="50" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <line x1="22" y1="90" x2="218" y2="90" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <line x1="22" y1="130" x2="218" y2="130" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <circle cx="22" cy="50" r="9" fill="${c}"/><circle cx="22" cy="90" r="9" fill="${c}"/><circle cx="22" cy="130" r="9" fill="${c}"/>
+                    <polyline points="201,82 218,90 201,98" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`,
+                'straight_line_v': `
+                    <line x1="60" y1="18" x2="60" y2="162" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <line x1="120" y1="18" x2="120" y2="162" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <line x1="180" y1="18" x2="180" y2="162" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <circle cx="60" cy="18" r="9" fill="${c}"/><circle cx="120" cy="18" r="9" fill="${c}"/><circle cx="180" cy="18" r="9" fill="${c}"/>
+                    <polyline points="111,148 120,162 129,148" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`,
+                'diagonal_line': `
+                    <line x1="20" y1="20" x2="220" y2="160" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <line x1="20" y1="58" x2="172" y2="160" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round" stroke-opacity="0.45"/>
+                    <line x1="68" y1="20" x2="220" y2="122" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round" stroke-opacity="0.45"/>
+                    <circle cx="20" cy="20" r="9" fill="${c}"/>
+                    <circle cx="20" cy="58" r="9" fill="${c}" fill-opacity="0.45"/>
+                    <circle cx="68" cy="20" r="9" fill="${c}" fill-opacity="0.45"/>
+                    <polyline points="207,150 220,160 211,167" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`,
+                'zigzag': `
+                    <polyline points="20,46 68,140 116,46 164,140 212,46" fill="none" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="20" cy="46" r="9" fill="${c}"/>
+                    <circle cx="68" cy="140" r="6" fill="${c}" fill-opacity="0.5"/>
+                    <circle cx="116" cy="46" r="6" fill="${c}" fill-opacity="0.5"/>
+                    <circle cx="164" cy="140" r="6" fill="${c}" fill-opacity="0.5"/>
+                    <polyline points="200,50 212,46 208,60" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`,
+                'wave': `
+                    <path d="M20,88 C42,34 70,34 92,88 C114,142 142,142 164,88 C182,48 200,34 220,28" fill="none" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <circle cx="20" cy="88" r="9" fill="${c}"/>
+                    <circle cx="92" cy="88" r="5" fill="${c}" fill-opacity="0.4"/>
+                    <circle cx="164" cy="88" r="5" fill="${c}" fill-opacity="0.4"/>`,
+                'wavy_line': `
+                    <path d="M20,60 C40,26 62,26 82,60 C102,94 124,94 144,60 C164,26 186,26 206,60 C220,78 228,84 236,86" fill="none" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <path d="M20,116 C40,82 62,82 82,116 C102,150 124,150 144,116 C164,82 186,82 206,116" fill="none" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round" stroke-opacity="0.4"/>
+                    <circle cx="20" cy="60" r="9" fill="${c}"/>
+                    <circle cx="20" cy="116" r="9" fill="${c}" fill-opacity="0.4"/>`,
+                'spiral': `
+                    <path d="M120,88 C128,78 142,76 150,84 C166,100 158,126 138,134 C110,146 82,130 72,104 C58,72 78,44 108,38 C148,28 180,58 182,96 C184,140 150,168 110,166 C60,164 30,126 32,84 C34,36 76,8 122,12" fill="none" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/>
+                    <circle cx="120" cy="88" r="9" fill="${c}"/>`,
+                'dotted_line': `
+                    <g fill="${c}">
+                      <circle cx="24" cy="64" r="8"/><circle cx="56" cy="64" r="8"/><circle cx="88" cy="64" r="8"/>
+                      <circle cx="120" cy="64" r="8"/><circle cx="152" cy="64" r="8"/><circle cx="184" cy="64" r="8"/><circle cx="216" cy="64" r="8"/>
+                    </g>
+                    <g fill="${c}" fill-opacity="0.45">
+                      <circle cx="24" cy="116" r="8"/><circle cx="56" cy="116" r="8"/><circle cx="88" cy="116" r="8"/>
+                      <circle cx="120" cy="116" r="8"/><circle cx="152" cy="116" r="8"/><circle cx="184" cy="116" r="8"/><circle cx="216" cy="116" r="8"/>
+                    </g>
+                    <polyline points="200,58 216,64 200,70" fill="none" stroke="${c}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>`
+            }[itemId] || `<line x1="30" y1="90" x2="210" y2="90" stroke="${c}" stroke-width="5" stroke-dasharray="18,9" stroke-linecap="round"/><circle cx="30" cy="90" r="9" fill="${c}"/>`;
+
+            return `
+                <div class="w-full h-full flex flex-col items-center justify-center gap-2 p-2">
+                    <div class="w-full flex-1 flex items-center justify-center">
+                        <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:148px">
+                            <rect width="240" height="180" rx="14" fill="${c}" fill-opacity="0.09"/>
+                            ${body}
+                        </svg>
+                    </div>
+                    <div class="text-center font-bold text-slate-600 text-sm uppercase tracking-wide">${word}</div>
+                </div>`;
+        }
+
+        function getWarmupGuideOverlaySVG(itemId, color) {
+            const c = color;
+            const guides = {
+                'straight_line_h': `<svg width="100%" height="100%" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <g stroke="${c}" stroke-dasharray="24,14" stroke-linecap="round" stroke-opacity="0.32" stroke-width="4">
+                    <line x1="56" y1="96" x2="744" y2="96"/><line x1="56" y1="208" x2="744" y2="208"/>
+                    <line x1="56" y1="320" x2="744" y2="320"/><line x1="56" y1="432" x2="744" y2="432"/>
+                  </g>
+                  <g fill="#22c55e" opacity="0.72">
+                    <circle cx="56" cy="96" r="13"/><circle cx="56" cy="208" r="13"/>
+                    <circle cx="56" cy="320" r="13"/><circle cx="56" cy="432" r="13"/>
+                  </g>
+                  <g fill="#ef4444" opacity="0.52">
+                    <circle cx="744" cy="96" r="13"/><circle cx="744" cy="208" r="13"/>
+                    <circle cx="744" cy="320" r="13"/><circle cx="744" cy="432" r="13"/>
+                  </g>
+                </svg>`,
+                'straight_line_v': `<svg width="100%" height="100%" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <g stroke="${c}" stroke-dasharray="24,14" stroke-linecap="round" stroke-opacity="0.32" stroke-width="4">
+                    <line x1="133" y1="48" x2="133" y2="432"/><line x1="266" y1="48" x2="266" y2="432"/>
+                    <line x1="400" y1="48" x2="400" y2="432"/><line x1="534" y1="48" x2="534" y2="432"/><line x1="667" y1="48" x2="667" y2="432"/>
+                  </g>
+                  <g fill="#22c55e" opacity="0.72">
+                    <circle cx="133" cy="48" r="13"/><circle cx="266" cy="48" r="13"/>
+                    <circle cx="400" cy="48" r="13"/><circle cx="534" cy="48" r="13"/><circle cx="667" cy="48" r="13"/>
+                  </g>
+                  <g fill="#ef4444" opacity="0.52">
+                    <circle cx="133" cy="432" r="13"/><circle cx="266" cy="432" r="13"/>
+                    <circle cx="400" cy="432" r="13"/><circle cx="534" cy="432" r="13"/><circle cx="667" cy="432" r="13"/>
+                  </g>
+                </svg>`,
+                'diagonal_line': `<svg width="100%" height="100%" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <g stroke="${c}" stroke-dasharray="24,14" stroke-linecap="round" stroke-width="4">
+                    <line x1="48" y1="48" x2="752" y2="432" stroke-opacity="0.35"/>
+                    <line x1="48" y1="152" x2="640" y2="432" stroke-opacity="0.22"/>
+                    <line x1="48" y1="288" x2="490" y2="432" stroke-opacity="0.15"/>
+                    <line x1="160" y1="48" x2="752" y2="338" stroke-opacity="0.22"/>
+                    <line x1="336" y1="48" x2="752" y2="242" stroke-opacity="0.15"/>
+                  </g>
+                  <g fill="#22c55e" opacity="0.72">
+                    <circle cx="48" cy="48" r="13"/><circle cx="48" cy="152" r="13"/><circle cx="48" cy="288" r="13"/>
+                  </g>
+                </svg>`,
+                'zigzag': `<svg width="100%" height="100%" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <polyline points="48,80 224,320 400,80 576,320 752,80" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="24,14" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.35"/>
+                  <polyline points="48,288 224,432 400,288 576,432 752,288" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="24,14" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.17"/>
+                  <circle cx="48" cy="80" r="13" fill="#22c55e" opacity="0.72"/>
+                  <g fill="${c}" fill-opacity="0.28"><circle cx="224" cy="320" r="9"/><circle cx="400" cy="80" r="9"/><circle cx="576" cy="320" r="9"/><circle cx="752" cy="80" r="9"/></g>
+                </svg>`,
+                'wave': `<svg width="100%" height="100%" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M48,160 C118,30 196,30 266,160 C336,290 414,290 484,160 C554,30 632,30 702,160 C740,228 766,256 800,268" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="24,14" stroke-linecap="round" stroke-opacity="0.35"/>
+                  <path d="M48,368 C118,238 196,238 266,368 C336,498 414,498 484,368 C554,238 632,238 702,368" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="24,14" stroke-linecap="round" stroke-opacity="0.16"/>
+                  <circle cx="48" cy="160" r="13" fill="#22c55e" opacity="0.72"/>
+                </svg>`,
+                'wavy_line': `<svg width="100%" height="100%" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M48,88 C96,38 160,38 208,88 C256,138 320,138 368,88 C416,38 480,38 528,88 C576,138 640,138 688,88 C730,46 762,32 800,28" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="24,14" stroke-linecap="round" stroke-opacity="0.38"/>
+                  <path d="M48,248 C96,198 160,198 208,248 C256,298 320,298 368,248 C416,198 480,198 528,248 C576,298 640,298 688,248 C730,206 762,192 800,188" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="24,14" stroke-linecap="round" stroke-opacity="0.22"/>
+                  <path d="M48,408 C96,358 160,358 208,408 C256,458 320,458 368,408 C416,358 480,358 528,408 C576,458 640,458 688,408" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="24,14" stroke-linecap="round" stroke-opacity="0.11"/>
+                  <circle cx="48" cy="88" r="13" fill="#22c55e" opacity="0.72"/>
+                  <circle cx="48" cy="248" r="13" fill="#22c55e" opacity="0.44"/>
+                </svg>`,
+                'spiral': `<svg width="100%" height="100%" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M400,240 C418,218 446,212 464,224 C494,246 490,294 462,314 C424,340 378,326 358,294 C328,248 348,196 394,178 C450,154 508,182 524,240 C542,308 510,368 446,382 C368,400 298,354 280,278 C256,186 312,106 400,88 C504,66 596,140 608,244 C624,366 548,456 432,464 C292,474 190,370 188,240 C186,88 304,-8 448,-4 C598,2 718,128 718,280" fill="none" stroke="${c}" stroke-width="4" stroke-dasharray="24,14" stroke-linecap="round" stroke-opacity="0.35"/>
+                  <circle cx="400" cy="240" r="14" fill="#22c55e" opacity="0.78"/>
+                </svg>`,
+                'dotted_line': `<svg width="100%" height="100%" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <g fill="${c}" opacity="0.42">
+                    <circle cx="56" cy="120" r="12"/><circle cx="162" cy="120" r="12"/><circle cx="268" cy="120" r="12"/>
+                    <circle cx="374" cy="120" r="12"/><circle cx="480" cy="120" r="12"/><circle cx="586" cy="120" r="12"/><circle cx="692" cy="120" r="12"/>
+                  </g>
+                  <g fill="${c}" opacity="0.26">
+                    <circle cx="56" cy="264" r="12"/><circle cx="162" cy="264" r="12"/><circle cx="268" cy="264" r="12"/>
+                    <circle cx="374" cy="264" r="12"/><circle cx="480" cy="264" r="12"/><circle cx="586" cy="264" r="12"/><circle cx="692" cy="264" r="12"/>
+                  </g>
+                  <g fill="${c}" opacity="0.14">
+                    <circle cx="56" cy="408" r="12"/><circle cx="162" cy="408" r="12"/><circle cx="268" cy="408" r="12"/>
+                    <circle cx="374" cy="408" r="12"/><circle cx="480" cy="408" r="12"/><circle cx="586" cy="408" r="12"/><circle cx="692" cy="408" r="12"/>
+                  </g>
+                  <circle cx="56" cy="120" r="15" fill="#22c55e" opacity="0.78"/>
+                  <circle cx="56" cy="264" r="15" fill="#22c55e" opacity="0.5"/>
+                </svg>`
+            };
+            return guides[itemId] || `<div class="absolute inset-4 border-4 border-dashed rounded-xl" style="border-color:${c};opacity:0.25"></div>`;
         }
 
         // --- Navigation ---
@@ -605,7 +776,12 @@
 
         // --- Canvas Engine ---
         let brushColor = '#3b82f6';
-        let brushSize = 10;
+        // Ukuran kuas lebih besar untuk warmup (latihan motorik anak)
+        let brushSize = currentCategory === 'warmup' ? 16 : 10;
+        if (currentCategory === 'warmup') {
+            document.getElementById('brush-size').value = 16;
+            document.getElementById('brush-size-val').innerText = '16px';
+        }
         let isDrawing = false;
         let lastX = 0, lastY = 0;
         let isRainbow = false;
