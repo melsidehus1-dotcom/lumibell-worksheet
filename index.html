@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -75,8 +75,8 @@
         <div class="text-center mb-10">
             <div class="inline-block bg-white p-4 rounded-full shadow-xl border-4 border-amber-300 mb-6 animate-float relative">
                 <!-- Sparkles -->
-                <div class="absolute -top-2 -left-2 text-2xl text-yellow-400">Γ£¿</div>
-                <div class="absolute -bottom-2 -right-2 text-xl text-yellow-400">Γ¡É</div>
+                <div class="absolute -top-2 -left-2 text-2xl text-yellow-400">✨</div>
+                <div class="absolute -bottom-2 -right-2 text-xl text-yellow-400">⭐</div>
                 
                 <svg class="w-24 h-24" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M32 8C20.9543 8 12 16.9543 12 28V40H52V28C52 16.9543 43.0457 8 32 8Z" fill="#FCD34D" stroke="#D97706" stroke-width="4" stroke-linejoin="round"/>
@@ -102,7 +102,7 @@
                 <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-100 rounded-bl-full -mr-4 -mt-4 z-0 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10 flex flex-col items-center">
                     <div class="w-20 h-20 bg-emerald-100 rounded-2xl flex items-center justify-center text-5xl mb-4 border-4 border-emerald-200">
-                        ≡ƒî▒
+                        ✋
                     </div>
                     <h3 class="text-2xl font-bold text-slate-800 brand-font mb-1">Pemanasan</h3>
                     <p class="text-sm text-slate-500 font-bold">Latihan Motorik Halus</p>
@@ -114,7 +114,7 @@
                 <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-100 rounded-bl-full -mr-4 -mt-4 z-0 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10 flex flex-col items-center">
                     <div class="w-20 h-20 bg-indigo-100 rounded-2xl flex items-center justify-center text-5xl mb-4 border-4 border-indigo-200">
-                        ≡ƒà░∩╕Å
+                        📝
                     </div>
                     <h3 class="text-2xl font-bold text-slate-800 brand-font mb-1">Huruf A-Z</h3>
                     <p class="text-sm text-slate-500 font-bold">Menulis Abjad</p>
@@ -126,7 +126,7 @@
                 <div class="absolute top-0 right-0 w-24 h-24 bg-rose-100 rounded-bl-full -mr-4 -mt-4 z-0 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10 flex flex-col items-center">
                     <div class="w-20 h-20 bg-rose-100 rounded-2xl flex items-center justify-center text-5xl mb-4 border-4 border-rose-200">
-                        ≡ƒöó
+                        🔢
                     </div>
                     <h3 class="text-2xl font-bold text-slate-800 brand-font mb-1">Angka 0-9</h3>
                     <p class="text-sm text-slate-500 font-bold">Menghitung & Menulis</p>
@@ -138,7 +138,7 @@
                 <div class="absolute top-0 right-0 w-24 h-24 bg-amber-100 rounded-bl-full -mr-4 -mt-4 z-0 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10 flex flex-col items-center">
                     <div class="w-20 h-20 bg-amber-100 rounded-2xl flex items-center justify-center text-5xl mb-4 border-4 border-amber-200">
-                        Γ¡É
+                        🔷
                     </div>
                     <h3 class="text-2xl font-bold text-slate-800 brand-font mb-1">Bentuk</h3>
                     <p class="text-sm text-slate-500 font-bold">Mengenal Bentuk & Warna</p>
@@ -150,7 +150,7 @@
                 <div class="absolute top-0 right-0 w-32 h-32 bg-sky-100 rounded-bl-full -mr-4 -mt-4 z-0 transition-transform group-hover:scale-110"></div>
                 <div class="relative z-10 flex flex-col md:flex-row items-center justify-center gap-6">
                     <div class="w-20 h-20 bg-sky-100 rounded-2xl flex items-center justify-center text-5xl border-4 border-sky-200 shrink-0">
-                        ≡ƒÄ«
+                        🎮
                     </div>
                     <div class="text-center md:text-left">
                         <h3 class="text-2xl font-bold text-slate-800 brand-font mb-1">Taman Bermain</h3>
@@ -171,15 +171,16 @@
             </button>
             
             <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 border-4 border-indigo-200">
-                ≡ƒæ¿ΓÇì≡ƒæ⌐ΓÇì≡ƒæº
+                👨‍👩‍👦
             </div>
             <h3 class="text-2xl font-bold text-slate-800 brand-font mb-2">Area Orang Tua</h3>
             <p class="text-sm text-slate-500 font-bold mb-6">Tahan tombol di bawah selama 3 detik untuk membuka Buku Raport anak Anda.</p>
             
+            <!-- BUG-12 FIX: Durasi tahan dikurangi dari 3s → 2s -->
             <button id="btn-parent-lock" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 rounded-2xl shadow-md transition-all relative overflow-hidden select-none touch-none">
-                <div id="lock-progress" class="absolute left-0 top-0 bottom-0 bg-indigo-700 w-0 opacity-50 transition-all duration-[3000ms] ease-linear"></div>
+                <div id="lock-progress" class="absolute left-0 top-0 bottom-0 bg-indigo-700 w-0 opacity-50 transition-all duration-[2000ms] ease-linear"></div>
                 <span class="relative z-10 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-lock"></i> TAHAN 3 DETIK
+                    <i class="fa-solid fa-lock"></i> TAHAN 2 DETIK
                 </span>
             </button>
         </div>
@@ -191,7 +192,7 @@
             
             <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-amber-50 rounded-t-2xl">
                 <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-amber-200 rounded-xl flex items-center justify-center text-2xl border-2 border-amber-400">≡ƒôè</div>
+                    <div class="w-12 h-12 bg-amber-200 rounded-xl flex items-center justify-center text-2xl border-2 border-amber-400">📓</div>
                     <div>
                         <h2 class="text-2xl font-bold text-amber-900 brand-font">Buku Raport LumiBell</h2>
                         <p class="text-xs font-bold text-amber-700">Ringkasan kemajuan belajar</p>
@@ -206,25 +207,25 @@
                 <!-- Progress Stats -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 text-center relative overflow-hidden">
-                        <div class="text-3xl mb-2 relative z-10">≡ƒà░∩╕Å</div>
+                        <div class="text-3xl mb-2 relative z-10">📝</div>
                         <div class="text-2xl font-bold text-indigo-700 brand-font relative z-10" id="stat-alphabet">0%</div>
                         <div class="text-xs font-bold text-indigo-500 relative z-10">Huruf A-Z</div>
                         <div id="bar-alphabet" class="absolute bottom-0 left-0 h-1 bg-indigo-500 w-0 transition-all duration-1000"></div>
                     </div>
                     <div class="bg-rose-50 p-4 rounded-2xl border border-rose-100 text-center relative overflow-hidden">
-                        <div class="text-3xl mb-2 relative z-10">≡ƒöó</div>
+                        <div class="text-3xl mb-2 relative z-10">🔢</div>
                         <div class="text-2xl font-bold text-rose-700 brand-font relative z-10" id="stat-number">0%</div>
                         <div class="text-xs font-bold text-rose-500 relative z-10">Angka 0-9</div>
                         <div id="bar-number" class="absolute bottom-0 left-0 h-1 bg-rose-500 w-0 transition-all duration-1000"></div>
                     </div>
                     <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100 text-center relative overflow-hidden">
-                        <div class="text-3xl mb-2 relative z-10">Γ¡É</div>
+                        <div class="text-3xl mb-2 relative z-10">🔷</div>
                         <div class="text-2xl font-bold text-amber-700 brand-font relative z-10" id="stat-shape">0%</div>
                         <div class="text-xs font-bold text-amber-500 relative z-10">Bentuk</div>
                         <div id="bar-shape" class="absolute bottom-0 left-0 h-1 bg-amber-500 w-0 transition-all duration-1000"></div>
                     </div>
                     <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100 text-center relative overflow-hidden">
-                        <div class="text-3xl mb-2 relative z-10">≡ƒî▒</div>
+                        <div class="text-3xl mb-2 relative z-10">✋</div>
                         <div class="text-2xl font-bold text-emerald-700 brand-font relative z-10" id="stat-warmup">0%</div>
                         <div class="text-xs font-bold text-emerald-500 relative z-10">Pemanasan</div>
                         <div id="bar-warmup" class="absolute bottom-0 left-0 h-1 bg-emerald-500 w-0 transition-all duration-1000"></div>
@@ -232,7 +233,7 @@
                 </div>
 
                 <div class="bg-slate-50 p-6 rounded-3xl border-2 border-slate-200 text-center">
-                    <div class="text-6xl mb-4">≡ƒÄô</div>
+                    <div class="text-6xl mb-4">🏆</div>
                     <h3 class="text-2xl font-bold text-slate-800 brand-font mb-2">Sertifikat Kelulusan</h3>
                     <p class="text-sm font-bold text-slate-500 mb-6 max-w-md mx-auto">Selesaikan minimal 80% dari seluruh modul untuk mencetak sertifikat spesial dari Lumi!</p>
                     <button id="btn-print-cert" disabled class="bg-slate-300 text-slate-500 px-8 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 mx-auto cursor-not-allowed transition-all">
@@ -279,7 +280,8 @@
 
         // Parent Lock (Hold 3 Seconds)
         lockBtn.addEventListener('mousedown', startPress);
-        lockBtn.addEventListener('touchstart', startPress, {passive: true});
+        // BUG-03 FIX: Ubah passive:true → passive:false agar e.preventDefault() bisa berjalan
+        lockBtn.addEventListener('touchstart', startPress, {passive: false});
         lockBtn.addEventListener('mouseup', endPress);
         lockBtn.addEventListener('mouseleave', endPress);
         lockBtn.addEventListener('touchend', endPress);
@@ -287,12 +289,13 @@
 
         function startPress(e) {
             e.preventDefault();
-            lockProgress.style.transition = 'width 3s linear';
+            // BUG-12 FIX: Durasi dikurangi dari 3000ms → 2000ms
+            lockProgress.style.transition = 'width 2s linear';
             lockProgress.style.width = '100%';
             
             pressTimer = setTimeout(() => {
                 openReportModal();
-            }, 3000);
+            }, 2000);
         }
 
         function endPress(e) {
@@ -312,13 +315,26 @@
         // Calculate Progress from LocalStorage and CSV totals
         function calculateProgress() {
             if(!appData) {
-                // If not fetched yet, fetch and calculate
+                // BUG-13 FIX: Tambah error handler jika CSV gagal
                 Papa.parse(CSV_URL, {
                     download: true,
                     header: true,
                     complete: function(results) {
                         appData = results.data;
                         updateStatsUI();
+                    },
+                    error: function() {
+                        const content = document.getElementById('report-content');
+                        if(content) {
+                            content.innerHTML = `
+                                <div class="text-center py-10">
+                                    <div class="text-5xl mb-4">📡</div>
+                                    <p class="font-bold text-slate-700">Gagal memuat data</p>
+                                    <p class="text-sm text-slate-400 mt-2">Periksa koneksi internet dan coba lagi.</p>
+                                    <button onclick="appData=null; calculateProgress();" class="mt-4 bg-indigo-500 text-white font-bold px-5 py-2 rounded-full text-sm">Coba Lagi</button>
+                                </div>
+                            `;
+                        }
                     }
                 });
             } else {
