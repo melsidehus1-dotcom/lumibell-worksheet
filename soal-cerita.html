@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soal Cerita Matematika - Petualangan LumiBell</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Halaman ini memakai CSS sendiri (tanpa Tailwind) supaya hasil cetak konsisten -->
+    <style>
+        :root {
+            --ink: #1e293b;
+            --muted: #64748b;
+            --violet: #7c3aed;
+            --violet-dark: #5b21b6;
+            --violet-soft: #ede9fe;
+            --line: #94a3b8;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            color: var(--ink);
+            background-color: #FFFDF0;
+            background-image: radial-gradient(#ddd6fe 1px, transparent 1px);
+            background-size: 20px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, .brand { font-family: 'Fredoka', sans-serif; }
+
+        /* ---------- Navbar ---------- */
+        .nav { background: rgba(255,255,255,.85); backdrop-filter: blur(8px); box-shadow: 0 1px 3px rgba(0,0,0,.08); padding: 14px 16px; position: sticky; top: 0; z-index: 50; }
+        .nav-in { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .nav-logo { background: var(--violet-soft); border: 2px solid #a78bfa; border-radius: 999px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .nav-brand h1 { margin: 0; font-size: 24px; color: #4c1d95; }
+        .nav-brand p { margin: 0; font-size: 10px; font-weight: 700; color: var(--violet); text-transform: uppercase; letter-spacing: .15em; }
+        .btn { border: 2px solid #e2e8f0; background: #fff; color: #334155; padding: 9px 16px; border-radius: 16px; font-weight: 700; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: inherit; transition: transform .1s; }
+        .btn:active { transform: scale(.96); }
+        .btn-primary { background: var(--violet); border-color: var(--violet); color: #fff; }
+        .btn-primary:hover { background: var(--violet-dark); }
+        .btn-amber { background: #f59e0b; border-color: #f59e0b; color: #fff; }
+        .btn-amber:hover { background: #d97706; }
+
+        /* ---------- Layout ---------- */
+        .layout { max-width: 1240px; margin: 0 auto; padding: 24px 16px 60px; display: grid; grid-template-columns: 300px 1fr; gap: 24px; align-items: start; }
+        @media (max-width: 960px) { .layout { grid-template-columns: 1fr; } .panel { position: static !important; } }
+
+        .panel { background: #fff; border: 3px solid #c4b5fd; border-radius: 24px; padding: 20px; position: sticky; top: 96px; box-shadow: 0 10px 25px -10px rgba(124,58,237,.3); }
+        .panel h2 { margin: 0 0 4px; font-size: 22px; }
+        .panel .hint { margin: 0 0 16px; font-size: 13px; color: var(--muted); font-weight: 600; }
+        .field { margin-bottom: 14px; }
+        .field > label, .field > .flabel { display: block; font-size: 13px; font-weight: 700; color: var(--violet-dark); margin-bottom: 6px; }
+        .field input[type=text], .field select { width: 100%; padding: 9px 12px; border: 2px solid #e2e8f0; border-radius: 12px; font-family: inherit; font-weight: 700; font-size: 14px; color: var(--ink); background: #fff; }
+        .field input[type=text]:focus, .field select:focus { outline: none; border-color: #a78bfa; }
+        .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+        .chip { position: relative; }
+        .chip input { position: absolute; opacity: 0; pointer-events: none; }
+        .chip span { display: inline-block; padding: 7px 12px; border: 2px solid #e2e8f0; border-radius: 999px; font-size: 13px; font-weight: 700; cursor: pointer; user-select: none; }
+        .chip input:checked + span { background: var(--violet-soft); border-color: #a78bfa; color: var(--violet-dark); }
+        .toggle { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; font-weight: 700; margin-bottom: 10px; cursor: pointer; }
+        .toggle input { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--violet); }
+        .toggle small { display: block; font-weight: 600; color: var(--muted); }
+        .actions { display: grid; gap: 8px; margin-top: 18px; }
+        .actions .btn { justify-content: center; padding: 12px; font-size: 15px; }
+        .seed-row { display: flex; gap: 6px; align-items: center; }
+        .seed-row input { flex: 1; }
+
+        /* ---------- Kertas (A4) ---------- */
+        .papers { min-width: 0; }
+        .paper { background: #fff; width: 210mm; max-width: 100%; margin: 0 auto; padding: 12mm 13mm; box-shadow: 0 10px 30px rgba(0,0,0,.12); border-radius: 6px; }
+        .paper + .paper { margin-top: 28px; }
+
+        .sheet-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 3px solid var(--violet-soft); padding-bottom: 10px; margin-bottom: 10px; }
+        .title-row { display: flex; gap: 10px; align-items: center; }
+        .title-row .logo { width: 46px; height: 46px; border-radius: 50%; background: #fef3c7; border: 3px solid #fcd34d; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .title-row h1 { margin: 0; font-size: 22px; color: #4c1d95; }
+        .title-row p { margin: 0; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .05em; }
+        .id-grid { display: grid; grid-template-columns: auto 1fr; gap: 4px 8px; font-size: 13px; font-weight: 700; min-width: 250px; }
+        .fill { border-bottom: 2px dotted var(--line); min-height: 20px; padding-left: 4px; font-family: 'Fredoka', sans-serif; font-weight: 500; }
+
+        .steps-strip { display: flex; gap: 6px; margin: 8px 0 14px; }
+        .steps-strip div { flex: 1; background: #faf5ff; border: 2px solid var(--violet-soft); border-radius: 12px; padding: 6px 4px; text-align: center; font-size: 11px; font-weight: 700; line-height: 1.25; }
+        .steps-strip b { display: block; font-size: 17px; }
+
+        /* Kartu soal */
+        .soal { border: 2px solid #e2e8f0; border-radius: 16px; padding: 12px 14px; margin-bottom: 12px; break-inside: avoid; page-break-inside: avoid; }
+        .soal-top { display: flex; gap: 10px; align-items: flex-start; }
+        .no { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--violet); color: #fff; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+        .cerita { flex: 1; font-size: 16px; line-height: 1.75; font-weight: 600; }
+        .cerita .emo { font-size: 20px; margin-right: 4px; }
+        .tag-star { display: inline-block; font-size: 11px; font-weight: 700; background: #fef3c7; color: #92400e; border: 1.5px solid #fcd34d; border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: middle; }
+        .clock { flex: none; }
+
+        .langkah { list-style: none; margin: 10px 0 0; padding: 0 0 0 40px; display: grid; gap: 8px; font-size: 13.5px; font-weight: 600; }
+        .langkah li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .langkah li.top { align-items: flex-start; }
+        .lbl { font-weight: 700; color: var(--violet-dark); min-width: 158px; }
+        .box { display: inline-block; width: 54px; height: 30px; border: 2px solid var(--line); border-radius: 8px; vertical-align: middle; background: #fff; }
+        .box.w { width: 82px; }
+        .opc { display: inline-block; width: 30px; height: 30px; border: 2px dashed var(--line); border-radius: 50%; vertical-align: middle; }
+        .eq { font-family: 'Fredoka', sans-serif; font-size: 20px; font-weight: 600; }
+        .kals { display: grid; gap: 6px; }
+        .kal { display: flex; align-items: center; gap: 6px; }
+        .kal small { color: var(--muted); width: 64px; }
+        .sep { color: var(--muted); font-size: 12px; }
+        .pilih { display: inline-flex; gap: 6px; align-items: center; }
+        .pilih span { display: inline-flex; width: 30px; height: 30px; border-radius: 50%; border: 2px solid #c4b5fd; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; align-items: center; justify-content: center; }
+        .pilih small { color: var(--muted); margin: 0 2px 0 6px; }
+        .line { display: inline-block; border-bottom: 2px dotted var(--line); min-width: 180px; flex: 1; height: 24px; }
+        .line.short { flex: 0 0 150px; min-width: 150px; }
+        .chk { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--line); border-radius: 4px; vertical-align: middle; }
+        .circ { border: 1.5px solid var(--ink); border-radius: 999px; padding: 0 5px; }
+        .coret { height: 78px; border: 2px dashed #e2e8f0; border-radius: 10px; margin: 10px 0 8px 40px; position: relative; }
+        .coret::after { content: 'Ruang coret-coret / gambar'; position: absolute; right: 8px; bottom: 4px; font-size: 10px; color: #cbd5e1; font-weight: 700; }
+        .jawab-row { margin-left: 40px; display: flex; gap: 8px; align-items: center; font-size: 13.5px; font-weight: 700; }
+
+        .sheet-foot { display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; font-weight: 700; margin-top: 6px; }
+
+        /* Kunci jawaban */
+        .key-title { margin: 0 0 4px; font-size: 22px; color: #4c1d95; }
+        .key-sub { margin: 0 0 12px; font-size: 12px; font-weight: 600; color: var(--muted); }
+        table.key { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+        table.key th { background: var(--violet-soft); color: var(--violet-dark); text-align: left; padding: 6px; font-size: 11px; }
+        table.key td { border-bottom: 1px solid #e2e8f0; padding: 6px; vertical-align: top; font-weight: 600; }
+        table.key td.c { text-align: center; font-family: 'Fredoka', sans-serif; font-size: 14px; }
+        table.key td.mark { width: 44px; border-left: 1px dashed #e2e8f0; }
+        table.key .ask { color: var(--violet-dark); margin-top: 3px; }
+        table.key .mono { font-family: 'Fredoka', sans-serif; font-size: 13px; white-space: nowrap; }
+        table.key tr { break-inside: avoid; }
+        .trap { margin-top: 3px; color: #b45309; font-size: 10.5px; }
+        .guide { margin-top: 14px; border: 2px solid #fde68a; background: #fffbeb; border-radius: 14px; padding: 10px 14px; font-size: 11.5px; break-inside: avoid; }
+        .guide h3 { margin: 0 0 6px; font-size: 15px; color: #92400e; }
+        .guide table { width: 100%; border-collapse: collapse; }
+        .guide td { padding: 4px 6px; vertical-align: top; border-top: 1px solid #fde68a; font-weight: 600; }
+        .guide td:first-child { font-weight: 700; width: 38%; }
+        .guide ul { margin: 6px 0 0; padding-left: 18px; font-weight: 600; }
+
+        /* ---------- Cetak ---------- */
+        @media print {
+            @page { size: A4; margin: 10mm; }
+            body { background: #fff; }
+            .no-print { display: none !important; }
+            .layout { display: block; padding: 0; max-width: none; }
+            .paper { box-shadow: none; width: auto; padding: 0; margin: 0; border-radius: 0; }
+            .paper + .paper { break-before: page; page-break-before: always; margin-top: 0; }
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header class="nav no-print">
+        <div class="nav-in">
+            <div class="nav-brand">
+                <div class="nav-logo">🧮</div>
+                <div>
+                    <h1>LumiBell</h1>
+                    <p>Drill Soal Cerita</p>
+                </div>
+            </div>
+            <a href="index.html" class="btn"><i class="fa-solid fa-home"></i> Kembali ke Beranda</a>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- Panel Pengaturan -->
+        <aside class="panel no-print">
+            <h2>⚙️ Atur Lembar Soal</h2>
+            <p class="hint">Setiap klik "Buat Soal Baru" menghasilkan soal yang berbeda.</p>
+
+            <div class="field">
+                <label for="cfg-name">Nama anak</label>
+                <input type="text" id="cfg-name" placeholder="(opsional)">
+            </div>
+
+            <div class="field">
+                <span class="flabel">Materi</span>
+                <div class="chips" id="cfg-topics">
+                    <label class="chip"><input type="checkbox" value="tambah" checked><span>➕ Penjumlahan</span></label>
+                    <label class="chip"><input type="checkbox" value="kurang" checked><span>➖ Pengurangan</span></label>
+                    <label class="chip"><input type="checkbox" value="uang" checked><span>💰 Uang</span></label>
+                    <label class="chip"><input type="checkbox" value="waktu" checked><span>⏰ Waktu</span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="cfg-max">Bilangan sampai</label>
+                <select id="cfg-max">
+                    <option value="20">20 (pemula)</option>
+                    <option value="50">50</option>
+                    <option value="100" selected>100</option>
+                    <option value="1000">1.000</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="cfg-count">Jumlah soal</label>
+                <select id="cfg-count">
+                    <option value="4">4 soal</option>
+                    <option value="6">6 soal</option>
+                    <option value="8" selected>8 soal</option>
+                    <option value="10">10 soal</option>
+                    <option value="12">12 soal</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="cfg-mode">Tingkat bantuan</label>
+                <select id="cfg-mode">
+                    <option value="lengkap" selected>Lengkap (dipandu)</option>
+                    <option value="sedang">Sedang</option>
+                    <option value="mandiri">Mandiri</option>
+                </select>
+            </div>
+
+            <label class="toggle"><input type="checkbox" id="cfg-challenge" checked>
+                <span>⭐ Soal tantangan 2 langkah<small>Sekitar 1 dari 4 soal</small></span></label>
+            <label class="toggle"><input type="checkbox" id="cfg-key" checked>
+                <span>🔑 Kunci jawaban + panduan orang tua<small>Dicetak di halaman terpisah</small></span></label>
+
+            <div class="field">
+                <label for="cfg-seed">Kode lembar</label>
+                <div class="seed-row">
+                    <input type="text" id="cfg-seed" inputmode="numeric" title="Masukkan kode lalu tekan Enter untuk membuat ulang lembar yang sama">
+                </div>
+                <p class="hint" style="margin:6px 0 0">Kode + pengaturan yang sama = soal yang sama.</p>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" id="btn-new"><i class="fa-solid fa-rotate"></i> Buat Soal Baru</button>
+                <button class="btn btn-amber" id="btn-print"><i class="fa-solid fa-print"></i> Cetak / Simpan PDF</button>
+            </div>
+        </aside>
+
+        <!-- Pratinjau kertas -->
+        <main class="papers" id="papers"></main>
+    </div>
+
+<script>
+/* =========================================================
+   Utilitas acak (pakai seed supaya lembar bisa diulang)
+   ========================================================= */
+let rand = Math.random;
+function mulberry32(a) {
+    return function () {
+        a |= 0; a = a + 0x6D2B79F5 | 0;
+        let t = Math.imul(a ^ a >>> 15, 1 | a);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+}
+const ri = (a, b) => Math.floor(rand() * (b - a + 1)) + a;
+const pick = arr => arr[Math.floor(rand() * arr.length)];
+const shuffle = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const fmt = n => typeof n === 'number' ? n.toLocaleString('id-ID') : n;
+const rp = n => 'Rp' + fmt(n);
+const jam = (h, m) => String(h).padStart(2, '0') + '.' + (m ? '30' : '00');
+const ucfirst = s => s.charAt(0).toUpperCase() + s.slice(1);
+const MIN = '−';
+
+/* =========================================================
+   Data cerita
+   ========================================================= */
+const NAMES = ['Andi', 'Siti', 'Budi', 'Rina', 'Dodi', 'Lala', 'Beni', 'Maya', 'Raka', 'Nisa', 'Tono', 'Dewi', 'Fajar', 'Putri', 'Galih', 'Intan', 'Bayu', 'Salsa'];
+const names = n => shuffle(NAMES).slice(0, n);
+
+const ITEMS = [
+    { n: 'kelereng', e: '🔵' }, { n: 'stiker', e: '⭐' }, { n: 'permen', e: '🍬' },
+    { n: 'pensil warna', e: '🖍️' }, { n: 'kartu bergambar', e: '🃏' }, { n: 'jeruk', e: '🍊' },
+    { n: 'buku cerita', e: '📚' }, { n: 'apel', e: '🍎' }, { n: 'mobil-mobilan', e: '🚗' }, { n: 'jepit rambut', e: '🎀' }
+];
+
+// Harga [min, max] dalam rupiah
+const SHOP = [
+    { n: 'pensil', e: '✏️', min: 1000, max: 3000 }, { n: 'penghapus', e: '🧽', min: 500, max: 2000 },
+    { n: 'buku tulis', e: '📒', min: 3000, max: 6000 }, { n: 'roti', e: '🍞', min: 2000, max: 5000 },
+    { n: 'susu kotak', e: '🥛', min: 3000, max: 6000 }, { n: 'es krim', e: '🍦', min: 2000, max: 6000 },
+    { n: 'permen', e: '🍬', min: 500, max: 1500 }, { n: 'stiker', e: '⭐', min: 1000, max: 3000 },
+    { n: 'kue', e: '🧁', min: 1000, max: 3000 }, { n: 'jus jeruk', e: '🧃', min: 3000, max: 7000 },
+    { n: 'penggaris', e: '📏', min: 2000, max: 4000 }, { n: 'buku gambar', e: '🎨', min: 4000, max: 8000 },
+    { n: 'mobil-mobilan', e: '🚗', min: 8000, max: 18000 }, { n: 'boneka', e: '🧸', min: 10000, max: 20000 },
+    { n: 'bola', e: '⚽', min: 8000, max: 15000 }, { n: 'buku mewarnai', e: '🖍️', min: 6000, max: 12000 }
+];
+const NOTES = [2000, 5000, 10000, 20000, 50000, 100000];
+
+const ACTS = [
+    ['belajar', '📖'], ['bermain sepeda', '🚲'], ['berenang', '🏊'], ['membantu Ibu di dapur', '🍳'],
+    ['berlatih menari', '💃'], ['bermain bola', '⚽'], ['membaca buku cerita', '📚'], ['berkebun bersama Kakek', '🌱']
+];
+
+let CTX = { max: 100, step: 500, cap: 20000 };
+
+/* Pasangan bilangan a + b = c, dengan c <= batas */
+function parts() {
+    const max = CTX.max;
+    const lo = Math.max(6, Math.floor(max * 0.3));
+    const c = ri(lo, max);
+    const a = ri(2, c - 2);
+    return { a, b: c - a, c };
+}
+
+/* Bentuk objek soal standar */
+function P(o) {
+    const p = Object.assign({ pre: '', suf: '', trap: null, clock: null, note: '', two: false, wide: CTX.max >= 1000 }, o);
+    p.ansText = p.pre === 'Rp' ? rp(p.ans) : [p.pre, fmt(p.ans), p.suf].filter(Boolean).join(' ');
+    return p;
+}
+
+/* =========================================================
+   Template: PENJUMLAHAN
+   ========================================================= */
+const ADD_SCENES = [
+    { e: '🐟', suf: 'ekor ikan', ask: 'Banyak ikan di kolam sekarang',
+      t: (a, b) => `Di kolam ada ${a} ekor ikan. Ayah memasukkan ${b} ekor ikan lagi ke kolam. Berapa ekor ikan di kolam sekarang?`,
+      k: (a, b) => [`Ikan mula-mula = ${a} ekor`, `Ikan yang dimasukkan = ${b} ekor`] },
+    { e: '🐦', suf: 'burung', ask: 'Banyak burung di pohon sekarang',
+      t: (a, b) => `Ada ${a} burung hinggap di pohon. Kemudian datang ${b} burung lagi. Berapa burung di pohon sekarang?`,
+      k: (a, b) => [`Burung mula-mula = ${a}`, `Burung yang datang = ${b}`] },
+    { e: '🚌', suf: 'penumpang', ask: 'Banyak penumpang di bus sekarang',
+      t: (a, b) => `Di dalam bus ada ${a} penumpang. Di halte, ${b} penumpang naik. Berapa penumpang di dalam bus sekarang?`,
+      k: (a, b) => [`Penumpang mula-mula = ${a}`, `Penumpang naik = ${b}`] },
+    { e: '📚', suf: 'buku', ask: 'Banyak buku di rak sekarang',
+      t: (a, b) => `Di rak perpustakaan ada ${a} buku. Bu Guru menambahkan ${b} buku baru. Berapa buku di rak sekarang?`,
+      k: (a, b) => [`Buku mula-mula = ${a}`, `Buku baru = ${b}`] }
+];
+
+const T_TAMBAH = [
+    () => { // Menggabungkan
+        const [A, B] = names(2), it = pick(ITEMS), { a, b, c } = parts();
+        return P({ type: 'Menggabungkan', e: it.e,
+            text: `${A} punya ${a} ${it.n}. ${B} punya ${b} ${it.n}. Berapa jumlah ${it.n} mereka berdua?`,
+            ask: `Jumlah ${it.n} ${A} dan ${B}`, known: [`${ucfirst(it.n)} ${A} = ${a}`, `${ucfirst(it.n)} ${B} = ${b}`],
+            steps: [[a, '+', b, c]], ans: c, suf: it.n });
+    },
+    () => { // Bertambah
+        const s = pick(ADD_SCENES), { a, b, c } = parts();
+        return P({ type: 'Bertambah', e: s.e, text: s.t(a, b), ask: s.ask, known: s.k(a, b),
+            steps: [[a, '+', b, c]], ans: c, suf: s.suf });
+    },
+    () => { // Membandingkan: lebih banyak (dicari yang lebih besar)
+        const [A, B] = names(2), it = pick(ITEMS), { a, b, c } = parts();
+        return P({ type: 'Membandingkan (lebih banyak)', e: it.e,
+            text: `${A} punya ${a} ${it.n}. ${B} punya ${b} ${it.n} lebih banyak daripada ${A}. Berapa ${it.n} milik ${B}?`,
+            ask: `Banyak ${it.n} ${B}`, known: [`${ucfirst(it.n)} ${A} = ${a}`, `${B} punya ${b} lebih banyak`],
+            steps: [[a, '+', b, c]], ans: c, suf: it.n });
+    },
+    () => { // Mencari jumlah mula-mula (jebakan)
+        const [A, B] = names(2), it = pick(ITEMS), { a, b, c } = parts();
+        return P({ type: 'Mencari jumlah mula-mula', e: it.e,
+            text: `${A} memberikan ${b} ${it.n} kepada ${B}. Sekarang ${it.n} ${A} tinggal ${a}. Berapa ${it.n} ${A} mula-mula?`,
+            ask: `Banyak ${it.n} ${A} mula-mula`, known: [`Diberikan = ${b}`, `Tinggal = ${a}`],
+            steps: [[a, '+', b, c]], ans: c, suf: it.n,
+            trap: 'Ada kata "memberikan" dan "tinggal", tapi yang dicari jumlah MULA-MULA → dijumlah (+).' });
+    }
+];
+
+/* =========================================================
+   Template: PENGURANGAN
+   ========================================================= */
+const SUB_SCENES = [
+    { e: '🍪', suf: 'kue', ask: 'Banyak kue yang tersisa',
+      t: (A, c, b) => `Ibu membuat ${c} kue. Sebanyak ${b} kue sudah dimakan. Berapa kue yang masih tersisa?`,
+      k: (c, b) => [`Kue mula-mula = ${c}`, `Dimakan = ${b}`] },
+    { e: '🎈', suf: 'balon', ask: 'Banyak balon sekarang',
+      t: (A, c, b) => `${A} punya ${c} balon. Sebanyak ${b} balon meletus. Berapa balon ${A} sekarang?`,
+      k: (c, b) => [`Balon mula-mula = ${c}`, `Meletus = ${b}`] },
+    { e: '🏍️', suf: 'sepeda motor', ask: 'Banyak motor yang masih ada',
+      t: (A, c, b) => `Di tempat parkir ada ${c} sepeda motor. Lalu ${b} sepeda motor pergi. Berapa sepeda motor yang masih ada di tempat parkir?`,
+      k: (c, b) => [`Motor mula-mula = ${c}`, `Pergi = ${b}`] },
+    { e: '🐔', suf: 'ekor ayam', ask: 'Banyak ayam Pak Tani sekarang',
+      t: (A, c, b) => `Pak Tani punya ${c} ekor ayam. Sebanyak ${b} ekor ayam dijual ke pasar. Berapa ekor ayam Pak Tani sekarang?`,
+      k: (c, b) => [`Ayam mula-mula = ${c} ekor`, `Dijual = ${b} ekor`] }
+];
+
+const T_KURANG = [
+    () => { // Mengambil / sisa
+        const [A, B] = names(2), it = pick(ITEMS), { a, b, c } = parts();
+        return P({ type: 'Mengambil (sisa)', e: it.e,
+            text: `${A} punya ${c} ${it.n}. Sebanyak ${b} ${it.n} diberikan kepada ${B}. Berapa sisa ${it.n} ${A}?`,
+            ask: `Sisa ${it.n} ${A}`, known: [`${ucfirst(it.n)} ${A} = ${c}`, `Diberikan = ${b}`],
+            steps: [[c, MIN, b, a]], ans: a, suf: it.n });
+    },
+    () => { // Berkurang (adegan)
+        const [A] = names(1), s = pick(SUB_SCENES), { a, b, c } = parts();
+        return P({ type: 'Berkurang', e: s.e, text: s.t(A, c, b), ask: s.ask, known: s.k(c, b),
+            steps: [[c, MIN, b, a]], ans: a, suf: s.suf });
+    },
+    () => { // Selisih (jebakan "lebih banyak")
+        const [A, B] = names(2), it = pick(ITEMS), { a, b, c } = parts();
+        return P({ type: 'Membandingkan (selisih)', e: it.e,
+            text: `${A} punya ${c} ${it.n}. ${B} punya ${a} ${it.n}. Berapa ${it.n} ${A} lebih banyak daripada ${B}?`,
+            ask: `Selisih ${it.n} ${A} dan ${B}`, known: [`${ucfirst(it.n)} ${A} = ${c}`, `${ucfirst(it.n)} ${B} = ${a}`],
+            steps: [[c, MIN, a, b]], ans: b, suf: it.n,
+            trap: 'Ada kata "lebih banyak", tapi yang dicari SELISIH → dikurang (−).' });
+    },
+    () => { // Lebih sedikit
+        const [A, B] = names(2), it = pick(ITEMS), { a, b, c } = parts();
+        return P({ type: 'Membandingkan (lebih sedikit)', e: it.e,
+            text: `${A} punya ${c} ${it.n}. ${B} punya ${b} ${it.n} lebih sedikit daripada ${A}. Berapa ${it.n} milik ${B}?`,
+            ask: `Banyak ${it.n} ${B}`, known: [`${ucfirst(it.n)} ${A} = ${c}`, `${B} punya ${b} lebih sedikit`],
+            steps: [[c, MIN, b, a]], ans: a, suf: it.n });
+    },
+    () => { // Mencari kekurangan (jebakan "lagi")
+        const [A] = names(1), { a, b, c } = parts();
+        if (rand() < 0.5) {
+            return P({ type: 'Mencari kekurangan', e: '📖',
+                text: `Buku cerita ${A} tebalnya ${c} halaman. ${A} sudah membaca ${a} halaman. Berapa halaman lagi yang harus dibaca ${A}?`,
+                ask: 'Halaman yang belum dibaca', known: [`Tebal buku = ${c} halaman`, `Sudah dibaca = ${a} halaman`],
+                steps: [[c, MIN, a, b]], ans: b, suf: 'halaman',
+                trap: 'Ada kata "lagi", tapi yang dicari KEKURANGANNYA → dikurang (−).' });
+        }
+        const it = pick(ITEMS);
+        return P({ type: 'Mencari kekurangan', e: it.e,
+            text: `${A} punya ${a} ${it.n}. ${A} ingin punya ${c} ${it.n}. Berapa ${it.n} lagi yang ${A} perlukan?`,
+            ask: `${ucfirst(it.n)} yang masih diperlukan`, known: [`Sudah punya = ${a}`, `Ingin punya = ${c}`],
+            steps: [[c, MIN, a, b]], ans: b, suf: it.n,
+            trap: 'Ada kata "lagi", tapi yang dicari KEKURANGANNYA → dikurang (−).' });
+    },
+    () => { // Bagian dari keseluruhan
+        const { a, b, c } = parts();
+        return P({ type: 'Bagian dari keseluruhan', e: '🌷',
+            text: `Di kebun ada ${c} bunga. Sebanyak ${a} bunga berwarna merah, sisanya berwarna kuning. Berapa bunga yang berwarna kuning?`,
+            ask: 'Banyak bunga kuning', known: [`Semua bunga = ${c}`, `Bunga merah = ${a}`],
+            steps: [[c, MIN, a, b]], ans: b, suf: 'bunga' });
+    }
+];
+
+/* =========================================================
+   Template: 2 LANGKAH (tambah & kurang)
+   ========================================================= */
+const T_DUA = [
+    () => {
+        const [A, B] = names(2), it = pick(ITEMS), { a: x, b: y, c: s } = parts();
+        const z = ri(2, s - 2);
+        return P({ type: 'Dua langkah (+ lalu −)', e: it.e,
+            text: `${A} punya ${x} ${it.n}. ${A} mendapat ${y} ${it.n} lagi dari Kakak. Lalu ${A} memberikan ${z} ${it.n} kepada ${B}. Berapa ${it.n} ${A} sekarang?`,
+            ask: `Banyak ${it.n} ${A} sekarang`, known: [`Mula-mula = ${x}`, `Mendapat = ${y}`, `Diberikan = ${z}`],
+            steps: [[x, '+', y, s], [s, MIN, z, s - z]], ans: s - z, suf: it.n });
+    },
+    () => {
+        const { a: x, b: y, c: s } = parts(), z = ri(2, s - 2);
+        return P({ type: 'Dua langkah (+ lalu −)', e: '🚌',
+            text: `Di dalam bus ada ${x} penumpang. Di halte pertama, ${y} penumpang naik. Di halte kedua, ${z} penumpang turun. Berapa penumpang di dalam bus sekarang?`,
+            ask: 'Banyak penumpang sekarang', known: [`Mula-mula = ${x}`, `Naik = ${y}`, `Turun = ${z}`],
+            steps: [[x, '+', y, s], [s, MIN, z, s - z]], ans: s - z, suf: 'penumpang' });
+    },
+    () => {
+        const [A, B] = names(2), it = pick(ITEMS), max = CTX.max;
+        const x = ri(Math.max(2, Math.floor(max * 0.15)), Math.floor((max - 2) / 2));
+        const d = ri(1, Math.max(1, max - 2 * x));
+        const y = x + d;
+        return P({ type: 'Dua langkah (bandingkan lalu jumlah)', e: it.e,
+            text: `${A} punya ${x} ${it.n}. ${B} punya ${d} ${it.n} lebih banyak daripada ${A}. Berapa jumlah ${it.n} mereka berdua?`,
+            ask: `Jumlah ${it.n} ${A} dan ${B}`, known: [`${ucfirst(it.n)} ${A} = ${x}`, `${B} punya ${d} lebih banyak`],
+            steps: [[x, '+', d, y], [x, '+', y, x + y]], ans: x + y, suf: it.n,
+            trap: `Hitung dulu milik ${B}, baru dijumlahkan dengan milik ${A}.` });
+    },
+    () => {
+        const c = ri(Math.max(6, Math.floor(CTX.max * 0.3)), CTX.max);
+        const b = ri(1, Math.max(1, Math.floor(c / 3))), d = ri(1, Math.max(1, Math.floor(c / 3)));
+        return P({ type: 'Dua langkah (− lalu −)', e: '🥚',
+            text: `Ibu membeli ${c} butir telur. Sebanyak ${b} butir pecah di jalan, dan ${d} butir dipakai untuk membuat kue. Berapa butir telur yang tersisa?`,
+            ask: 'Banyak telur yang tersisa', known: [`Telur dibeli = ${c}`, `Pecah = ${b}`, `Dipakai = ${d}`],
+            steps: [[c, MIN, b, c - b], [c - b, MIN, d, c - b - d]], ans: c - b - d, suf: 'butir telur' });
+    }
+];
+
+/* =========================================================
+   Template: UANG
+   ========================================================= */
+function moneyCfg(max) {
+    if (max <= 20) return { step: 1000, cap: 10000 };
+    if (max <= 100) return { step: 500, cap: 20000 };
+    return { step: 500, cap: 50000 };
+}
+function priceRange(s) {
+    const st = CTX.step;
+    const lo = Math.max(st, Math.ceil(s.min / st) * st);
+    const hi = Math.min(CTX.cap - st, Math.floor(s.max / st) * st);
+    return lo <= hi ? [lo, hi] : null;
+}
+function price(s) { const [lo, hi] = priceRange(s); return ri(lo / CTX.step, hi / CTX.step) * CTX.step; }
+function shopPick(n, maxSum, distinct) {
+    const pool = SHOP.filter(priceRange);
+    for (let k = 0; k < 200; k++) {
+        const its = shuffle(pool).slice(0, n), ps = its.map(price);
+        const sum = ps.reduce((x, y) => x + y, 0);
+        if (sum <= maxSum && (!distinct || new Set(ps).size === ps.length)) return { its, ps, sum };
+    }
+    const its = pool.slice(0, n); const ps = its.map(i => priceRange(i)[0]);
+    return { its, ps, sum: ps.reduce((x, y) => x + y, 0) };
+}
+function note(amount) {
+    const ok = NOTES.filter(v => v > amount);
+    let v = ok[0];
+    if (ok[1] && ok[1] <= CTX.cap && rand() < 0.35) v = ok[1];
+    return v;
+}
+
+const T_UANG = [
+    () => {
+        const [A] = names(1), { its, ps, sum } = shopPick(2, CTX.cap);
+        return P({ type: 'Belanja: jumlah harga', e: '🛒', wide: true,
+            text: `${A} membeli ${its[0].n} ${its[0].e} seharga ${rp(ps[0])} dan ${its[1].n} ${its[1].e} seharga ${rp(ps[1])}. Berapa rupiah yang harus ${A} bayar?`,
+            ask: 'Jumlah uang yang harus dibayar', known: [`Harga ${its[0].n} = ${rp(ps[0])}`, `Harga ${its[1].n} = ${rp(ps[1])}`],
+            steps: [[ps[0], '+', ps[1], sum]], ans: sum, pre: 'Rp' });
+    },
+    () => {
+        const [A] = names(1), { its, ps } = shopPick(1, CTX.cap - CTX.step), p = ps[0], N = note(p);
+        return P({ type: 'Uang kembalian', e: its[0].e, wide: true,
+            text: `${A} membeli ${its[0].n} seharga ${rp(p)}. ${A} membayar dengan selembar uang ${rp(N)}. Berapa uang kembalian yang diterima ${A}?`,
+            ask: 'Uang kembalian', known: [`Harga ${its[0].n} = ${rp(p)}`, `Uang yang dibayar = ${rp(N)}`],
+            steps: [[N, MIN, p, N - p]], ans: N - p, pre: 'Rp' });
+    },
+    () => {
+        const [A] = names(1), st = CTX.step, units = CTX.cap / st;
+        const s = ri(1, units - 1) * st, t = ri(1, (CTX.cap - s) / st) * st;
+        return P({ type: 'Menabung', e: '🐷', wide: true,
+            text: `Di celengan ${A} ada uang ${rp(s)}. Hari ini ${A} menabung lagi ${rp(t)}. Berapa jumlah uang di celengan ${A} sekarang?`,
+            ask: 'Jumlah uang di celengan sekarang', known: [`Uang mula-mula = ${rp(s)}`, `Menabung lagi = ${rp(t)}`],
+            steps: [[s, '+', t, s + t]], ans: s + t, pre: 'Rp' });
+    },
+    () => {
+        let { its, ps } = shopPick(2, CTX.cap * 2, true);
+        if (ps[0] < ps[1]) { its = [its[1], its[0]]; ps = [ps[1], ps[0]]; }
+        return P({ type: 'Selisih harga', e: '🏷️', wide: true,
+            text: `Harga ${its[0].n} ${its[0].e} ${rp(ps[0])}. Harga ${its[1].n} ${its[1].e} ${rp(ps[1])}. Berapa rupiah harga ${its[0].n} lebih mahal daripada ${its[1].n}?`,
+            ask: 'Selisih kedua harga', known: [`Harga ${its[0].n} = ${rp(ps[0])}`, `Harga ${its[1].n} = ${rp(ps[1])}`],
+            steps: [[ps[0], MIN, ps[1], ps[0] - ps[1]]], ans: ps[0] - ps[1], pre: 'Rp',
+            trap: 'Ada kata "lebih mahal", tapi yang dicari SELISIH harga → dikurang (−).' });
+    },
+    () => {
+        const [A] = names(1), st = CTX.step;
+        const pool = SHOP.filter(s => { const r = priceRange(s); return r && r[1] >= 2 * st; });
+        const it = pick(pool); let P0 = price(it); if (P0 < 2 * st) P0 = 2 * st;
+        const s = ri(1, P0 / st - 1) * st;
+        return P({ type: 'Kekurangan uang', e: it.e, wide: true,
+            text: `${A} ingin membeli ${it.n} seharga ${rp(P0)}. Uang ${A} baru ${rp(s)}. Berapa rupiah lagi yang dibutuhkan ${A}?`,
+            ask: 'Kekurangan uang', known: [`Harga ${it.n} = ${rp(P0)}`, `Uang yang dimiliki = ${rp(s)}`],
+            steps: [[P0, MIN, s, P0 - s]], ans: P0 - s, pre: 'Rp',
+            trap: 'Ada kata "lagi", tapi yang dicari KEKURANGANNYA → dikurang (−).' });
+    },
+    () => {
+        const [A] = names(1);
+        const saku = pick([5000, 10000, 20000].filter(v => v <= CTX.cap));
+        const pool = SHOP.filter(s => { const r = priceRange(s); return r && r[0] < saku; });
+        const it = pick(pool); let p = price(it);
+        for (let k = 0; k < 50 && p >= saku; k++) p = price(it);
+        if (p >= saku) p = priceRange(it)[0];
+        return P({ type: 'Sisa uang', e: it.e, wide: true,
+            text: `Uang saku ${A} hari ini ${rp(saku)}. ${A} membeli ${it.n} seharga ${rp(p)} di kantin. Berapa sisa uang saku ${A}?`,
+            ask: 'Sisa uang saku', known: [`Uang saku = ${rp(saku)}`, `Harga ${it.n} = ${rp(p)}`],
+            steps: [[saku, MIN, p, saku - p]], ans: saku - p, pre: 'Rp' });
+    }
+];
+
+const T_UANG2 = [
+    () => {
+        const [A] = names(1), { its, ps, sum } = shopPick(2, CTX.cap - CTX.step), N = note(sum);
+        const text = rand() < 0.5
+            ? `${A} membeli ${its[0].n} ${its[0].e} seharga ${rp(ps[0])} dan ${its[1].n} ${its[1].e} seharga ${rp(ps[1])}. ${A} membayar dengan uang ${rp(N)}. Berapa uang kembalian ${A}?`
+            : `Uang ${A} ${rp(N)}. ${A} membeli ${its[0].n} ${its[0].e} seharga ${rp(ps[0])} dan ${its[1].n} ${its[1].e} seharga ${rp(ps[1])}. Berapa sisa uang ${A}?`;
+        return P({ type: 'Dua langkah (belanja & kembalian)', e: '🛒', wide: true, text,
+            ask: 'Uang yang tersisa', known: [`Harga ${its[0].n} = ${rp(ps[0])}`, `Harga ${its[1].n} = ${rp(ps[1])}`, `Uang = ${rp(N)}`],
+            steps: [[ps[0], '+', ps[1], sum], [N, MIN, sum, N - sum]], ans: N - sum, pre: 'Rp',
+            trap: 'Jumlahkan dulu semua harga, baru kurangkan dari uang yang dibayar.' });
+    }
+];
+
+/* =========================================================
+   Template: WAKTU
+   ========================================================= */
+const halfHour = () => rand() < 0.35 ? 30 : 0;
+const T_WAKTU = [
+    () => { // Waktu selesai
+        const [A] = names(1), [act, e] = pick(ACTS), h = ri(6, 9), d = ri(1, 3), m = halfHour();
+        return P({ type: 'Waktu selesai', e,
+            text: `${A} mulai ${act} pukul ${jam(h, m)}. ${A} ${act} selama ${d} jam. Pukul berapa ${A} selesai ${act}?`,
+            ask: 'Pukul berapa selesai', known: [`Mulai pukul ${jam(h, m)}`, `Lamanya ${d} jam`],
+            steps: [[h, '+', d, h + d]], ans: jam(h + d, m), pre: 'pukul', note: m ? `→ pukul ${jam(h + d, m)}` : '' });
+    },
+    () => { // Lama waktu
+        const [A] = names(1), h1 = ri(6, 9), d = ri(1, 3), h2 = h1 + d, m = halfHour();
+        const t1 = jam(h1, m), t2 = jam(h2, m);
+        const v = pick([
+            { e: '🚗', text: `${A} berangkat ke rumah Nenek pukul ${t1} dan sampai pukul ${t2}. Berapa jam lama perjalanan ${A}?` },
+            { e: '🎨', text: `Kakak les menggambar mulai pukul ${t1} sampai pukul ${t2}. Berapa jam Kakak les menggambar?` },
+            { e: '🎣', text: `${A} dan Ayah memancing dari pukul ${t1} sampai pukul ${t2}. Berapa jam mereka memancing?` }
+        ]);
+        return P({ type: 'Lama waktu', e: v.e, text: v.text,
+            ask: 'Berapa jam lamanya', known: [`Mulai pukul ${t1}`, `Selesai pukul ${t2}`],
+            steps: [[h2, MIN, h1, d]], ans: d, suf: 'jam',
+            trap: 'Lama waktu = jam selesai − jam mulai (bukan dijumlah).' });
+    },
+    () => { // Waktu mulai
+        const [A] = names(1), [act, e] = pick(ACTS), d = ri(1, 3), h2 = ri(6 + d, 12), m = halfHour();
+        return P({ type: 'Waktu mulai', e,
+            text: `${A} selesai ${act} pukul ${jam(h2, m)}. ${A} sudah ${act} selama ${d} jam. Pukul berapa ${A} mulai ${act}?`,
+            ask: 'Pukul berapa mulai', known: [`Selesai pukul ${jam(h2, m)}`, `Lamanya ${d} jam`],
+            steps: [[h2, MIN, d, h2 - d]], ans: jam(h2 - d, m), pre: 'pukul', note: m ? `→ pukul ${jam(h2 - d, m)}` : '',
+            trap: 'Yang dicari waktu MULAI (sebelumnya), jadi mundur → dikurang (−).' });
+    },
+    () => { // Membaca jam + menghitung
+        const [A] = names(1), [act, e] = pick(ACTS), h = ri(6, 9), d = ri(1, 3), m = halfHour();
+        return P({ type: 'Membaca jam + waktu selesai', e, clock: { h, m },
+            text: `Jam di samping menunjukkan waktu ${A} mulai ${act}. ${A} ${act} selama ${d} jam. Pukul berapa ${A} selesai ${act}?`,
+            ask: 'Pukul berapa selesai', known: [`Jam menunjukkan pukul ${jam(h, m)}`, `Lamanya ${d} jam`],
+            steps: [[h, '+', d, h + d]], ans: jam(h + d, m), pre: 'pukul', note: m ? `→ pukul ${jam(h + d, m)}` : '' });
+    }
+];
+
+const TEMPL = { tambah: T_TAMBAH, kurang: T_KURANG, uang: T_UANG, waktu: T_WAKTU };
+
+/* =========================================================
+   Gambar jam analog (SVG)
+   ========================================================= */
+function clockSVG(h, m) {
+    const f = v => v.toFixed(2);
+    let t = `<svg class="clock" width="118" height="118" viewBox="0 0 120 120"><circle cx="60" cy="60" r="55" fill="#fff" stroke="#7c3aed" stroke-width="4"/>`;
+    for (let i = 0; i < 60; i++) {
+        const a = i * 6 * Math.PI / 180, r1 = i % 5 ? 50 : 46;
+        t += `<line x1="${f(60 + r1 * Math.sin(a))}" y1="${f(60 - r1 * Math.cos(a))}" x2="${f(60 + 52 * Math.sin(a))}" y2="${f(60 - 52 * Math.cos(a))}" stroke="#94a3b8" stroke-width="${i % 5 ? 1 : 2}"/>`;
+    }
+    for (let n = 1; n <= 12; n++) {
+        const a = n * 30 * Math.PI / 180;
+        t += `<text x="${f(60 + 37 * Math.sin(a))}" y="${f(60 - 37 * Math.cos(a) + 4.5)}" text-anchor="middle" font-size="13" font-family="Fredoka, sans-serif" font-weight="600" fill="#1e293b">${n}</text>`;
+    }
+    const ha = ((h % 12) + m / 60) * 30 * Math.PI / 180, ma = m * 6 * Math.PI / 180;
+    t += `<line x1="60" y1="60" x2="${f(60 + 24 * Math.sin(ha))}" y2="${f(60 - 24 * Math.cos(ha))}" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>`;
+    t += `<line x1="60" y1="60" x2="${f(60 + 38 * Math.sin(ma))}" y2="${f(60 - 38 * Math.cos(ma))}" stroke="#7c3aed" stroke-width="3" stroke-linecap="round"/>`;
+    t += `<circle cx="60" cy="60" r="4" fill="#1e293b"/></svg>`;
+    return t;
+}
+
+/* =========================================================
+   Pengaturan & pembuatan soal
+   ========================================================= */
+const STORE_KEY = 'lumibell_soal_cerita_cfg';
+let currentSeed = null;
+
+function readCfg() {
+    let topics = [...document.querySelectorAll('#cfg-topics input:checked')].map(i => i.value);
+    if (!topics.length) {
+        document.querySelector('#cfg-topics input[value=tambah]').checked = true;
+        topics = ['tambah'];
+    }
+    return {
+        name: document.getElementById('cfg-name').value.trim(),
+        topics,
+        max: parseInt(document.getElementById('cfg-max').value, 10),
+        count: parseInt(document.getElementById('cfg-count').value, 10),
+        mode: document.getElementById('cfg-mode').value,
+        challenge: document.getElementById('cfg-challenge').checked,
+        key: document.getElementById('cfg-key').checked
+    };
+}
+function saveCfg(cfg) { try { localStorage.setItem(STORE_KEY, JSON.stringify(cfg)); } catch (e) { /* abaikan */ } }
+function loadCfg() {
+    try {
+        const c = JSON.parse(localStorage.getItem(STORE_KEY));
+        if (!c) return;
+        document.getElementById('cfg-name').value = c.name || '';
+        document.querySelectorAll('#cfg-topics input').forEach(i => { i.checked = (c.topics || []).includes(i.value); });
+        if (c.max) document.getElementById('cfg-max').value = c.max;
+        if (c.count) document.getElementById('cfg-count').value = c.count;
+        if (c.mode) document.getElementById('cfg-mode').value = c.mode;
+        document.getElementById('cfg-challenge').checked = c.challenge !== false;
+        document.getElementById('cfg-key').checked = c.key !== false;
+    } catch (e) { /* abaikan */ }
+}
+
+function generate(seed) {
+    const cfg = readCfg();
+    saveCfg(cfg);
+    currentSeed = seed || (Math.floor(Math.random() * 90000) + 10000);
+    document.getElementById('cfg-seed').value = currentSeed;
+    rand = mulberry32(currentSeed);
+    CTX = Object.assign({ max: cfg.max }, moneyCfg(cfg.max));
+
+    // Urutan topik: dibagi rata lalu diacak
+    let seq = [];
+    for (let i = 0; i < cfg.count; i++) seq.push(cfg.topics[i % cfg.topics.length]);
+    seq = shuffle(seq);
+
+    // Slot soal tantangan 2 langkah
+    const eligible = seq.map((t, i) => ['tambah', 'kurang', 'uang'].includes(t) ? i : -1).filter(i => i >= 0);
+    const nCh = cfg.challenge ? Math.min(eligible.length, Math.max(1, Math.round(cfg.count / 4))) : 0;
+    const chSet = new Set(shuffle(eligible).slice(0, nCh));
+
+    // "Kantong" template supaya variasi merata dan tidak berulang
+    const bags = {};
+    const draw = (key, list) => {
+        if (!bags[key] || !bags[key].length) bags[key] = shuffle(list.map((_, i) => i));
+        return list[bags[key].pop()];
+    };
+
+    const problems = seq.map((t, i) => {
+        let p;
+        if (chSet.has(i)) { p = (t === 'uang' ? draw('u2', T_UANG2) : draw('d2', T_DUA))(); p.two = true; }
+        else p = draw(t, TEMPL[t])();
+        p.topic = t;
+        return p;
+    });
+
+    render(cfg, problems);
+}
+
+/* =========================================================
+   Tampilan lembar kerja
+   ========================================================= */
+function scaffold(p, mode) {
+    const bx = `<span class="box${p.wide ? ' w' : ''}"></span>`;
+    const multi = p.steps.length > 1;
+    const kal = p.steps.map((_, i) => `<div class="kal">${multi ? `<small>Langkah ${i + 1}</small>` : ''}${bx}<span class="opc"></span>${bx}<span class="eq">=</span>${bx}</div>`).join('');
+    const pilih = `<span class="pilih">${p.steps.map((_, i) => `${multi ? `<small>Langkah ${i + 1}:</small>` : ''}<span>+</span><span>−</span>`).join('')}</span>`;
+    const knownBoxes = p.known.map((_, i) => (i === 0 ? '' : `<span class="sep">${i === p.known.length - 1 ? 'dan' : ','}</span>`) + bx).join('');
+
+    if (mode === 'lengkap') {
+        const jawab = `${p.pre ? `<b>${p.pre}</b>` : ''}<span class="line short"></span>${p.suf ? `<b>${p.suf}</b>` : ''}`;
+        return `<ol class="langkah">
+            <li><span class="lbl">① Baca &amp; tandai</span> Baca 2 kali. <u>Garis bawahi</u> angkanya, <span class="circ">lingkari</span> pertanyaannya. <span class="chk"></span></li>
+            <li><span class="lbl">② Yang diketahui</span>${knownBoxes}</li>
+            <li><span class="lbl">③ Yang ditanya</span><span class="line"></span></li>
+            <li><span class="lbl">④ Lingkari tandanya</span>${pilih}</li>
+            <li class="top"><span class="lbl">⑤ Kalimat matematika</span><div class="kals">${kal}</div></li>
+            <li><span class="lbl">⑥ Jawaban</span>Jadi, ${jawab}</li>
+        </ol>`;
+    }
+    if (mode === 'sedang') {
+        return `<ol class="langkah">
+            <li><span class="lbl">① Lingkari tandanya</span>${pilih}</li>
+            <li class="top"><span class="lbl">② Kalimat matematika</span><div class="kals">${kal}</div></li>
+            <li><span class="lbl">③ Jawaban</span>Jadi, <span class="line"></span></li>
+        </ol>`;
+    }
+    return `<div class="coret"></div><div class="jawab-row">Jawaban: <span class="line"></span></div>`;
+}
+
+function render(cfg, problems) {
+    const esc = s => s.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+    const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const cards = problems.map((p, i) => `
+        <div class="soal">
+            <div class="soal-top">
+                <div class="no">${i + 1}</div>
+                <div class="cerita"><span class="emo">${p.e}</span>${p.text}${p.two ? '<span class="tag-star">⭐ Tantangan</span>' : ''}</div>
+                ${p.clock ? clockSVG(p.clock.h, p.clock.m) : ''}
+            </div>
+            ${scaffold(p, cfg.mode)}
+        </div>`).join('');
+
+    let html = `
+    <section class="paper">
+        <div class="sheet-head">
+            <div class="title-row">
+                <div class="logo">🔔</div>
+                <div>
+                    <h1>Petualangan Soal Cerita</h1>
+                    <p>LUMIBELL · MATEMATIKA KELAS 2</p>
+                </div>
+            </div>
+            <div class="id-grid">
+                <span>Nama</span><span class="fill">${esc(cfg.name)}</span>
+                <span>Tanggal</span><span class="fill"></span>
+                <span>Benar</span><span class="fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ ${problems.length}</span>
+            </div>
+        </div>
+        <div class="steps-strip">
+            <div><b>📖</b>1. Baca<br>2 kali</div>
+            <div><b>✏️</b>2. Tandai angka<br>&amp; pertanyaan</div>
+            <div><b>🤔</b>3. Bertambah atau<br>berkurang?</div>
+            <div><b>➕➖</b>4. Tulis &amp;<br>hitung</div>
+            <div><b>✅</b>5. Cek lagi<br>jawabanmu</div>
+        </div>
+        ${cards}
+        <div class="sheet-foot"><span>Kode lembar: ${currentSeed}</span><span>Semangat, kamu pasti bisa! 🌟</span></div>
+    </section>`;
+
+    if (cfg.key) {
+        const nTrap = problems.filter(p => p.trap && !p.two).length;
+        const nTwo = problems.filter(p => p.two).length;
+        const rows = problems.map((p, i) => `
+            <tr>
+                <td class="c">${i + 1}</td>
+                <td><b>${p.type}</b>${p.two ? ' ⭐' : ''}${p.trap ? `<div class="trap">⚠️ ${p.trap}</div>` : ''}</td>
+                <td>${p.known.join('<br>')}<div class="ask">❓ ${p.ask}</div></td>
+                <td class="mono">${p.steps.map(s => `${fmt(s[0])} ${s[1]} ${fmt(s[2])} = ${fmt(s[3])}`).join('<br>')}${p.note ? `<br><small>${p.note}</small>` : ''}</td>
+                <td><b>${p.ansText}</b></td>
+                <td class="mark"></td>
+            </tr>`).join('');
+
+        html += `
+        <section class="paper">
+            <h2 class="key-title">🔑 Kunci Jawaban &amp; Panduan Orang Tua</h2>
+            <p class="key-sub">Kode lembar ${currentSeed} · ${today} · ${problems.length} soal, termasuk ${nTrap} soal "jebakan kata kunci" ⚠️ dan ${nTwo} soal 2 langkah ⭐. Isi kolom ✓/✗ saat memeriksa.</p>
+            <table class="key">
+                <thead><tr><th>No</th><th>Tipe soal</th><th>Diketahui → Ditanya</th><th>Kalimat matematika</th><th>Jawaban</th><th>✓ / ✗</th></tr></thead>
+                <tbody>${rows}</tbody>
+            </table>
+
+            <div class="guide">
+                <h3>🔍 Cara membaca hasil: di mana kesulitan anak?</h3>
+                <table>
+                    <tr><td>Angka di "Yang diketahui" salah / tertukar, atau tidak tahu yang ditanya</td>
+                        <td><b>Kesulitan memahami bacaan.</b> Bacakan soal bersama, lalu minta anak menceritakan ulang dengan kata-katanya sendiri. Peragakan dengan benda nyata (kelereng, uang mainan, jam).</td></tr>
+                    <tr><td>Angka benar, tapi tanda + / − salah (sering di soal ⚠️)</td>
+                        <td><b>Terjebak kata kunci.</b> Jangan ajarkan "lebih = tambah". Tanyakan: <i>"Hasilnya nanti jadi lebih banyak atau lebih sedikit dari angka terbesar?"</i> Gambar dua batang untuk membandingkan.</td></tr>
+                    <tr><td>Kalimat matematika benar, tapi hasil hitungan salah</td>
+                        <td><b>Pemahaman sudah baik, berhitungnya yang perlu dilatih.</b> Latih penjumlahan/pengurangan bersusun secara terpisah.</td></tr>
+                    <tr><td>Salah di soal 2 langkah ⭐</td>
+                        <td><b>Sulit memecah soal.</b> Tutup kalimat kedua dengan kertas, selesaikan satu bagian dulu, lalu buka bagian berikutnya.</td></tr>
+                    <tr><td>Jawaban benar tapi tanpa satuan (Rp, jam, kue, dll.)</td>
+                        <td>Biasakan menjawab dengan kalimat lengkap: <i>"Jadi, sisa kue ada 5 kue."</i></td></tr>
+                </table>
+                <ul>
+                    <li>Mulai dari bantuan <b>Lengkap</b>. Jika sudah benar ≥ 80% dua kali berturut-turut, naik ke <b>Sedang</b>, lalu <b>Mandiri</b>.</li>
+                    <li>Saat anak bingung, jangan langsung beri tahu jawabannya. Tanyakan: <i>"Ceritanya tentang apa? Apa yang ditanya? Benda itu bertambah atau berkurang?"</i></li>
+                    <li>Lebih baik 4 soal yang dikerjakan dengan tenang setiap hari daripada 20 soal sekaligus.</li>
+                </ul>
+            </div>
+        </section>`;
+    }
+
+    document.getElementById('papers').innerHTML = html;
+}
+
+/* =========================================================
+   Event
+   ========================================================= */
+document.getElementById('btn-new').addEventListener('click', () => generate());
+document.getElementById('btn-print').addEventListener('click', () => window.print());
+// Perubahan pengaturan: pakai kode yang sama supaya soal tidak berubah tanpa diminta
+document.querySelectorAll('.panel input:not(#cfg-seed), .panel select').forEach(el => {
+    el.addEventListener(el.type === 'text' ? 'input' : 'change', () => generate(currentSeed));
+});
+document.getElementById('cfg-seed').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+        const v = parseInt(e.target.value, 10);
+        if (v > 0) generate(v);
+    }
+});
+
+loadCfg();
+const urlSeed = parseInt(new URLSearchParams(location.search).get('kode'), 10);
+generate(urlSeed > 0 ? urlSeed : null);
+</script>
+</body>
+</html>

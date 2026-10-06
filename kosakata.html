@@ -1,0 +1,379 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kosa Kata - LumiBell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: "Quicksand", sans-serif; background-color: #FFFDF0; background-image: radial-gradient(#fde68a 1px, transparent 1px); background-size: 20px 20px; }
+        h1,h2,h3,.brand-font { font-family: "Fredoka", sans-serif; }
+        .filter-btn { transition: all 0.2s ease; }
+        .filter-btn.active { transform: scale(1.05); }
+        .vocab-row { transition: background-color 0.15s ease; }
+        .vocab-row:hover { background-color: #fef9c3; }
+        @media print {
+            body { background: white !important; background-image: none !important; font-size: 11pt; }
+            .no-print { display: none !important; }
+            .print-container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+            .print-header-block { display: block !important; text-align: center; margin-bottom: 12pt; border-bottom: 2px solid #000; padding-bottom: 8pt; }
+            #vocab-table { width: 100%; border-collapse: collapse; box-shadow: none !important; border-radius: 0 !important; }
+            #vocab-table thead tr { background: #fef08a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            #vocab-table th, #vocab-table td { border: 1px solid #555 !important; padding: 5pt 8pt !important; font-size: 10pt; }
+            #vocab-table tbody tr:nth-child(even) { background: #fffbeb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .vocab-row:hover { background-color: transparent !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm p-4 sticky top-0 z-50 no-print">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <div class="bg-amber-100 p-2.5 rounded-full shadow-inner border-2 border-amber-400">
+                    <svg class="w-8 h-8 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-amber-900 tracking-wide">LumiBell</h1>
+                    <p class="text-[10px] font-bold text-amber-600 uppercase tracking-widest">Aplikasi Belajar Anak</p>
+                </div>
+            </a>
+            <button onclick="window.print()" class="flex items-center gap-2 bg-amber-400 hover:bg-amber-500 text-amber-900 font-bold px-4 py-2 rounded-xl shadow transition">
+                <i class="fas fa-print"></i>
+                <span>Cetak / Print</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 print-container">
+
+        <div class="text-center mb-6">
+            <h2 class="text-4xl font-bold text-amber-800 no-print">Kamus Kosa Kata Anak</h2>
+            <p class="text-slate-600 mt-1 no-print">Bahasa Indonesia &middot; Bahasa Inggris &middot; Jawa Ngoko &middot; Jawa Krama</p>
+            <div class="print-header-block hidden">
+                <h2 style="font-size:18pt;font-weight:bold;">Kamus Kosa Kata Anak &mdash; LumiBell</h2>
+                <p id="print-category-label" style="font-size:10pt;color:#555;margin-top:4pt;"></p>
+            </div>
+        </div>
+
+        <div class="no-print flex flex-col sm:flex-row gap-3 mb-4">
+            <div class="relative flex-1">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-amber-400"></i>
+                <input id="search-input" type="text" placeholder="Cari kata..." class="w-full pl-9 pr-4 py-2.5 rounded-xl border-2 border-amber-200 focus:border-amber-400 focus:outline-none bg-white font-medium" oninput="filterTable()"/>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-slate-500">
+                <span id="result-count" class="font-bold text-amber-700"></span>
+                <span>kata ditampilkan</span>
+            </div>
+        </div>
+
+        <div id="filter-buttons" class="no-print flex flex-wrap gap-2 mb-5">
+            <button class="filter-btn active bg-amber-400 text-amber-900 font-bold px-4 py-1.5 rounded-full text-sm shadow" data-category="all" onclick="setFilter('all', this)">
+                Semua
+            </button>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl shadow-lg">
+            <table id="vocab-table" class="w-full bg-white text-sm">
+                <thead>
+                    <tr class="bg-amber-300 text-amber-900">
+                        <th class="py-3 px-4 text-left font-bold w-8 no-print">#</th>
+                        <th class="py-3 px-4 text-left font-bold">Indonesia</th>
+                        <th class="py-3 px-4 text-left font-bold">English</th>
+                        <th class="py-3 px-4 text-left font-bold">Jawa Ngoko</th>
+                        <th class="py-3 px-4 text-left font-bold">Jawa Krama</th>
+                        <th class="py-3 px-4 text-left font-bold no-print">Kategori</th>
+                    </tr>
+                </thead>
+                <tbody id="vocab-body"></tbody>
+            </table>
+        </div>
+
+        <p class="text-center text-xs text-slate-400 mt-6 no-print">LumiBell &copy; 2025 &middot; Worksheet Kosa Kata</p>
+    </main>
+
+    <script>
+    const vocab = [
+        {id:"Anggota Tubuh",in:"Kepala",en:"Head",ngoko:"Sirah",krama:"Mustaka"},
+        {id:"Anggota Tubuh",in:"Rambut",en:"Hair",ngoko:"Rambut",krama:"Rikma"},
+        {id:"Anggota Tubuh",in:"Mata",en:"Eye",ngoko:"Moto",krama:"Soca"},
+        {id:"Anggota Tubuh",in:"Hidung",en:"Nose",ngoko:"Irung",krama:"Grana"},
+        {id:"Anggota Tubuh",in:"Telinga",en:"Ear",ngoko:"Kuping",krama:"Talingan"},
+        {id:"Anggota Tubuh",in:"Mulut",en:"Mouth",ngoko:"Tutuk",krama:"Cangkem"},
+        {id:"Anggota Tubuh",in:"Gigi",en:"Tooth",ngoko:"Untu",krama:"Waja"},
+        {id:"Anggota Tubuh",in:"Lidah",en:"Tongue",ngoko:"Ilat",krama:"Lidhah"},
+        {id:"Anggota Tubuh",in:"Leher",en:"Neck",ngoko:"Gulu",krama:"Jangga"},
+        {id:"Anggota Tubuh",in:"Bahu",en:"Shoulder",ngoko:"Pundhak",krama:"Pundhak"},
+        {id:"Anggota Tubuh",in:"Tangan",en:"Hand",ngoko:"Tangan",krama:"Asta"},
+        {id:"Anggota Tubuh",in:"Jari",en:"Finger",ngoko:"Driji",krama:"Racikan"},
+        {id:"Anggota Tubuh",in:"Kuku",en:"Nail",ngoko:"Kuku",krama:"Kuku"},
+        {id:"Anggota Tubuh",in:"Perut",en:"Stomach",ngoko:"Weteng",krama:"Padharan"},
+        {id:"Anggota Tubuh",in:"Kaki",en:"Foot",ngoko:"Sikil",krama:"Suku"},
+        {id:"Anggota Tubuh",in:"Lutut",en:"Knee",ngoko:"Dhengkul",krama:"Jengku"},
+        {id:"Anggota Tubuh",in:"Punggung",en:"Back",ngoko:"Geger",krama:"Pengkeran"},
+        {id:"Anggota Tubuh",in:"Dada",en:"Chest",ngoko:"Dhadha",krama:"Jaja"},
+        {id:"Buah-buahan",in:"Apel",en:"Apple",ngoko:"Apel",krama:"Apel"},
+        {id:"Buah-buahan",in:"Pisang",en:"Banana",ngoko:"Gedhang",krama:"Pisang"},
+        {id:"Buah-buahan",in:"Mangga",en:"Mango",ngoko:"Pelem",krama:"Mangga"},
+        {id:"Buah-buahan",in:"Jeruk",en:"Orange",ngoko:"Jeruk",krama:"Jeruk"},
+        {id:"Buah-buahan",in:"Semangka",en:"Watermelon",ngoko:"Semangka",krama:"Semangka"},
+        {id:"Buah-buahan",in:"Anggur",en:"Grape",ngoko:"Anggur",krama:"Anggur"},
+        {id:"Buah-buahan",in:"Pepaya",en:"Papaya",ngoko:"Kates",krama:"Pepaya"},
+        {id:"Buah-buahan",in:"Nanas",en:"Pineapple",ngoko:"Nanas",krama:"Nanas"},
+        {id:"Buah-buahan",in:"Melon",en:"Melon",ngoko:"Melon",krama:"Melon"},
+        {id:"Buah-buahan",in:"Strawberi",en:"Strawberry",ngoko:"Strawberi",krama:"Strawberi"},
+        {id:"Buah-buahan",in:"Kelapa",en:"Coconut",ngoko:"Klopo",krama:"Krambil"},
+        {id:"Buah-buahan",in:"Nangka",en:"Jackfruit",ngoko:"Nongko",krama:"Nangka"},
+        {id:"Buah-buahan",in:"Rambutan",en:"Rambutan",ngoko:"Rambutan",krama:"Rambutan"},
+        {id:"Buah-buahan",in:"Durian",en:"Durian",ngoko:"Duren",krama:"Durian"},
+        {id:"Buah-buahan",in:"Alpukat",en:"Avocado",ngoko:"Alpukat",krama:"Alpukat"},
+        {id:"Sayuran",in:"Wortel",en:"Carrot",ngoko:"Wortel",krama:"Wortel"},
+        {id:"Sayuran",in:"Bayam",en:"Spinach",ngoko:"Bayem",krama:"Bayem"},
+        {id:"Sayuran",in:"Tomat",en:"Tomato",ngoko:"Tomat",krama:"Tomat"},
+        {id:"Sayuran",in:"Kentang",en:"Potato",ngoko:"Kentang",krama:"Kentang"},
+        {id:"Sayuran",in:"Kubis",en:"Cabbage",ngoko:"Kol",krama:"Kobis"},
+        {id:"Sayuran",in:"Kacang Panjang",en:"Long Bean",ngoko:"Kacang dawa",krama:"Kacang panjang"},
+        {id:"Sayuran",in:"Terong",en:"Eggplant",ngoko:"Terong",krama:"Terong"},
+        {id:"Sayuran",in:"Timun",en:"Cucumber",ngoko:"Timun",krama:"Timun"},
+        {id:"Sayuran",in:"Jagung",en:"Corn",ngoko:"Jagung",krama:"Jagung"},
+        {id:"Sayuran",in:"Bawang",en:"Onion",ngoko:"Bawang",krama:"Bawang"},
+        {id:"Sayuran",in:"Kangkung",en:"Water Spinach",ngoko:"Kangkung",krama:"Kangkung"},
+        {id:"Sayuran",in:"Sawi",en:"Mustard Green",ngoko:"Sawi",krama:"Sawi"},
+        {id:"Hewan",in:"Kucing",en:"Cat",ngoko:"Kucing",krama:"Kucing"},
+        {id:"Hewan",in:"Anjing",en:"Dog",ngoko:"Asu",krama:"Sona"},
+        {id:"Hewan",in:"Burung",en:"Bird",ngoko:"Manuk",krama:"Peksi"},
+        {id:"Hewan",in:"Ikan",en:"Fish",ngoko:"Iwak",krama:"Ulam"},
+        {id:"Hewan",in:"Kuda",en:"Horse",ngoko:"Jaran",krama:"Turangga"},
+        {id:"Hewan",in:"Sapi",en:"Cow",ngoko:"Sapi",krama:"Lembu"},
+        {id:"Hewan",in:"Kambing",en:"Goat",ngoko:"Wedus",krama:"Menda"},
+        {id:"Hewan",in:"Ayam",en:"Chicken",ngoko:"Pitik",krama:"Ayam"},
+        {id:"Hewan",in:"Bebek",en:"Duck",ngoko:"Bebek",krama:"Bebek"},
+        {id:"Hewan",in:"Kerbau",en:"Buffalo",ngoko:"Kebo",krama:"Mahisa"},
+        {id:"Hewan",in:"Kelinci",en:"Rabbit",ngoko:"Terwelu",krama:"Terwelu"},
+        {id:"Hewan",in:"Gajah",en:"Elephant",ngoko:"Gajah",krama:"Gajah"},
+        {id:"Hewan",in:"Harimau",en:"Tiger",ngoko:"Macan",krama:"Sima"},
+        {id:"Hewan",in:"Ular",en:"Snake",ngoko:"Ula",krama:"Sawer"},
+        {id:"Hewan",in:"Katak",en:"Frog",ngoko:"Kodok",krama:"Precil"},
+        {id:"Hewan",in:"Tikus",en:"Mouse",ngoko:"Tikus",krama:"Tikus"},
+        {id:"Warna",in:"Merah",en:"Red",ngoko:"Abang",krama:"Abrit"},
+        {id:"Warna",in:"Biru",en:"Blue",ngoko:"Biru",krama:"Biru"},
+        {id:"Warna",in:"Hijau",en:"Green",ngoko:"Ijo",krama:"Ijem"},
+        {id:"Warna",in:"Kuning",en:"Yellow",ngoko:"Kuning",krama:"Jene"},
+        {id:"Warna",in:"Hitam",en:"Black",ngoko:"Ireng",krama:"Cemeng"},
+        {id:"Warna",in:"Putih",en:"White",ngoko:"Putih",krama:"Pethak"},
+        {id:"Warna",in:"Oranye",en:"Orange",ngoko:"Oranye",krama:"Oranye"},
+        {id:"Warna",in:"Ungu",en:"Purple",ngoko:"Ungu",krama:"Wungu"},
+        {id:"Warna",in:"Coklat",en:"Brown",ngoko:"Coklat",krama:"Soklat"},
+        {id:"Warna",in:"Abu-abu",en:"Grey",ngoko:"Abu-abu",krama:"Awu-awu"},
+        {id:"Warna",in:"Merah Muda",en:"Pink",ngoko:"Jambon",krama:"Jambon"},
+        {id:"Keluarga",in:"Ayah",en:"Father",ngoko:"Bapak",krama:"Rama"},
+        {id:"Keluarga",in:"Ibu",en:"Mother",ngoko:"Ibu",krama:"Ibu"},
+        {id:"Keluarga",in:"Kakak Laki-laki",en:"Older Brother",ngoko:"Mas",krama:"Mas"},
+        {id:"Keluarga",in:"Kakak Perempuan",en:"Older Sister",ngoko:"Mbak",krama:"Mbak"},
+        {id:"Keluarga",in:"Adik",en:"Younger Sibling",ngoko:"Adik",krama:"Adik"},
+        {id:"Keluarga",in:"Kakek",en:"Grandfather",ngoko:"Simbah kakung",krama:"Eyang kakung"},
+        {id:"Keluarga",in:"Nenek",en:"Grandmother",ngoko:"Simbah putri",krama:"Eyang putri"},
+        {id:"Keluarga",in:"Paman",en:"Uncle",ngoko:"Pakdhe / Paklik",krama:"Paman"},
+        {id:"Keluarga",in:"Bibi",en:"Aunt",ngoko:"Budhe / Bulik",krama:"Bibi"},
+        {id:"Angka",in:"Satu",en:"One",ngoko:"Siji",krama:"Setunggal"},
+        {id:"Angka",in:"Dua",en:"Two",ngoko:"Loro",krama:"Kalih"},
+        {id:"Angka",in:"Tiga",en:"Three",ngoko:"Telu",krama:"Tiga"},
+        {id:"Angka",in:"Empat",en:"Four",ngoko:"Papat",krama:"Sekawan"},
+        {id:"Angka",in:"Lima",en:"Five",ngoko:"Lima",krama:"Gangsal"},
+        {id:"Angka",in:"Enam",en:"Six",ngoko:"Enem",krama:"Enem"},
+        {id:"Angka",in:"Tujuh",en:"Seven",ngoko:"Pitu",krama:"Pitu"},
+        {id:"Angka",in:"Delapan",en:"Eight",ngoko:"Wolu",krama:"Wolu"},
+        {id:"Angka",in:"Sembilan",en:"Nine",ngoko:"Songo",krama:"Sanga"},
+        {id:"Angka",in:"Sepuluh",en:"Ten",ngoko:"Sepuluh",krama:"Sedasa"},
+        {id:"Angka",in:"Sebelas",en:"Eleven",ngoko:"Sewelas",krama:"Setunggal welas"},
+        {id:"Angka",in:"Dua belas",en:"Twelve",ngoko:"Rolas",krama:"Kalih welas"},
+        {id:"Angka",in:"Dua puluh",en:"Twenty",ngoko:"Rongpuluh",krama:"Kalih dasa"},
+        {id:"Angka",in:"Seratus",en:"One hundred",ngoko:"Satus",krama:"Setunggal atus"},
+        {id:"Hari & Bulan",in:"Senin",en:"Monday",ngoko:"Senen",krama:"Senen"},
+        {id:"Hari & Bulan",in:"Selasa",en:"Tuesday",ngoko:"Seloso",krama:"Selasa"},
+        {id:"Hari & Bulan",in:"Rabu",en:"Wednesday",ngoko:"Rebo",krama:"Rebo"},
+        {id:"Hari & Bulan",in:"Kamis",en:"Thursday",ngoko:"Kemis",krama:"Kemis"},
+        {id:"Hari & Bulan",in:"Jumat",en:"Friday",ngoko:"Jemuah",krama:"Jumat"},
+        {id:"Hari & Bulan",in:"Sabtu",en:"Saturday",ngoko:"Setu",krama:"Sabtu"},
+        {id:"Hari & Bulan",in:"Minggu",en:"Sunday",ngoko:"Ahad",krama:"Minggu"},
+        {id:"Hari & Bulan",in:"Hari",en:"Day",ngoko:"Dino",krama:"Dinten"},
+        {id:"Hari & Bulan",in:"Minggu (pekan)",en:"Week",ngoko:"Minggu",krama:"Minggu"},
+        {id:"Hari & Bulan",in:"Bulan",en:"Month",ngoko:"Sasi",krama:"Wulan"},
+        {id:"Hari & Bulan",in:"Tahun",en:"Year",ngoko:"Taun",krama:"Taun"},
+        {id:"Hari & Bulan",in:"Januari",en:"January",ngoko:"Januari",krama:"Januari"},
+        {id:"Hari & Bulan",in:"Februari",en:"February",ngoko:"Februari",krama:"Februari"},
+        {id:"Hari & Bulan",in:"Maret",en:"March",ngoko:"Maret",krama:"Maret"},
+        {id:"Hari & Bulan",in:"April",en:"April",ngoko:"April",krama:"April"},
+        {id:"Hari & Bulan",in:"Mei",en:"May",ngoko:"Mei",krama:"Mei"},
+        {id:"Hari & Bulan",in:"Juni",en:"June",ngoko:"Juni",krama:"Juni"},
+        {id:"Hari & Bulan",in:"Juli",en:"July",ngoko:"Juli",krama:"Juli"},
+        {id:"Hari & Bulan",in:"Agustus",en:"August",ngoko:"Agustus",krama:"Agustus"},
+        {id:"Hari & Bulan",in:"September",en:"September",ngoko:"September",krama:"September"},
+        {id:"Hari & Bulan",in:"Oktober",en:"October",ngoko:"Oktober",krama:"Oktober"},
+        {id:"Hari & Bulan",in:"November",en:"November",ngoko:"November",krama:"November"},
+        {id:"Hari & Bulan",in:"Desember",en:"December",ngoko:"Desember",krama:"Desember"},
+        {id:"Alat Sekolah",in:"Pensil",en:"Pencil",ngoko:"Potlot",krama:"Pensil"},
+        {id:"Alat Sekolah",in:"Buku",en:"Book",ngoko:"Buku",krama:"Buku"},
+        {id:"Alat Sekolah",in:"Penggaris",en:"Ruler",ngoko:"Penggaris",krama:"Penggaris"},
+        {id:"Alat Sekolah",in:"Penghapus",en:"Eraser",ngoko:"Penghapus",krama:"Penghapus"},
+        {id:"Alat Sekolah",in:"Tas",en:"Bag",ngoko:"Tas",krama:"Tas"},
+        {id:"Alat Sekolah",in:"Meja",en:"Desk / Table",ngoko:"Meja",krama:"Meja"},
+        {id:"Alat Sekolah",in:"Kursi",en:"Chair",ngoko:"Kursi",krama:"Kursi"},
+        {id:"Alat Sekolah",in:"Papan tulis",en:"Blackboard",ngoko:"Papan tulis",krama:"Papan tulis"},
+        {id:"Alat Sekolah",in:"Kapur",en:"Chalk",ngoko:"Kapur",krama:"Kapur"},
+        {id:"Alat Sekolah",in:"Gunting",en:"Scissors",ngoko:"Gunting",krama:"Gunting"},
+        {id:"Alat Sekolah",in:"Lem",en:"Glue",ngoko:"Lem",krama:"Lem"},
+        {id:"Makanan & Minuman",in:"Nasi",en:"Rice",ngoko:"Sego",krama:"Sekul"},
+        {id:"Makanan & Minuman",in:"Air",en:"Water",ngoko:"Banyu",krama:"Toya"},
+        {id:"Makanan & Minuman",in:"Susu",en:"Milk",ngoko:"Susu",krama:"Susu"},
+        {id:"Makanan & Minuman",in:"Roti",en:"Bread",ngoko:"Roti",krama:"Roti"},
+        {id:"Makanan & Minuman",in:"Telur",en:"Egg",ngoko:"Endhog",krama:"Tigan"},
+        {id:"Makanan & Minuman",in:"Daging",en:"Meat",ngoko:"Iwak daging",krama:"Ulam"},
+        {id:"Makanan & Minuman",in:"Gula",en:"Sugar",ngoko:"Gulo",krama:"Gulo"},
+        {id:"Makanan & Minuman",in:"Garam",en:"Salt",ngoko:"Uyah",krama:"Uyah"},
+        {id:"Makanan & Minuman",in:"Mie",en:"Noodle",ngoko:"Mie",krama:"Mie"},
+        {id:"Makanan & Minuman",in:"Tempe",en:"Tempe",ngoko:"Tempe",krama:"Tempe"},
+        {id:"Makanan & Minuman",in:"Tahu",en:"Tofu",ngoko:"Tahu",krama:"Tahu"},
+        {id:"Makanan & Minuman",in:"Kopi",en:"Coffee",ngoko:"Kopi",krama:"Kopi"},
+        {id:"Makanan & Minuman",in:"Teh",en:"Tea",ngoko:"Teh",krama:"Teh"},
+        {id:"Makanan & Minuman",in:"Jus",en:"Juice",ngoko:"Jus",krama:"Jus"},
+        {id:"Tempat",in:"Rumah",en:"House",ngoko:"Omah",krama:"Griya"},
+        {id:"Tempat",in:"Sekolah",en:"School",ngoko:"Sekolah",krama:"Sekolah"},
+        {id:"Tempat",in:"Pasar",en:"Market",ngoko:"Pasar",krama:"Peken"},
+        {id:"Tempat",in:"Rumah Sakit",en:"Hospital",ngoko:"Rumah sakit",krama:"Griya sakit"},
+        {id:"Tempat",in:"Masjid",en:"Mosque",ngoko:"Masjid",krama:"Masjid"},
+        {id:"Tempat",in:"Kantor",en:"Office",ngoko:"Kantor",krama:"Kantor"},
+        {id:"Tempat",in:"Toko",en:"Shop / Store",ngoko:"Warung",krama:"Toko"},
+        {id:"Tempat",in:"Sawah",en:"Rice Field",ngoko:"Sawah",krama:"Sabin"},
+        {id:"Tempat",in:"Sungai",en:"River",ngoko:"Kali",krama:"Lepen"},
+        {id:"Tempat",in:"Hutan",en:"Forest",ngoko:"Alas",krama:"Wana"},
+        {id:"Tempat",in:"Gunung",en:"Mountain",ngoko:"Gunung",krama:"Redi"},
+        {id:"Tempat",in:"Laut",en:"Sea / Ocean",ngoko:"Segoro",krama:"Seganten"},
+        {id:"Kata Kerja",in:"Makan",en:"To eat",ngoko:"Mangan",krama:"Nedha"},
+        {id:"Kata Kerja",in:"Minum",en:"To drink",ngoko:"Ngombe",krama:"Ngunjuk"},
+        {id:"Kata Kerja",in:"Tidur",en:"To sleep",ngoko:"Turu",krama:"Tilem"},
+        {id:"Kata Kerja",in:"Berjalan",en:"To walk",ngoko:"Mlaku",krama:"Mlampah"},
+        {id:"Kata Kerja",in:"Berlari",en:"To run",ngoko:"Mlayu",krama:"Mlayu"},
+        {id:"Kata Kerja",in:"Duduk",en:"To sit",ngoko:"Lungguh",krama:"Lenggah"},
+        {id:"Kata Kerja",in:"Berdiri",en:"To stand",ngoko:"Ngadeg",krama:"Ngadeg"},
+        {id:"Kata Kerja",in:"Berbicara",en:"To speak",ngoko:"Omong",krama:"Matur"},
+        {id:"Kata Kerja",in:"Belajar",en:"To study",ngoko:"Sinau",krama:"Sinau"},
+        {id:"Kata Kerja",in:"Bermain",en:"To play",ngoko:"Dolanan",krama:"Dolanan"},
+        {id:"Kata Kerja",in:"Membaca",en:"To read",ngoko:"Moco",krama:"Maos"},
+        {id:"Kata Kerja",in:"Menulis",en:"To write",ngoko:"Nulis",krama:"Nyerat"},
+        {id:"Kata Kerja",in:"Melihat",en:"To see / look",ngoko:"Ndelok",krama:"Ningali"},
+        {id:"Kata Kerja",in:"Mendengar",en:"To listen",ngoko:"Krungu",krama:"Mireng"},
+        {id:"Kata Kerja",in:"Pergi",en:"To go",ngoko:"Lunga",krama:"Tindak"},
+        {id:"Kata Kerja",in:"Datang",en:"To come",ngoko:"Teko",krama:"Rawuh"},
+        {id:"Kata Kerja",in:"Memberi",en:"To give",ngoko:"Menehi",krama:"Maringi"},
+        {id:"Kata Kerja",in:"Meminta",en:"To ask for",ngoko:"Njaluk",krama:"Nyuwun"},
+        {id:"Kata Kerja",in:"Membeli",en:"To buy",ngoko:"Tuku",krama:"Mundhut"},
+        {id:"Kata Kerja",in:"Menjual",en:"To sell",ngoko:"Adol",krama:"Sade"},
+        {id:"Kata Sifat",in:"Besar",en:"Big",ngoko:"Gedhe",krama:"Ageng"},
+        {id:"Kata Sifat",in:"Kecil",en:"Small",ngoko:"Cilik",krama:"Alit"},
+        {id:"Kata Sifat",in:"Panjang",en:"Long / Tall",ngoko:"Dowo",krama:"Panjang"},
+        {id:"Kata Sifat",in:"Pendek",en:"Short",ngoko:"Cendhek",krama:"Cekak"},
+        {id:"Kata Sifat",in:"Tinggi",en:"Tall / High",ngoko:"Dhuwur",krama:"Inggil"},
+        {id:"Kata Sifat",in:"Rendah",en:"Low",ngoko:"Cendhek",krama:"Andhap"},
+        {id:"Kata Sifat",in:"Banyak",en:"Many / A lot",ngoko:"Akeh",krama:"Kathah"},
+        {id:"Kata Sifat",in:"Sedikit",en:"Few / A little",ngoko:"Sithik",krama:"Sakedhik"},
+        {id:"Kata Sifat",in:"Bagus",en:"Good / Nice",ngoko:"Apik",krama:"Sae"},
+        {id:"Kata Sifat",in:"Jelek",en:"Bad / Ugly",ngoko:"Elek",krama:"Awon"},
+        {id:"Kata Sifat",in:"Baru",en:"New",ngoko:"Anyar",krama:"Enggal"},
+        {id:"Kata Sifat",in:"Lama",en:"Old",ngoko:"Lawas",krama:"Lawas"},
+        {id:"Kata Sifat",in:"Panas",en:"Hot",ngoko:"Panas",krama:"Benter"},
+        {id:"Kata Sifat",in:"Dingin",en:"Cold",ngoko:"Adhem",krama:"Asrep"},
+        {id:"Kata Sifat",in:"Manis",en:"Sweet",ngoko:"Manis",krama:"Legi"},
+        {id:"Kata Sifat",in:"Pahit",en:"Bitter",ngoko:"Pait",krama:"Pait"},
+        {id:"Kata Sifat",in:"Asin",en:"Salty",ngoko:"Asin",krama:"Asin"},
+        {id:"Kata Sifat",in:"Pedas",en:"Spicy",ngoko:"Pedes",krama:"Pedhes"},
+        {id:"Kata Sifat",in:"Senang",en:"Happy",ngoko:"Seneng",krama:"Remen"},
+        {id:"Kata Sifat",in:"Sedih",en:"Sad",ngoko:"Sedhih",krama:"Sedhih"},
+        {id:"Kata Sifat",in:"Lelah",en:"Tired",ngoko:"Kesel",krama:"Sayah"},
+        {id:"Kata Sifat",in:"Sakit",en:"Sick / Hurt",ngoko:"Lara",krama:"Sakit"},
+    ];
+
+    const categoryConfig = {
+        "Anggota Tubuh":     {emoji:"&#x1FAC0;", color:"bg-red-100 text-red-700 border-red-300"},
+        "Buah-buahan":       {emoji:"&#x1F34E;", color:"bg-orange-100 text-orange-700 border-orange-300"},
+        "Sayuran":           {emoji:"&#x1F966;", color:"bg-green-100 text-green-700 border-green-300"},
+        "Hewan":             {emoji:"&#x1F43E;", color:"bg-yellow-100 text-yellow-700 border-yellow-300"},
+        "Warna":             {emoji:"&#x1F3A8;", color:"bg-purple-100 text-purple-700 border-purple-300"},
+        "Keluarga":          {emoji:"&#x1F46A;", color:"bg-pink-100 text-pink-700 border-pink-300"},
+        "Angka":             {emoji:"&#x1F522;", color:"bg-blue-100 text-blue-700 border-blue-300"},
+        "Hari & Bulan":      {emoji:"&#x1F4C5;", color:"bg-cyan-100 text-cyan-700 border-cyan-300"},
+        "Alat Sekolah":      {emoji:"&#x270F;", color:"bg-indigo-100 text-indigo-700 border-indigo-300"},
+        "Makanan & Minuman": {emoji:"&#x1F35C;", color:"bg-amber-100 text-amber-700 border-amber-300"},
+        "Tempat":            {emoji:"&#x1F3E0;", color:"bg-teal-100 text-teal-700 border-teal-300"},
+        "Kata Kerja":        {emoji:"&#x1F3C3;", color:"bg-lime-100 text-lime-700 border-lime-300"},
+        "Kata Sifat":        {emoji:"&#x1F4A1;", color:"bg-rose-100 text-rose-700 border-rose-300"},
+    };
+
+    let activeFilter = "all";
+
+    function buildFilters() {
+        const container = document.getElementById("filter-buttons");
+        const categories = [...new Set(vocab.map(v => v.id))];
+        categories.forEach(cat => {
+            const cfg = categoryConfig[cat] || {emoji:"&#x1F4CC;", color:"bg-slate-100 text-slate-700 border-slate-300"};
+            const btn = document.createElement("button");
+            btn.className = "filter-btn bg-white border-2 border-amber-200 text-slate-700 font-bold px-4 py-1.5 rounded-full text-sm hover:bg-amber-100 transition";
+            btn.dataset.category = cat;
+            btn.innerHTML = cfg.emoji + " " + cat;
+            btn.onclick = function() { setFilter(cat, this); };
+            container.appendChild(btn);
+        });
+    }
+
+    function setFilter(category, btn) {
+        activeFilter = category;
+        document.querySelectorAll(".filter-btn").forEach(b => {
+            b.classList.remove("active","bg-amber-400","text-amber-900");
+            b.classList.add("bg-white","border-amber-200","text-slate-700");
+        });
+        btn.classList.add("active","bg-amber-400","text-amber-900");
+        btn.classList.remove("bg-white","border-amber-200","text-slate-700");
+        filterTable();
+    }
+
+    function filterTable() {
+        const q = (document.getElementById("search-input").value || "").toLowerCase().trim();
+        const tbody = document.getElementById("vocab-body");
+        tbody.innerHTML = "";
+
+        const filtered = vocab.filter(v => {
+            const matchCat = activeFilter === "all" || v.id === activeFilter;
+            const matchSearch = !q || v.in.toLowerCase().includes(q) || v.en.toLowerCase().includes(q) || v.ngoko.toLowerCase().includes(q) || v.krama.toLowerCase().includes(q);
+            return matchCat && matchSearch;
+        });
+
+        filtered.forEach((v, i) => {
+            const cfg = categoryConfig[v.id] || {emoji:"&#x1F4CC;", color:"bg-slate-100 text-slate-700 border-slate-300"};
+            const row = document.createElement("tr");
+            row.className = "vocab-row border-b border-amber-50" + (i%2===0?" bg-white":" bg-amber-50/40");
+            row.innerHTML =
+                '<td class="py-2.5 px-4 text-slate-400 text-xs font-bold no-print">' + (i+1) + '</td>' +
+                '<td class="py-2.5 px-4 font-bold text-slate-800">' + v.in + '</td>' +
+                '<td class="py-2.5 px-4 text-blue-700 font-medium">' + v.en + '</td>' +
+                '<td class="py-2.5 px-4 text-green-700 font-medium">' + v.ngoko + '</td>' +
+                '<td class="py-2.5 px-4 text-purple-700 font-medium">' + v.krama + '</td>' +
+                '<td class="py-2.5 px-4 no-print"><span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full border ' + cfg.color + '">' + cfg.emoji + ' ' + v.id + '</span></td>';
+            tbody.appendChild(row);
+        });
+
+        document.getElementById("result-count").textContent = filtered.length;
+        const lbl = document.getElementById("print-category-label");
+        if(lbl) lbl.textContent = activeFilter === "all" ? "Semua Kategori" : "Kategori: " + activeFilter;
+    }
+
+    buildFilters();
+    filterTable();
+    </script>
+</body>
+</html>
